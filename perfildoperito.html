@@ -18,7 +18,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            font-size: 13px;
         }
         
         .header {
@@ -26,36 +25,36 @@
             color: white;
             display: flex;
             align-items: center;
-            height: 40px;
+            height: 60px;
             width: 100%;
-            padding: 0 15px;
+            padding: 0 30px;
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            margin-right: 30px;
+            margin-right: 50px; /* Aumentado o espaço entre o logo e o primeiro item */
         }
         
         .logo {
-            height: 30px;
+            height: 40px;
             width: auto;
         }
         
         .nav {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 80%;
+            justify-content: space-between; /* Distribui os itens igualmente */
+            width: 80%; /* Limita a largura para controlar o espaçamento */
         }
         
         .nav-item {
             color: white;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 500;
             letter-spacing: 0.5px;
-            padding: 3px 0;
+            padding: 5px 0;
             text-align: center;
         }
         
@@ -65,18 +64,17 @@
         
         .main-container {
             flex-grow: 1;
+            padding: 20px;
+            max-width: 1400px;
             width: 100%;
-            background-color: white;
-            display: flex;
-            flex-direction: column;
+            margin: 0 auto;
         }
         
         .page-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 8px 12px;
-            border-bottom: 1px solid #eee;
-            background-color: #f9f9f9;
+            margin-bottom: 20px;
         }
         
         .back-button {
