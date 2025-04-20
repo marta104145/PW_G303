@@ -1,0 +1,218 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo */
+body {
+  font-family: 'Roboto', sans-serif; /* Garante que estás a importar no <head> */
+  background: #f2f2f2;
+  color: #333;
+}
+
+/* HEADER */
+.header {
+  background-color: #2B5314; /* verde escuro */
+  width: 100%;
+  height: 60px; /* Ajusta se quiseres */
+}
+
+/* NAVBAR */
+.navbar {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  /* “space-between” => logo encosta à esquerda, menu à direita */
+  justify-content: space-between;
+}
+
+/* LOGO */
+.navbar-logo img {
+  height: 40px; 
+  width: auto;
+  /* Se quiseres mais espaço, podes aumentar a margin-right */
+}
+
+/* MENU */
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 50px; /* espaçamento horizontal entre links */
+}
+
+/* LINKS do MENU */
+.navbar-menu li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 300; /* leve */
+  font-size: 20px;  /* tamanho do texto */
+  padding: 10px;    /* um pouco de espaço ao redor */
+  transition: color 0.2s ease-in-out;
+}
+
+/* HOVER - se não quiseres mudança de cor, remove */
+.navbar-menu li a:hover {
+  color: #cccccc;
+}
+
+.page-title {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.page-title h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* ===== MAP SECTION (barra verde + mapa) ===== */
+.map-section {
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  padding: 20px;
+  background-color: #2B5314; /* fundo verde escuro por trás de tudo */
+  border-radius: 8px;         /* cantos arredondados */
+  position: relative;
+}
+
+/* Barra de pesquisa em verde */
+.search-bar {
+  background-color: #DFF0D8;
+  border-radius: 50px;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;         /* ← ocupar 100% da .map-section */
+  box-sizing: border-box;
+}
+
+
+/* Input sem fundo transparente */
+.search-bar input {
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+  font-size: 16px;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+/* Ícone de lupa */
+.search-icon {
+  font-size: 18px;
+  color: #2B5314;  /* Cor verde do ícone */
+  margin-left: 10px;
+}
+
+
+.search-btn {
+  background: #4CAF50; /* ou outro verde */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.search-icon {
+  font-size: 18px;
+  color: #2B5314;
+  margin-left: 10px;
+}
+
+/* Container do mapa */
+.map-container {
+  width: 100%;
+  background: #ccc; /* fallback se não tiveres imagem */
+  border: 10px solid #2B5314; /* “moldura” verde como no mockup */
+  border-top: none; /* se quiseres colar com a barra verde */
+  border-radius: 0 0 8px 8px; /* cantos inferiores */
+  text-align: center; /* centramos a imagem */
+}
+
+.map-container img {
+  width: 100%;
+  max-width: 1000px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Botão circular verde (seta) no canto direito */
+.round-btn {
+  position: absolute;
+  right: 30px; /* ajusta consoante o layout */
+  bottom: 30px; 
+  width: 50px;
+  height: 50px;
+  background-color: #2B5314;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* ===== SECÇÃO DAS LISTAS (Ocorrências & Auditorias) ===== */
+.listas-home {
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.listas-home .bloco {
+  flex: 1;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.listas-home .bloco h2 {
+  margin-bottom: 15px;
+}
+
+.listas-home ul {
+  list-style: none;
+  margin-bottom: 15px;
+}
+
+.listas-home li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.listas-home li strong {
+  color: #333;
+}
+
+/* Footer da lista */
+.listas-home .bloco p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.listas-home .bloco p a {
+  color: #2B5314;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+#map {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden; /* garante que o conteúdo respeita os cantos */
+}
