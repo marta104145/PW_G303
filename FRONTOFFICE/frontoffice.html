@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyesEverywhere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+
+        header {
+            background-color: #45624e;
+            color: white;
+            padding: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            cursor: pointer;
+        }
+
+        .hero {
+            background-color: #45624e;
+            text-align: left;
+            padding: 50px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero button {
+            background-color: #658b6f;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .sobre-nos, .areas {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+
+        .card {
+            min-width: 200px;
+            background-color: #45624e;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 0 0 auto;
+        }
+
+        .areas img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .area-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .areas-list {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div>EyesEverywhere</div>
+            <ul>
+                <li>Home</li>
+                <li>Sobre nós</li>
+                <li>Áreas de atuação</li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div>
+            <h1>Localize o problema, nós resolvemos</h1>
+            <p>Ajude-nos a localizar os problemas.</p>
+            <button>Entre nessa grande aventura</button>
+        </div>
+        <div>
+            <img src="arvorefrontoffice.png" alt="Imagem ilustrativa">
+        </div>
+    </section>
+
+    <section class="sobre-nos">
+        <h2>Sobre nós</h2>
+        <p>A EyesEverywhere é uma plataforma dedicada à preservação ambiental, focada na monitorização e gestão de ocorrências em espaços naturais e urbanos. A nossa missão é proteger e preservar o meio ambiente através da auditoria, registo e resolução de problemas ambientais, promovendo um futuro sustentável para todos.</p>
+        
+        <div class="cards">
+            <div class="card">Auditorias</div>
+            <div class="card">Ocorrências</div>
+            <div class="card">Submeter Ocorrência</div>
+            <div class="card">Contactos</div>
+        </div>
+    </section>
+
+    <section class="areas">
+        <h2>Áreas de atuação</h2>
+        <div class="areas-list">
+            <div class="area-item">
+                <img src="https://via.placeholder.com/150" alt="">
+                Árvores em Risco de Queda
+            </div>
+            <div class="area-item">
+                <img src="https://via.placeholder.com/150" alt="">
+                Gestão de Resíduos
+            </div>
+            <div class="area-item">
+                <img src="https://via.placeholder.com/150" alt="">
+                Manutenção de Jardins
+            </div>
+            <div class="area-item">
+                <img src="https://via.placeholder.com/150" alt="">
+                Qualidade do Solo
+            </div>
+            <div class="area-item">
+                <img src="https://via.placeholder.com/150" alt="">
+                Espaços Verdes
+            </div>
+        </div>
+    </section>
+</body>
+</html>
