@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="css/login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Google Login -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+  <meta name="google-signin-client_id"
+    content="489122318578-mh2cd8k3s2quna67qfqn47a25dg33kdf.apps.googleusercontent.com">
+
+</head>
+
+<body>
+  <div class="overlay">
+    <div class="login-box">
+      <img src="images/logo.png" alt="Logo" class="logo">
+      <h2>Olá de volta!</h2>
+      <form onsubmit="return false">
+        <div id="g_id_onload" data-client_id="489122318578-mh2cd8k3s2quna67qfqn47a25dg33kdf.apps.googleusercontent.com"
+          data-callback="handleCredentialResponse" data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+          data-shape="rectangular" data-logo_alignment="left">
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- JS Final -->
+  <script src="js/login.js"></script>
+  <div id="popup-success" class="popup hidden">
+    <p>Login com Google feito com sucesso! A redirecionar...</p>
+  </div>
+</body>
+
+</html>
