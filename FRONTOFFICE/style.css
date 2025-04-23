@@ -1,0 +1,157 @@
+
+body {
+  margin: 0;
+  font-family: 'Roboto';
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 0; /* Remove o padding padrão */
+  width: 100%;  /* Garante que o body e o html ocupem toda a largura da tela */
+  height: 100%; /* Garante que o body ocupe toda a altura */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 2em;
+  background-color: #3C5E4B;
+  color: white;
+}
+
+.header .logo {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
+.header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5em;
+}
+
+.header nav ul li a {
+  color: #ACACAC;
+  text-decoration: none;
+}
+
+.search-icon {
+  font-size: 1.2em;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #3C5E4B;
+  color: white;
+  padding: 4em 10em;
+  position: relative;
+}
+
+.hero-text h1 {
+  font-size: 2.5em;
+  margin: 0.2em 0;
+  font-weight: normal;
+  color: #ACACAC;
+}
+.hero-text p {
+  font-size: 1.5em;
+  margin: 0.2em 0;
+  font-weight: normal;
+  color: #ACACAC
+}
+
+.hero-text button {
+  margin-top: 1em;
+  padding: 0.7em 1.5em;
+  background-color: #2e4e3f;
+  color: #3C5E4B;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hero-img {
+  position: absolute; /* Permite posicionar a imagem livremente dentro da hero */
+  bottom: -50px; /* Ajuste para que a imagem se sobreponha à parte branca */
+  right: 0; /* Move a imagem para o canto direito */
+  max-height: 400px; /* Ajuste o tamanho da imagem conforme necessário */
+  width: auto; /* Garante que a imagem mantenha a proporção */
+}
+
+section {
+  padding: 2em;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.cards, .testemunhos, .metricas {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  margin-top: 1.5em;
+}
+
+.card, .box, .metricas div, .botoes button {
+  background-color: #2e4e3f;
+  color: white;
+  padding: 1em;
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
+}
+
+.circle-cards {
+  display: flex;
+  gap: 1.5em;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.circle-cards img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.auditorias ul {
+  padding-left: 1.5em;
+}
+
+.auditoria-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.auditoria-content img, .ocorrencias img {
+  max-width: 100%;
+  border: 3px solid #2e4e3f;
+  border-radius: 8px;
+}
+
+.botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.contactos {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.contacto-info p {
+  margin: 0.5em 0;
+}
+
+.contactos img {
+  max-width: 300px;
+  margin-top: 1em;
+}
