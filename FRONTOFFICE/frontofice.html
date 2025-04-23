@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EyesEverywhere</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">EyesEverywhere</div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#areas">Áreas de atuação</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+        <li><a href="#contactos">Contactos</a></li>
+      </ul>
+    </nav>
+    <div class="search-icon">🔍</div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>Localize o problema, nós resolvemos</h1>
+      <p>Ajude-nos a localizar os problemas.</p>
+      <button>Entre nessa grande aventura</button>
+    </div>
+    <img src="arvorefrontoffice.png" alt="Mão com árvore" class="hero-img" /> <!-- Imagem da árvore -->
+  </section>
+  
+
+  <section class="sobre" id="sobre">
+    <h2>Sobre nós</h2>
+    <p>A EyesEverywhere é uma plataforma dedicada à preservação ambiental, focada na monitorização e gestão de ocorrências em espaços naturais e urbanos. A nossa missão é proteger e preservar o meio ambiente através da auditoria, registo e resolução de problemas ambientais, promovendo um futuro sustentável para todos. Acreditamos que pequenas ações fazem a diferença e, com a tua ajuda, podemos garantir a conservação dos nossos ecossistemas.
+    <div class="cards">
+      <div class="card">Auditorias</div>
+      <div class="card">Ocorrências</div>
+      <div class="card">Submeter Ocorrência</div>
+      <div class="card">Contactos</div>
+    </div>
+  </section>
+
+  <section class="areas" id="areas">
+    <h2>Áreas de atuação</h2>
+    <div class="circle-cards">
+      <img src="arvore.png" alt="Árvores em risco">
+      <img src="residuos.png" alt="Resíduos">
+      <img src="jardins.png" alt="Jardins">
+      <img src="solo.png" alt="Solo">
+      <img src="espacos.png" alt="Espaços verdes">
+    </div>
+  </section>
+
+  <section class="auditorias">
+    <h2>Auditorias</h2>
+    <div class="auditoria-content">
+      <ul id="auditorias-list"></ul>
+      <img src="img/mapa-auditorias.png" alt="Mapa auditorias" />
+    </div>
+  </section>
+
+  <section class="ocorrencias">
+    <h2>Ocorrências</h2>
+    <img src="img/mapa-ocorrencias.png" alt="Mapa ocorrências" />
+    <div class="botoes">
+      <button onclick="filtrarOcorrencias('em aberto')">Ver ocorrências em aberto</button>
+      <button onclick="filtrarOcorrencias('em análise')">Ver ocorrências em análise</button>
+      <button onclick="filtrarOcorrencias('concluídas')">Ver ocorrências concluídas</button>
+    </div>
+  </section>
+
+  <section class="feedback" id="feedback">
+    <h2>Feedback</h2>
+    <div class="testemunhos" id="feedback-list"></div>
+    <div class="metricas">
+      <div>+30 Auditorias realizadas</div>
+      <div>+200 Ocorrências registadas</div>
+      <div>Tempo de resposta: 15min</div>
+      <div>Satisfação: 9/10</div>
+    </div>
+  </section>
+
+  <section class="contactos" id="contactos">
+    <h2>Contactos</h2>
+    <div class="contacto-info">
+      <p>📞 +351 912 345 678</p>
+      <p>📧 eyeseverywhere@gmail.com</p>
+      <p>🌐 everywhere</p>
+    </div>
+    <img src="img/footer-ilustracao.png" alt="Ilustração ecológica" />
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
