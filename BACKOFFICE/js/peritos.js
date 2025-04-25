@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td class="perito-nome" style="cursor:pointer">
-          <img src="${p.imagem}" width="30" height="30" style="border-radius:50%; vertical-align: middle;"> 
+          <img src="${p.imagem}" class="perito-foto">
+
           <span>${p.nome}</span>
         </td>
         <td>${p.nascimento}</td>
