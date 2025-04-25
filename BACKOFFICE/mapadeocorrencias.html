@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Ocorrências</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mapa.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div id="header-container"></div>
+    <div id="map"></div>
+    <div class="search-box" id="search-box">
+        <input type="text" id="search-input" placeholder="Pesquisar localização...">
+    </div>
+    <button class="search-button" id="toggle-search">
+        <i class="fas fa-search"></i>
+    </button>
+
+    <script>
+        function initMap() {
+            const centro = { lat: 41.450491, lng: -8.294101 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: centro,
+                zoom: 12,
+            });
+
+
+            const marker = new google.maps.Marker({
+                position: centro,
+                map: map,
+                title: "Estou aqui!"
+            });
+        }
+    </script>
+
+    <script src="js/mapa.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap"
+        async defer></script>
+    <script src="js/loadHeader.js"></script>
+
+</body>
+
+</html>
