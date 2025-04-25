@@ -1,0 +1,309 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #2B5314;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2B5314;
+    margin: 0;
+}
+
+.profile-container {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.profile-section {
+    display: flex;
+    gap: 30px;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+}
+
+.profile-job {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.profile-details {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.action-button {
+    background-color: #ffffff;
+    border: 2px solid #2B5314;
+    color: #2B5314;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.action-button:hover {
+    background-color: #2B5314;
+    color: white;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #2B5314;
+    text-align: center;
+}
+
+.audit-container {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.audit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.audit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.audit-icon {
+    background-color: #2B5314;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    margin-right: 10px;
+}
+
+.audit-info {
+    flex: 1;
+}
+
+.audit-type {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.audit-location {
+    font-size: 14px;
+    color: #777;
+}
+
+.audit-date {
+    font-size: 14px;
+    color: #444;
+    margin-right: 20px;
+    white-space: nowrap;
+}
+
+.audit-status {
+    font-size: 14px;
+    color: #d97706;
+    white-space: nowrap;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+    padding: 10px;
+}
+
+.load-more {
+    color: #2B5314;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.map-placeholder {
+    margin-top: 30px;
+    height: 300px;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 380px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #555;
+}
+
+.popup-text {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.popup-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.popup-btn {
+    padding: 10px 20px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.2s ease-in-out;
+}
+
+.popup-btn.cancel {
+    background: #2B5314;
+    color: white;
+}
+
+.popup-btn.confirm {
+    background: #f2f2f2;
+    color: #333;
+}
+
+.popup-btn.confirm:hover {
+    background: #e0e0e0;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    margin: 5% auto;
+    padding: 40px 30px;
+    border-radius: 10px;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .modal-content h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2B5314;
+  }
+  
+  #form-perito input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .add-button {
+    background-color: #2B5314;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .add-button:hover {
+    background-color: #3e7e1f;
+  }
+  

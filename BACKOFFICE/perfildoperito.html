@@ -1,417 +1,75 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perito</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            background-color: #2B5314;
-            color: white;
-            display: flex;
-            align-items: center;
-            height: 60px;
-            width: 100%;
-            padding: 0 30px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            margin-right: 50px; /* Aumentado o espaço entre o logo e o primeiro item */
-        }
-        
-        .logo {
-            height: 40px;
-            width: auto;
-        }
-        
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Distribui os itens igualmente */
-            width: 80%; /* Limita a largura para controlar o espaçamento */
-        }
-        
-        .nav-item {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            padding: 5px 0;
-            text-align: center;
-        }
-        
-        .nav-item:hover {
-            text-decoration: underline;
-        }
-        
-        .main-container {
-            flex-grow: 1;
-            padding: 20px;
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .back-button {
-            background: none;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            color: #666;
-            margin-right: 12px;
-        }
-        
-        .page-title {
-            font-size: 14px;
-            color: #666;
-            font-weight: normal;
-            flex-grow: 1;
-            text-align: center;
-        }
-        
-        .profile-container {
-            max-width: 800px;
-            margin: 0 auto 0 80px; /* Ajustado para ficar mais à esquerda */
-            padding: 0 20px 0 0; /* Removido padding à esquerda */
-        }
-        
-        .profile-section {
-            display: flex;
-            padding: 20px 0;
-            /* Removida a borda inferior: border-bottom: 1px solid #eee; */
-            background-color: white;
-        }
-        
-        .profile-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: #ddd;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 20px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        
-        .profile-avatar {
-            width: 60px;
-            height: 60px;
-            fill: #999;
-        }
-        
-        .profile-info {
-            flex-grow: 1;
-        }
-        
-        .profile-name {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-        
-        .profile-job {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .profile-details {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 4px;
-            line-height: 1.4;
-        }
-        
-        .profile-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .action-button {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px 10px;
-            font-size: 12px;
-            color: #2B5314;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .action-button:hover {
-            background-color: #e8e8e8;
-        }
-        
-        .action-button svg {
-            width: 14px;
-            height: 14px;
-        }
-        
-        .content-section {
-            width: 100%;
-            padding: 20px 0;
-            flex-shrink: 0;
-        }
-        
-        .section-title {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
-        
-        .audit-container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .audit-list {
-            list-style: none;
-            width: 100%;
-        }
-        
-        .audit-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .audit-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            flex-shrink: 0;
-            margin-right: 10px;
-        }
-        
-        .audit-info {
-            flex-grow: 1;
-        }
-        
-        .audit-type {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 3px;
-        }
-        
-        .audit-location {
-            font-size: 13px;
-            color: #666;
-        }
-        
-        .audit-date {
-            font-size: 13px;
-            color: #999;
-            margin-right: 40px;
-            flex-shrink: 0;
-            width: 120px;
-            text-align: right;
-        }
-        
-        .audit-status {
-            font-size: 13px;
-            color: #ff6b00;
-            flex-shrink: 0;
-            width: 100px;
-            text-align: right;
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            font-size: 13px;
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 15px 20px;
-        }
-        
-        .load-more {
-            color: #2B5314;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .no-data {
-            text-align: center;
-            padding: 15px;
-            color: #999;
-            font-size: 13px;
-        }
-        
-        .map-placeholder {
-            width: 100%;
-            height: 250px;
-            background-color: #f9f9f9;
-            border-top: 1px solid #eee;
-            flex-grow: 1;
-        }
-    </style>
+    <title>Perfil do Perito</title>
+    <link rel="stylesheet" href="css/perfilperito.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
-    <header class="header">
-        <div class="logo-container">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-FQE7yPmxgp5b6GU8cZd6As89t2hdhY.png" alt="Logo" class="logo">
-        </div>
-        <nav class="nav">
-            <a href="#" class="nav-item">HOME</a>
-            <a href="#" class="nav-item">MAPA DE OCORRÊNCIAS</a>
-            <a href="#" class="nav-item">PERITOS</a>
-            <a href="#" class="nav-item">DASHBOARDS</a>
-            <a href="#" class="nav-item">AUDITORIAS</a>
-            <a href="#" class="nav-item">PEDIDOS</a>
-        </nav>
-    </header>
-    
+
+    <div id="header-container"></div>
+
     <div class="main-container">
         <div class="page-header">
-            <button class="back-button">←</button>
-            <h1 class="page-title">Editar Perito</h1>
+            <button class="back-button" onclick="history.back()">← Voltar</button>
+            <h1 class="page-title">Perfil do Perito</h1>
         </div>
-        
+
         <div class="profile-container">
             <div class="profile-section">
                 <div class="profile-image">
-                    <svg viewBox="0 0 24 24" class="profile-avatar">
-                        <circle cx="12" cy="9" r="6" fill="#bbb"/>
-                        <circle cx="10" cy="8" r="1" fill="#666"/>
-                        <circle cx="14" cy="8" r="1" fill="#666"/>
-                        <path d="M12 16c-3.9 0-7 1.3-7 3v2h14v-2c0-1.7-3.1-3-7-3z" fill="#bbb"/>
-                    </svg>
+                    <img id="perito-img" src="" alt="Foto do perito">
                 </div>
                 <div class="profile-info">
-                    <h2 class="profile-name">Francisco Morim Moreira</h2>
-                    <p class="profile-job">Licenciado em Engenharia e Gestão de Sistemas de Informação</p>
-                    <p class="profile-details">Rua Fontes Pereira de Melo nº18, Vila Nova de Famalicão, 4760-337</p>
-                    <p class="profile-details">franciscomorim.moreira@gmail.com</p>
-                    <p class="profile-details">+351 913 560 827</p>
-                    <p class="profile-details">14/08/2024</p>
+                    <h2 class="profile-name" id="perito-nome"></h2>
+                    <p class="profile-job" id="perito-especialidade"></p>
+                    <p class="profile-details" id="perito-morada"></p>
+                    <p class="profile-details" id="perito-email"></p>
+                    <p class="profile-details" id="perito-telemovel"></p>
+                    <p class="profile-details" id="perito-nascimento"></p>
                 </div>
             </div>
-            
+
             <div class="profile-actions">
-                <button class="action-button">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg>
-                    Editar
-                </button>
-                <button class="action-button">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 6h18"></path>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
-                    Remover
-                </button>
+                <button class="action-button" onclick="editarPerito()">✏️ Editar</button>
+                <button class="action-button" onclick="confirmarRemocao()">🗑️ Remover</button>
             </div>
         </div>
-        
+
         <div class="content-section">
             <h3 class="section-title">Auditorias e Ocorrências</h3>
-            
             <div class="audit-container">
-                <ul class="audit-list">
-                    <li class="audit-item">
-                        <div class="audit-icon">1</div>
-                        <div class="audit-info">
-                            <div class="audit-type">[Report type]</div>
-                            <div class="audit-location">Location</div>
-                        </div>
-                        <div class="audit-date">2 dias</div>
-                        <div class="audit-status">Status: Por Ler</div>
-                    </li>
-                    <li class="audit-item">
-                        <div class="audit-icon">2</div>
-                        <div class="audit-info">
-                            <div class="audit-type">[Report type]</div>
-                            <div class="audit-location">Location</div>
-                        </div>
-                        <div class="audit-date">25 mai, 10:00:00 am</div>
-                        <div class="audit-status">Status: Por Ler</div>
-                    </li>
-                    <li class="audit-item">
-                        <div class="audit-icon">3</div>
-                        <div class="audit-info">
-                            <div class="audit-type">[Report type]</div>
-                            <div class="audit-location">Location</div>
-                        </div>
-                        <div class="audit-date">2 dias</div>
-                        <div class="audit-status">Status: Por Ler</div>
-                    </li>
-                    <li class="audit-item">
-                        <div class="audit-icon">4</div>
-                        <div class="audit-info">
-                            <div class="audit-type">[Report type]</div>
-                            <div class="audit-location">Location</div>
-                        </div>
-                        <div class="audit-date">2 dias</div>
-                        <div class="audit-status">Status: Por Ler</div>
-                    </li>
-                    <li class="audit-item">
-                        <div class="audit-icon">5</div>
-                        <div class="audit-info">
-                            <div class="audit-type">[Report type]</div>
-                            <div class="audit-location">Location</div>
-                        </div>
-                        <div class="audit-date">2 dias</div>
-                        <div class="audit-status">Status: Por Ler</div>
-                    </li>
-                </ul>
+                <ul class="audit-list" id="lista-auditorias"></ul>
             </div>
-            
-            <div class="pagination">
-                <div>1 - 5 de 123</div>
-                <a href="#" class="load-more">Carregar mais</a>
-            </div>
+            <div class="pagination" id="contador-auditorias">0 - 0 de 0</div>
         </div>
-        
-        <div class="no-data">Sem coordenadas/localização</div>
-        
-        <div class="map-placeholder">
-            <!-- Espaço em branco para o mapa -->
+
+        <div id="map" class="map-placeholder"></div>
+    </div>
+
+    <!-- Modal personalizado -->
+    <div id="popup-remocao" class="popup-overlay">
+        <div class="popup-box">
+            <button class="popup-close" onclick="fecharPopup()">×</button>
+            <p class="popup-text">Confirma a remoção de perito?</p>
+            <div class="popup-actions">
+                <button class="popup-btn cancel" onclick="fecharPopup()">Cancelar</button>
+                <button class="popup-btn confirm" onclick="removerPerito()">Remover perito</button>
+            </div>
         </div>
     </div>
+
+
+    <script src="js/loadHeader.js"></script>
+    <script src="js/perfilperito.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap"
+        async defer></script>
+
 </body>
+
 </html>

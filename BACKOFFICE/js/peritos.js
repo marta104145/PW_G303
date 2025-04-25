@@ -1,20 +1,27 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("modal-perito");
+    const btnAbrir = document.getElementById("abrir-modal");
+    const btnFechar = document.getElementById("fechar-modal");
+    const form = document.getElementById("form-perito");
+    const inputImg = document.getElementById("upload-img");
+    const previewImg = document.getElementById("preview-img");
     const tbody = document.getElementById("peritos-tbody");
     const contador = document.getElementById("contador-peritos");
+    const pesquisaInput = document.getElementById("pesquisa-perito");
   
-    // Simula paginação de 5 por página
-    const porPagina = 5;
+    let peritos = JSON.parse(localStorage.getItem("peritos")) || [];
   
-    // Obter lista do localStorage
-    const peritos = JSON.parse(localStorage.getItem("peritos")) || [];
-  
-    function renderTabela(peritos) {
+    function renderTabela(peritosMostrados = peritos) {
       tbody.innerHTML = "";
-      let mostrar = peritos.slice(0, porPagina);
+      const mostrar = peritosMostrados.slice(0, 5);
+  
       mostrar.forEach(p => {
-        let linha = document.createElement("tr");
-        linha.innerHTML = `
-          <td>${p.nome}</td>
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="perito-nome" style="cursor:pointer">
+            <img src="${p.imagem}" width="30" height="30" style="border-radius:50%; vertical-align: middle;"> 
+            <span>${p.nome}</span>
+          </td>
           <td>${p.nascimento}</td>
           <td>${p.email}</td>
           <td>${p.telemovel}</td>
@@ -23,12 +30,62 @@ document.addEventListener("DOMContentLoaded", function () {
           <td class="action-icons">👁️</td>
           <td class="action-icons">✏️</td>
         `;
-        tbody.appendChild(linha);
+        tr.querySelector(".perito-nome").addEventListener("click", () => {
+          localStorage.setItem("peritoSelecionado", JSON.stringify(p));
+          window.location.href = "perfildoperito.html";
+        });
+        tbody.appendChild(tr);
       });
   
-      contador.textContent = `1 - ${mostrar.length} of ${peritos.length}`;
+      contador.textContent = `1 - ${mostrar.length} of ${peritosMostrados.length}`;
     }
   
-    renderTabela(peritos);
+    // Modal toggle
+    btnAbrir.addEventListener("click", () => modal.style.display = "block");
+    btnFechar.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", e => {
+      if (e.target == modal) modal.style.display = "none";
+    });
+  
+    // Preview da imagem
+    inputImg.addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => previewImg.src = e.target.result;
+        reader.readAsDataURL(file);
+      }
+    });
+  
+    // Submeter formulário
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+  
+      const novo = {
+        nome: form.nome.value,
+        morada: form.morada.value,
+        nascimento: form.nascimento.value,
+        email: form.email.value,
+        telemovel: form.telemovel.value,
+        especialidade: form.especialidade.value,
+        imagem: previewImg.src || ""
+      };
+  
+      peritos.push(novo);
+      localStorage.setItem("peritos", JSON.stringify(peritos));
+      modal.style.display = "none";
+      form.reset();
+      previewImg.src = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+      renderTabela();
+    });
+  
+    // Pesquisar por nome
+    pesquisaInput.addEventListener("input", function () {
+      const termo = this.value.toLowerCase();
+      const filtrados = peritos.filter(p => p.nome.toLowerCase().includes(termo));
+      renderTabela(filtrados);
+    });
+  
+    renderTabela();
   });
   
