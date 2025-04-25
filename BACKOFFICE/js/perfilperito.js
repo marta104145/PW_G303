@@ -28,7 +28,7 @@ function removerPerito() {
 
 
 function editarPerito() {
-    alert("Funcionalidade de edição por implementar.");
+    window.location.href = "editarperito.html";
 }
 
 function carregarAuditorias() {

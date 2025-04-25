@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar perfil de perito</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/editarperito.css">
+    <script src="js/loadHeader.js" defer></script>
+</head>
+
+<body>
+    <div id="header-container"></div>
+
+    <div class="main-container">
+        <div class="page-header">
+            <button class="back-button" onclick="history.back()">←</button>
+
+            <h1 class="page-title">Editar Perfil do Perito</h1>
+        </div>
+
+        <div class="editar-container">
+            <div class="perfil-img">
+                <label for="upload-img" style="cursor:pointer;">
+                    <img id="foto-perito" src="" alt="Foto do perito">
+                </label>
+                <input type="file" id="upload-img" accept="image/*" style="display:none;">
+            </div>
+            
+
+            <div class="form-editar">
+                <input type="text" id="nome" placeholder="Nome">
+                <input type="text" id="morada" placeholder="Morada">
+                <input type="date" id="nascimento" placeholder="Data de nascimento">
+                <input type="email" id="email" placeholder="Email">
+                <input type="text" id="telemovel" placeholder="Telemóvel">
+                <input type="text" id="especialidade" placeholder="Especialidade">
+            </div>
+
+            <div class="botoes-container">
+                <button class="botao-voltar" onclick="history.back()">← Voltar</button>
+                <button class="botao-guardar" id="guardar-alteracoes">Guardar alterações</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="js/editarperito.js"></script>
+</body>
+</html>

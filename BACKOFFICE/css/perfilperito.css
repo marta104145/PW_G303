@@ -29,7 +29,7 @@ body {
 .page-title {
     font-size: 28px;
     font-weight: 600;
-    color: #2B5314;
+    color: #000000;
     margin: 0;
 }
 
@@ -103,7 +103,7 @@ body {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 20px;
-    color: #2B5314;
+    color: #000000;
     text-align: center;
 }
 
@@ -260,50 +260,3 @@ body {
     background: #e0e0e0;
 }
 
-.modal-content {
-    background: white;
-    width: 100%;
-    max-width: 500px;
-    margin: 5% auto;
-    padding: 40px 30px;
-    border-radius: 10px;
-    position: relative;
-    font-family: 'Roboto', sans-serif;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-  
-  .modal-content h2 {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #2B5314;
-  }
-  
-  #form-perito input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .add-button {
-    background-color: #2B5314;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .add-button:hover {
-    background-color: #3e7e1f;
-  }
-  
