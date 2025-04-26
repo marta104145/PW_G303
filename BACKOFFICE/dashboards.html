@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- TailwindCSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Vue.js 3 via CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/style.css"> 
+  <link rel="stylesheet" href="css/dashboards.css">
+</head>
+<body>
+
+<!-- Aqui o header vai ser carregado -->
+<div id="header-container"></div> 
+<script src="js/loadHeader.js"></script>
+
+<!-- App Vue -->
+<div id="app" class="container">
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+    <div class="bg-[#2c5f2d] text-white p-6 rounded-lg text-center">
+      <h2 class="text-2xl font-bold">{{ ocorrencias }}</h2>
+      <p class="mt-2">Ocorrências resolvidas</p>
+    </div>
+    <div class="bg-[#2c5f2d] text-white p-6 rounded-lg text-center">
+      <h2 class="text-2xl font-bold">{{ auditorias }}</h2>
+      <p class="mt-2">Auditorias realizadas</p>
+    </div>
+    <div class="bg-[#2c5f2d] text-white p-6 rounded-lg text-center">
+      <h2 class="text-2xl font-bold">{{ custoMaterial }} €</h2>
+      <p class="mt-2">Custo de materiais</p>
+    </div>
+    <div class="bg-[#2c5f2d] text-white p-6 rounded-lg text-center">
+      <h2 class="text-2xl font-bold">{{ peritosDisponiveis }}</h2>
+      <p class="mt-2">Profissionais disponíveis</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white p-4 rounded-lg shadow">
+      <canvas id="ocorrenciasChart"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow">
+      <canvas id="auditoriasChart"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow">
+      <canvas id="materiaisChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Carregar o header -->
+<script src="loadheader.js"></script>
+
+<!-- Vue App -->
+<script>
+const { createApp, ref, onMounted } = Vue;
+
+createApp({
+  setup() {
+    const ocorrencias = ref(1234);
+    const auditorias = ref(567);
+    const custoMaterial = ref(1234.56);
+    const peritosDisponiveis = ref(11);
+
+    onMounted(() => {
+      new Chart(document.getElementById('ocorrenciasChart'), {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+          datasets: [{
+            label: 'Ocorrências resolvidas',
+            data: [10, 25, 40, 30, 50, 60],
+            borderColor: '#2c5f2d',
+            backgroundColor: 'rgba(44, 95, 45, 0.2)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      new Chart(document.getElementById('auditoriasChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Jardins', 'Parques', 'Árvores', 'Outros'],
+          datasets: [{
+            data: [30, 25, 20, 25],
+            backgroundColor: ['#2c5f2d', '#244c23', '#6fa26f', '#99c199'],
+            hoverOffset: 4
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      new Chart(document.getElementById('materiaisChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Cordas', 'Sinalização', 'Ferramentas', 'Placas', 'Produtos químicos'],
+          datasets: [{
+            label: 'Materiais usados',
+            data: [50, 30, 20, 40, 25],
+            backgroundColor: '#2c5f2d'
+          }]
+        },
+        options: { responsive: true }
+      });
+    });
+
+    return { ocorrencias, auditorias, custoMaterial, peritosDisponiveis };
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
