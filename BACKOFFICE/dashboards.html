@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="css/style.css"> 
   <link rel="stylesheet" href="css/dashboards.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <link rel="icon" type="image/png" href="images/logo.png">
+
 </head>
 <body>
 
@@ -62,6 +65,38 @@
       <canvas id="materiaisChart"></canvas>
     </div>
   </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+  
+    <!-- Lista de Auditorias resolvidas -->
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Auditorias resolvidas</h2>
+      <ul class="space-y-4">
+        <li v-for="(auditoria, index) in auditoriasResolvidas" :key="index" class="flex items-center justify-between p-3 border rounded">
+          <div class="flex items-center gap-3">
+            <i class="fas fa-sync-alt text-[#2c5f2d]"></i> 
+            <span>{{ auditoria }}</span>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Lista de Materiais disponíveis -->
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Materiais disponíveis em armazém</h2>
+      <ul class="space-y-4">
+        <li v-for="(material, index) in materiaisDisponiveis" :key="index" class="flex items-center justify-between p-3 border rounded">
+          <div class="flex items-center gap-3">
+            <i :class="['fas', material.icone, 'text-[#2c5f2d]']"></i> 
+            <span>{{ material.nome }}</span>
+          </div>
+          <span class="text-gray-600 font-semibold">{{ material.quantidade }}</span> <!-- Quantidade -->
+        </li>
+      </ul>
+    </div>
+  
+  </div>
 </div>
 
 <!-- Carregar o header -->
@@ -73,15 +108,31 @@ const { createApp, ref, onMounted } = Vue;
 
 createApp({
   setup() {
-    const ocorrencias = ref(1234);
-    const auditorias = ref(567);
+    const ocorrencias = ref(200);
+    const auditorias = ref(250);
     const custoMaterial = ref(1234.56);
     const peritosDisponiveis = ref(0); // começa a 0
+    const auditoriasResolvidas = ref([]);
+    const materiaisDisponiveis = ref([]);
 
     onMounted(() => {
       // Obter peritos guardados no localStorage
       const peritosGuardados = JSON.parse(localStorage.getItem('peritos')) || [];
       peritosDisponiveis.value = peritosGuardados.length; // Número de peritos
+
+      auditoriasResolvidas.value = [
+        "Inspeção Parque Norte",
+        "Verificação Jardim Central",
+        "Auditoria Zona Infantil",
+        "Inspeção das Árvores de Sombra"
+      ];
+
+      materiaisDisponiveis.value = [
+        { nome: "Cordas de segurança", quantidade: 15, icone: "fa-link" },
+        { nome: "Placas de aviso", quantidade: 8, icone: "fa-map-signs" },
+        { nome: "Produtos de limpeza", quantidade: 25, icone: "fa-spray-can" },
+        { nome: "Kit primeiros socorros", quantidade: 12, icone: "fa-briefcase-medical" }
+      ];
 
       // Gráficos
       new Chart(document.getElementById('ocorrenciasChart'), {
@@ -120,14 +171,20 @@ createApp({
           datasets: [{
             label: 'Materiais usados',
             data: [50, 30, 20, 40, 25],
-            backgroundColor: '#2c5f2d'
+            backgroundColor: [
+              '#2c5f2d', // Cordas
+              '#6fa26f', // Sinalização
+              '#99c199', // Ferramentas
+              '#244c23', // Placas
+              '#4d774e'  // Produtos químicos
+          ]
           }]
         },
         options: { responsive: true }
       });
     });
 
-    return { ocorrencias, auditorias, custoMaterial, peritosDisponiveis };
+    return { ocorrencias, auditorias, custoMaterial, peritosDisponiveis, auditoriasResolvidas, materiaisDisponiveis };
   }
 }).mount('#app');
 </script>
