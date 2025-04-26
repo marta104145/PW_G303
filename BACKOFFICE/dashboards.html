@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <link rel="icon" type="image/png" href="images/logo.png">
-  
+
 </head>
 <body>
 
@@ -76,8 +76,8 @@ const { createApp, ref, onMounted } = Vue;
 
 createApp({
   setup() {
-    const ocorrencias = ref(1234);
-    const auditorias = ref(567);
+    const ocorrencias = ref(200);
+    const auditorias = ref(250);
     const custoMaterial = ref(1234.56);
     const peritosDisponiveis = ref(0); // começa a 0
 
@@ -123,7 +123,13 @@ createApp({
           datasets: [{
             label: 'Materiais usados',
             data: [50, 30, 20, 40, 25],
-            backgroundColor: '#2c5f2d'
+            backgroundColor: [
+              '#2c5f2d', // Cordas
+              '#6fa26f', // Sinalização
+              '#99c199', // Ferramentas
+              '#244c23', // Placas
+              '#4d774e'  // Produtos químicos
+          ]
           }]
         },
         options: { responsive: true }
