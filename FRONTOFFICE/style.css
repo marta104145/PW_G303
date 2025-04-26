@@ -29,7 +29,7 @@ header {
 }
 
 .logo-text {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: normal;
 }
 
@@ -41,13 +41,13 @@ header {
 .center-menu a {
   color: #ACACAC;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .right-section {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .icon {
@@ -60,9 +60,10 @@ header {
   align-items: center;
   justify-content: space-between;
   background-color: #3C5E4B;
-  color: white;
-  padding: 4em 10em;
+  color: #ACACAC;
+  padding: 5em 10rem;
   position: relative;
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.5);
 }
 
 .hero-text h1 {
@@ -82,10 +83,17 @@ header {
   margin-top: 1em;
   padding: 0.7em 1.5em;
   background-color: #2e4e3f;
-  color: #3C5E4B;
+  color: #ACACAC;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra inicial do botão */
+  transition: box-shadow 0.3s ease; /* Transição suave para quando o botão for hover */
+}
+
+
+.hero-text button:hover {
+  box-shadow: 0 9px 20px rgba(0, 0, 0, 0.8); /* Sombra mais forte ao passar o mouse */
 }
 
 .hero-img {
@@ -101,38 +109,77 @@ section {
   max-width: 1200px;
   margin: auto;
 }
-
-.cards, .testemunhos, .metricas {
+.cards {
   display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
+  justify-content: center; /* Centraliza os itens */
+  gap: 1em; /* Espaçamento entre os botões */
   margin-top: 1.5em;
+  flex-wrap: nowrap; /* Impede quebras de linha */
 }
 
-.card, .box, .metricas div, .botoes button {
+.card {
   background-color: #2e4e3f;
   color: white;
-  padding: 1em;
+  padding: 1.5em;
   border-radius: 10px;
-  flex: 1;
   text-align: center;
+  cursor: pointer;
+  width: 150px; /* Ajuste a largura */
+  height: 175px; /* Ajuste a altura */
+  display: flex;
+  flex-direction: column; /* Alinha o texto verticalmente */
+  justify-content: center; /* Centraliza o conteúdo verticalmente */
+  align-items: center; /* Alinha o conteúdo horizontalmente */
+  transition: transform 0.3s ease;
+}
+
+.card p {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.card small {
+  font-size: 0.9em;
+  color: #ACACAC; /* Cor do texto pequeno */
+  margin-top: 0.5em;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
 }
 
 .circle-cards {
   display: flex;
-  gap: 1.5em;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: 1.5em;
+  justify-content: center; /* Garante que as imagens fiquem centralizadas */
   margin-top: 1em;
 }
 
+.circle-cards .item {
+  text-align: center;
+  width: 70px;  /* Define a largura do círculo */
+  height: 210px; /* Define a altura do círculo */
+  flex: 0 1 30%; /* Controla a largura das imagens */
+ 
+}
+
 .circle-cards img {
-  width: 150px;
-  height: 150px;
+  width: 65%;
+  height: 215px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.circle-cards .item:nth-child(4),
+.circle-cards .item:nth-child(5) {
+  /* Força as duas últimas imagens a ficarem centralizadas */
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 40px; 
+}
+
 
 .auditorias ul {
   padding-left: 1.5em;
