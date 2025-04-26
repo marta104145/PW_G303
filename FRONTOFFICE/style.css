@@ -9,33 +9,50 @@ body {
   height: 100%; /* Garante que o body ocupe toda a altura */
 }
 
-.header {
+header {
+  background-color: #3C5E4B;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em 2em;
-  background-color: #3C5E4B;
-  color: white;
+  padding: 1rem 2rem;
 }
 
-.header .logo {
-  font-size: 1.5em;
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 40px;
+  margin-right: 0.5rem;
+}
+
+.logo-text {
+  font-size: 1.5rem;
   font-weight: normal;
 }
 
-.header nav ul {
-  list-style: none;
+.center-menu {
   display: flex;
-  gap: 1.5em;
+  gap: 2rem;
 }
 
-.header nav ul li a {
+.center-menu a {
   color: #ACACAC;
   text-decoration: none;
+  font-size: 1rem;
 }
 
-.search-icon {
-  font-size: 1.2em;
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon {
+  height: 24px;
+  cursor: pointer;
 }
 
 .hero {
