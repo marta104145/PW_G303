@@ -141,11 +141,18 @@ section {
   align-items: center; /* Alinha o conteúdo horizontalmente */
   transition: transform 0.3s ease;
   flex-shrink: 0; /* impedir de encolher */
+  
 }
 
 .card p {
   font-size: 1.5em;
   font-weight: normal;
+  margin: 0; /* remove margens extra */
+  height: 50px; /* força todos os títulos a ocupar o mesmo espaço */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .card small {
@@ -207,13 +214,6 @@ section {
   max-width: 100%;
   border: 3px solid #2e4e3f;
   border-radius: 8px;
-}
-
-.botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  margin-top: 1em;
 }
 
 .contactos {
