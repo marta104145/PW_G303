@@ -1,43 +1,21 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em 2em;
-  background-color: #3C5E4B;
-  color: white;
-}
-
-.header .logo {
-  font-size: 1.5em;
-  font-weight: normal;
-}
-
-.header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1.5em;
-}
-
-.header nav ul li a {
-  color: #ACACAC;
-  text-decoration: none;
-}
-
-.search-icon {
-  font-size: 1.2em;
-}
-
-.logo-img {
-  height: 40px;
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.icon {
-  height: 24px;
-  cursor: pointer;
-}
+<div class="botoes">
+      <div class="card">
+        <p>Auditorias</p>
+        <small>Avaliamos e protegemos espaços naturais através de auditorias ambientais. 
+          Vê auditorias antigas aqui.</small>
+      </div>
+      <div class="card">
+        <p>Ocorrências</p>
+        <small>Consulta problemas ambientais reportados e o seu estado de resolução.
+          Vê ocorrências antigas aqui.</small>
+      </div>
+      <div class="card">
+        <p>Submeter Ocorrência</p>
+        <small>Denuncia problemas ambientais e ajuda a preservar a natureza. Submete a tua ocorrência aqui.</small>
+      </div>
+      <div class="card">
+        <p>Contactos</p>
+        <small>Fala connosco para esclarecer dúvidas ou contribuir para a preservação do meio ambiente. Estamos aqui para ajudar!.</small>
+      </div>
+    </div>
+    </section>
