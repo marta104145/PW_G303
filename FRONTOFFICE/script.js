@@ -1,12 +1,13 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // Lista de auditorias
-  const auditorias = [
+  /*const auditorias = [
     "Auditoria 1 - Avaliação do parque de São Mamede",
     "Auditoria 2 - Manutenção do Parque da Cidade",
     "Auditoria 3 - Verificação da erosão do solo",
     "Auditoria 4 - Árvores em Risco de Queda",
     "Auditoria 5 - Monitorização do solo"
+    
   ];
 
   const auditoriasList = document.getElementById("auditorias-list");
@@ -14,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const li = document.createElement("li");
     li.textContent = item;
     auditoriasList.appendChild(li);
-  });
+  });*/
 
   // Feedbacks
   const feedbacks = [

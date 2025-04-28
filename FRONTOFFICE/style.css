@@ -1,3 +1,4 @@
+/* Estilos para o body */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -8,28 +9,31 @@ body {
   height: 100%;
 }
 
-header {
+/* Estilo para o cabeçalho */
+.header {
   background-color: #3C5E4B;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  position: fixed; /* Makes the header stick to the top */
+  top: 0; /* Positions at the very top */
+  width: 100%; /* Full width */
+  z-index: 1000; /* Ensures header stays above other content */
+  box-sizing: border-box; /* Includes padding in width calculation */
 }
 
-
+.left-section {
+  display: flex;
+  align-items: center;
+}
 
 .header .logo {
   display: flex;
   align-items: center;
   font-size: 1.8em;
   font-weight: normal;
-}
-.header .logo-img {
-
-  width: 40px; /* Ajuste o tamanho da imagem */
-  height: auto;
-  margin-right: 10px; /* Espaçamento entre o logo e o texto */
 }
 
 .header .logo-img {
@@ -38,32 +42,31 @@ header {
   margin-right: 10px;
 }
 
-.header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 2.5em;
+.header .logo-text {
+ font-size: xx-large;
+ color: #E1E1E1;
 }
 
-.center-menu {
+.header nav{
   display: flex;
-  gap: 2.5em;
+  gap:120px;
 }
 
-.center-menu a {
-  color: #ACACAC;
+.header nav a{
   text-decoration: none;
-  font-size: 1.6em;
+  color: #ACACAC;
+  font-size: larger;
+}
+
+.icon{
+  width:20px;
+  height: 20px;
 }
 
 .right-section {
   display: flex;
   align-items: center;
   gap: 2rem;
-}
-
-.icon {
-  height: 24px;
-  cursor: pointer;
 }
 
 .hero {
@@ -74,7 +77,6 @@ header {
   color: white;
   padding: 9em 10em;
   position: relative;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .hero-text h1 {
@@ -115,7 +117,7 @@ button:hover {
 
 section {
   padding: 2em;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: auto;
 }
 
@@ -207,8 +209,28 @@ section {
 }
 
 
-.auditorias ul {
-  padding-left: 1.5em;
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 70px; /* Espaçamento superior */
+}
+
+.auditorias {
+  padding: 2em;
+  background-color: #3C5E4B;
+  color: white;
+  margin-top: 80px; /* Distância do topo para a seção de auditorias */
+}
+
+.auditorias h2 {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 1.5em;
 }
 
 .auditoria-content {
@@ -216,14 +238,47 @@ section {
   justify-content: space-between;
   gap: 2em;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.auditoria-content img, .ocorrencias img {
-  max-width: 100%;
-  border: 3px solid #2e4e3f;
-  border-radius: 8px;
+.auditoria-content ul {
+  padding-left: 0;
+  list-style: none;
+  flex: 1;
+  max-width: 600px;
 }
+
+.auditoria-content ul li {
+  background-color: #2e4e3f;
+  margin-bottom: 1em;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.auditoria-content ul li strong {
+  font-size: 1.2em;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.auditoria-content ul li p {
+  font-size: 1em;
+  margin: 0;
+}
+
+.map-container {
+  flex: 1;
+  max-width: 500px;
+}
+
+.auditoria-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 
 .contactos {
   background-color: #ffffff;
