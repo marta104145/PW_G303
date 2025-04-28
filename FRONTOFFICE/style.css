@@ -1,12 +1,11 @@
-
 body {
   margin: 0;
   font-family: 'Roboto';
   background-color: #f2f2f2;
   color: #333;
-  padding: 0; /* Remove o padding padrão */
-  width: 100%;  /* Garante que o body e o html ocupem toda a largura da tela */
-  height: 100%; /* Garante que o body ocupe toda a altura */
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 header {
@@ -18,76 +17,34 @@ header {
   padding: 1rem 2rem;
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-.left-section {
-  display: flex;
-  align-items: center;
-}
-
-.logo-img {
-  height: 40px;
-  margin-right: 0.5rem;
-}
-
-.logo-text {
-  font-size: 1.8rem;
-=======
-=======
->>>>>>> Stashed changes
-
-
 .header .logo {
   display: flex;
   align-items: center;
   font-size: 1.8em;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
   font-weight: normal;
 }
-.header .logo-img {
 
-  width: 40px; /* Ajuste o tamanho da imagem */
-  height: auto;
-  margin-right: 10px; /* Espaçamento entre o logo e o texto */
-=======
-  font-weight: normal;
-}
 .header .logo-img {
-
-  width: 40px; /* Ajuste o tamanho da imagem */
+  width: 40px;
   height: auto;
-  margin-right: 10px; /* Espaçamento entre o logo e o texto */
+  margin-right: 10px;
 }
 
 .header nav ul {
   list-style: none;
   display: flex;
   gap: 2.5em;
->>>>>>> Stashed changes
 }
 
 .center-menu {
   display: flex;
-<<<<<<< Updated upstream
-  gap: 2rem;
-=======
   gap: 2.5em;
->>>>>>> Stashed changes
 }
 
 .center-menu a {
   color: #ACACAC;
   text-decoration: none;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  font-size: 1.5rem;
-=======
   font-size: 1.6em;
->>>>>>> Stashed changes
-=======
-  font-size: 1.6em;
->>>>>>> Stashed changes
 }
 
 .right-section {
@@ -106,24 +63,10 @@ header {
   align-items: center;
   justify-content: space-between;
   background-color: #3C5E4B;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  color: #ACACAC;
-  padding: 5em 10rem;
-  position: relative;
-  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.5);
-=======
   color: white;
   padding: 9em 10em;
   position: relative;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
->>>>>>> Stashed changes
-=======
-  color: white;
-  padding: 9em 10em;
-  position: relative;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
->>>>>>> Stashed changes
 }
 
 .hero-text h1 {
@@ -142,42 +85,16 @@ header {
 .hero-text button {
   margin-top: 1em;
   padding: 0.7em 1.5em;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  background-color: #2e4e3f;
-  color: #ACACAC;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra inicial do botão */
-  transition: box-shadow 0.3s ease; /* Transição suave para quando o botão for hover */
-}
-
-
-.hero-text button:hover {
-  box-shadow: 0 9px 20px rgba(0, 0, 0, 0.8); /* Sombra mais forte ao passar o mouse */
-=======
   background-color: #3C5E4B;
   color:#ACACAC;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-=======
-  background-color: #3C5E4B;
-  color:#ACACAC;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
->>>>>>> Stashed changes
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra ao redor do botão */
   transition: box-shadow 0.3s ease; /* Transição suave para quando o botão for hover */
 }
 button:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Aumenta a sombra ao passar o mouse */
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
 
 .hero-img {
