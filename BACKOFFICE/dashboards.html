@@ -108,9 +108,9 @@ const { createApp, ref, onMounted } = Vue;
 
 createApp({
   setup() {
-    const ocorrencias = ref(200);
-    const auditorias = ref(250);
-    const custoMaterial = ref(1234.56);
+    const ocorrencias = ref(0);
+    const auditorias = ref(0);
+    const custoMaterial = ref(0);
     const peritosDisponiveis = ref(0); // começa a 0
     const auditoriasResolvidas = ref([]);
     const materiaisDisponiveis = ref([]);
@@ -118,7 +118,7 @@ createApp({
     onMounted(() => {
       // Obter peritos guardados no localStorage
       const peritosGuardados = JSON.parse(localStorage.getItem('peritos')) || [];
-      peritosDisponiveis.value = peritosGuardados.length; // Número de peritos
+      animarContador(peritosDisponiveis, peritosGuardados.length);; // Número de peritos
 
       auditoriasResolvidas.value = [
         "Inspeção Parque Norte",
@@ -182,6 +182,23 @@ createApp({
         },
         options: { responsive: true }
       });
+
+      function animarContador(refVariavel, valorFinal, duracao = 1000) {
+        let start = 0;
+        const incremento = valorFinal / (duracao / 16); // 16ms ~ 60fps
+        const contador = setInterval(() => {
+          start += incremento;
+          if (start >= valorFinal) {
+            start = valorFinal;
+            clearInterval(contador);
+          }
+        refVariavel.value = Math.floor(start); // Só valores inteiros
+        }, 16);
+      }
+
+      animarContador(ocorrencias, 200);
+      animarContador(auditorias, 250);
+      animarContador(custoMaterial, 1234.56);
     });
 
     return { ocorrencias, auditorias, custoMaterial, peritosDisponiveis, auditoriasResolvidas, materiaisDisponiveis };

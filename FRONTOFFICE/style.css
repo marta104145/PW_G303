@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Roboto';
+  font-family: 'Inter', sans-serif;
   background-color: #f2f2f2;
   color: #333;
   padding: 0;
@@ -110,12 +110,21 @@ section {
   max-width: 1200px;
   margin: auto;
 }
+
 .cards {
   display: flex;
   justify-content: center; /* Centraliza os itens */
   gap: 1em; /* Espaçamento entre os botões */
   margin-top: 1.5em;
   flex-wrap: nowrap; /* Impede quebras de linha */
+}
+
+.botoes {
+  display: flex;        /* MUITO IMPORTANTE */
+  margin-top: 2rem;
+  justify-content: center; /* Alinha no centro */
+  gap: 2rem;             /* Espaço entre cards */
+  flex-direction: row;
 }
 
 .card {
@@ -125,23 +134,31 @@ section {
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
-  width: 150px; /* Ajuste a largura */
-  height: 175px; /* Ajuste a altura */
+  width: 180px; /* Ajuste a largura */
+  height: 125px; /* Ajuste a altura */
   display: flex;
   flex-direction: column; /* Alinha o texto verticalmente */
   justify-content: center; /* Centraliza o conteúdo verticalmente */
   align-items: center; /* Alinha o conteúdo horizontalmente */
   transition: transform 0.3s ease;
+  flex-shrink: 0; /* impedir de encolher */
+  
 }
 
 .card p {
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.5em;
+  font-weight: normal;
+  margin: 0; /* remove margens extra */
+  height: 50px; /* força todos os títulos a ocupar o mesmo espaço */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .card small {
-  font-size: 0.9em;
-  color: #ACACAC; /* Cor do texto pequeno */
+  font-size: 0.7em;
+  color: white; /* Cor do texto pequeno */
   margin-top: 0.5em;
 }
 
@@ -198,13 +215,6 @@ section {
   max-width: 100%;
   border: 3px solid #2e4e3f;
   border-radius: 8px;
-}
-
-.botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  margin-top: 1em;
 }
 
 .contactos {
