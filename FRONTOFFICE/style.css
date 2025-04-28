@@ -17,11 +17,19 @@ header {
   padding: 1rem 2rem;
 }
 
+
+
 .header .logo {
   display: flex;
   align-items: center;
   font-size: 1.8em;
   font-weight: normal;
+}
+.header .logo-img {
+
+  width: 40px; /* Ajuste o tamanho da imagem */
+  height: auto;
+  margin-right: 10px; /* Espaçamento entre o logo e o texto */
 }
 
 .header .logo-img {
