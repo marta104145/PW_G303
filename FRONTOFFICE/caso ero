@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EyesEverywhere</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="icon" type="image/png" href="logo.png">
+</head>
+<body>
+  <header class="header">
+    <!-- Seção da esquerda com logo -->
+    <div class="left-section">
+      <img src="logo.png" alt="Logótipo EyesEverywhere" class="logo-img">
+      <span class="logo-text">EyesEverywhere</span>
+    </div>
+
+    <!-- Menu de navegação central -->
+    <nav class="center-menu">
+      <a href="#">Home</a>
+      <a href="#sobre">Sobre nós</a>
+      <a href="#areas">Áreas de atuação</a>
+    </nav>
+
+    <!-- Seção da direita com ícones -->
+    <div class="right-section">
+      <a href="/login.html" class="icon-button">
+        <img src="icone user.png" alt="Utilizador" class="icon">
+      </a>  
+    </div>
+  </header>
+  
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>Localize o problema, nós resolvemos</h1>
+      <p>Ajude-nos a localizar os problemas.</p>
+      <a href="login.html" class="hero-btn">Entre nessa grande aventura</a>
+    </div>
+    <img src="arvorefrontoffice.png" alt="Mão com árvore" class="hero-img" /> <!-- Imagem da árvore -->
+  </section>
+  
+
+  <section class="sobre" id="sobre">
+    <h2>Sobre nós</h2>
+    <p>A EyesEverywhere é uma plataforma dedicada à preservação ambiental, focada na monitorização e gestão de ocorrências em espaços naturais e urbanos. A nossa missão é proteger e preservar o meio ambiente através da auditoria, registo e resolução de problemas ambientais, promovendo um futuro sustentável para todos. Acreditamos que pequenas ações fazem a diferença e, com a tua ajuda, podemos garantir a conservação dos nossos ecossistemas.</p>
+    
+    <div class="botoes">
+      <div class="card">
+        <p>Auditorias</p>
+        <small>Avaliamos e protegemos espaços naturais através de auditorias ambientais. 
+          Vê auditorias antigas aqui..</small>
+      </div>
+      <div class="card">
+        <p>Ocorrências</p>
+        <small>Consulta problemas ambientais reportados e o seu estado de resolução.
+          Vê ocorrências antigas aqui.</small>
+      </div>
+      <nav class="card">
+        <a href="login.html" class="card">
+          <p>Submeter Ocorrência</p>
+          <small>Denuncia problemas ambientais e ajuda a preservar a natureza. Submete a tua ocorrência aqui.</small>
+        </a>
+      </nav>
+      <div class="card">
+        <p>Contactos</p>
+        <small>Fala connosco para esclarecer dúvidas ou contribuir para a preservação do meio ambiente. Estamos aqui para ajudar!.</small>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="areas" id="areas">
+    <h2>Áreas de atuação</h2>
+    <div class="circle-cards">
+      <div class="item">
+        <img src="arvore.png" alt="Árvores em risco">
+        <p>Árvores em Risco de Queda</p>
+      </div>
+      <div class="item">
+        <img src="residuos.png" alt="Resíduos">
+        <p>Gestão de Resíduos em Áreas Naturais</p>
+      </div>
+      <div class="item">
+        <img src="jardins.png" alt="Jardins">
+        <p>Manutenção de Jardins e Parques</p>
+      </div>
+      <div class="item">
+        <img src="solo.png" alt="Solo">
+        <p>Monitorização da Qualidade do Solo</p>
+      </div>
+      <div class="item">
+        <img src="espacos.png" alt="Espaços verdes">
+        <p>Preservação de Espaços Verdes</p>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="auditorias">
+    <h2>Auditorias</h2>
+    <div class="auditoria-content">
+      <ul id="auditorias-list">
+        <li>
+          <strong>Auditoria 1 - dd/mm/aaaa</strong>
+          <p>Avaliação da manutenção do parque de São Mamede</p>
+        </li>
+        <li>
+          <strong>Auditoria 2 - dd/mm/aaaa</strong>
+          <p>Inspeção do Estado de Manutenção do Parque da Cidade</p>
+        </li>
+        <li>
+          <strong>Auditoria 3 - dd/mm/aaaa</strong>
+          <p>Verificação de erosão do solo</p>
+        </li>
+        <li>
+          <strong>Auditoria 4 - dd/mm/aaaa</strong>
+          <p>Inspeção de Árvores em Risco de Queda</p>
+        </li>
+        <li>
+          <strong>Auditoria 5 - dd/mm/aaaa</strong>
+          <p>Verificação de erosão do solo</p>
+        </li>
+      </ul>
+      <div class="map-container">
+        <img src="img/mapa-auditorias.png" alt="Mapa auditorias" />
+      </div>
+    </div>
+  </section>
+  
+
+  <section class="ocorrencias">
+    <h2>Ocorrências</h2>
+    <img src="img/mapa-ocorrencias.png" alt="Mapa ocorrências" />
+    <div class="botoes">
+      <button onclick="filtrarOcorrencias('em aberto')">Ver ocorrências em aberto</button>
+      <button onclick="filtrarOcorrencias('em análise')">Ver ocorrências em análise</button>
+      <button onclick="filtrarOcorrencias('concluídas')">Ver ocorrências concluídas</button>
+    </div>
+  </section>
+
+
+  <section class="feedback" id="feedback">
+    <h2>Feedback</h2>
+    <div class="testemunhos">
+      <div class="caixa-feedback">
+        <p>"A plataforma facilitou o processo de denúncia de espaços verdes abandonados. Agora, a nossa praça está revitalizada e bem cuidada!" – Ana F.</p>
+      </div>
+      <div class="caixa-feedback">
+        <p>"Fiquei impressionado com a eficiência da plataforma. Reportei um jardim sem iluminação e, pouco tempo depois, já havia uma auditoria em andamento!" – Luís C.</p>
+      </div>
+      <div class="caixa-feedback">
+        <p>"Graças à EyesEverywhere, conseguimos identificar árvores em risco de queda no nosso parque local. A rápida resposta evitou acidentes!" – Sofia R.</p>
+      </div>
+    </div>
+    <div class="metricas">
+      <div>+30 Auditorias realizadas</div>
+      <div>+200 Ocorrências registadas e resolvidas</div>
+      <div>Tempo médio de resposta: 15 minutos</div>
+      <div>Satisfação dos cidadãos: 9/10</div>
+    </div>
+  </section>
+  
+
+  <section class="contactos" id="contactos">
+    <div class="contactos-container">
+      <div class="contactos-imagem">
+        <img src="img/imag contactos.png" alt="Ilustração ecológica" />
+      </div>
+      <div class="contactos-info">
+        <h2>Contactos</h2>
+        <p><img src="img/icone tele.png" alt="Telefone" class="contact-icon"> +351 912 345 678</p>
+        <p><img src="img/icone email.png" alt="Email" class="contact-icon"> eyeseverywhere@gmail.com</p>
+        <p><img src="img/icone.png" alt="Localização" class="contact-icon"> everywhere</p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  
+
+  

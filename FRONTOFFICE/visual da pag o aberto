@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: white;
+  border: 4px solid #2d5c88;
+  padding: 30px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.ocorrencia {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.ocorrencia img {
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.texto {
+  flex: 1;
+}
+
+.titulo {
+  color: #2e8b57;
+  font-weight: bold;
+}

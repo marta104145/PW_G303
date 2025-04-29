@@ -25,7 +25,9 @@
 
     <!-- Seção da direita com ícones -->
     <div class="right-section">
-      <img src="icone user.png" alt="Utilizador" class="icon">
+      <a href="/login.html" class="icon-button">
+        <img src="icone user.png" alt="Utilizador" class="icon">
+      </a>  
     </div>
   </header>
   
@@ -34,7 +36,7 @@
     <div class="hero-text">
       <h1>Localize o problema, nós resolvemos</h1>
       <p>Ajude-nos a localizar os problemas.</p>
-      <button>Entre nessa grande aventura</button>
+      <a href="login.html" class="hero-btn">Entre nessa grande aventura</a>
     </div>
     <img src="arvorefrontoffice.png" alt="Mão com árvore" class="hero-img" /> <!-- Imagem da árvore -->
   </section>
@@ -45,26 +47,28 @@
     <p>A EyesEverywhere é uma plataforma dedicada à preservação ambiental, focada na monitorização e gestão de ocorrências em espaços naturais e urbanos. A nossa missão é proteger e preservar o meio ambiente através da auditoria, registo e resolução de problemas ambientais, promovendo um futuro sustentável para todos. Acreditamos que pequenas ações fazem a diferença e, com a tua ajuda, podemos garantir a conservação dos nossos ecossistemas.</p>
     
     <div class="botoes">
-      <div class="card">
+      <a href="#auditorias" class="card">
         <p>Auditorias</p>
-        <small>Avaliamos e protegemos espaços naturais através de auditorias ambientais. 
-          Vê auditorias antigas aqui..</small>
-      </div>
-      <div class="card">
+        <small>Avaliamos e protegemos espaços naturais através de auditorias ambientais.
+           Vê auditorias antigas aqui..</small>
+      </a>
+      <a href="#ocorrencias" class="card">
         <p>Ocorrências</p>
         <small>Consulta problemas ambientais reportados e o seu estado de resolução.
-          Vê ocorrências antigas aqui.</small>
-      </div>
-      <div class="card">
+           Vê ocorrências antigas aqui.</small>
+      </a>
+      <a href="login.html" class="card">
         <p>Submeter Ocorrência</p>
-        <small>Denuncia problemas ambientais e ajuda a preservar a natureza. Submete a tua ocorrência aqui.</small>
-      </div>
-      <div class="card">
+        <small>Denuncia problemas ambientais e ajuda a preservar a natureza.
+           Submete a tua ocorrência aqui.</small>
+      </a>
+      <a href="#contactos" class="card">
         <p>Contactos</p>
-        <small>Fala connosco para esclarecer dúvidas ou contribuir para a preservação do meio ambiente. Estamos aqui para ajudar!.</small>
-      </div>
+        <small>Fala connosco para esclarecer dúvidas ou contribuir para a preservação do meio ambiente.
+           Estamos aqui para ajudar!.</small>
+      </a>
     </div>
-  </section>
+
 
   <section class="areas" id="areas">
     <h2>Áreas de atuação</h2>
@@ -92,7 +96,8 @@
     </div>
   </section>
 
-  <section class="auditorias">
+
+  <section class="auditorias" id="auditorias">
     <h2>Auditorias</h2>
     <div class="auditoria-content">
       <ul id="auditorias-list">
@@ -122,18 +127,19 @@
       </div>
     </div>
   </section>
+  
 
-  <section class="ocorrencias">
+  <section class="ocorrencias" id="ocorrencias">
     <h2>Ocorrências</h2>
-    <div class="ocorrencias-content">
-      <div class="buttons-container">
-        <button onclick="filtrarOcorrencias('em aberto')">Ver ocorrências em aberto</button>
-        <button onclick="filtrarOcorrencias('em análise')">Ver ocorrências em análise</button>
-        <button onclick="filtrarOcorrencias('concluídas')">Ver ocorrências concluídas</button>
-      </div>
+    <img src="img/mapa-ocorrencias.png" alt="Mapa ocorrências" />
+    <div class="botoes">
+      <button onclick="filtrarOcorrencias('em aberto')">Ver ocorrências em aberto</button>
+      <button onclick="filtrarOcorrencias('em análise')">Ver ocorrências em análise</button>
+      <button onclick="filtrarOcorrencias('concluídas')">Ver ocorrências concluídas</button>
     </div>
   </section>
 
+  
   <section class="feedback" id="feedback">
     <h2>Feedback</h2>
     <div class="feedback-cards">
@@ -160,15 +166,15 @@
   </section>
 
   <section class="contactos" id="contactos">
-    <h2>Contactos</h2>
-    <div class="contacto-info">
-      <p>📞 +351 912 345 678</p>
-      <p>📧 eyeseverywhere@gmail.com</p>
-      <p>🌐 everywhere</p>
+    <div class="contactos-container">
+      <div class="contactos-imagem">
+        <img src="imag contactos.png" alt="Ilustração ecológica" />
+      </div>
+      <div class="contactos-info">
+        <h2>Contactos</h2>
+        <p><img src="icone tele.png" alt="Telefone" class="contact-icon"> +351 912 345 678</p>
+        <p><img src="icone email.png" alt="Email" class="contact-icon"> eyeseverywhere@gmail.com</p>
+        <p><img src="icone loc.png" alt="Localização" class="contact-icon"> everywhere</p>
+      </div>
     </div>
-    <img src="img/footer-ilustracao.png" alt="Ilustração ecológica" />
   </section>
-
-  <script src="script.js"></script>
-</body>
-</html>

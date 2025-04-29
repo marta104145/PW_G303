@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ocorrências em Aberto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Ocorrências em aberto</h1>
+
+    <div class="ocorrencia">
+      <div class="texto">
+        <p><span class="titulo">Ocorrência 1</span> - dd/mm/aaaa</p>
+        <p><strong>- Banco de jardim danificado</strong></p>
+        <p>Relato: Passeando pelo parque, vi que vários bancos estão partidos e impossíveis de usar, prejudicando o conforto dos visitantes.</p>
+      </div>
+      <img src="banco.png" alt="Banco danificado">
+    </div>
+
+    <div class="ocorrencia">
+      <div class="texto">
+        <p><span class="titulo">Ocorrência 2</span> - dd/mm/aaaa</p>
+        <p><strong>- Lixo na floresta</strong></p>
+        <p>Relato: Quando cheguei à floresta reparei que ela estava cheia de lixo espalhado.</p>
+      </div>
+      <img src="lixo.png" alt="Lixo na floresta">
+    </div>
+  </div>
+</body>
+</html>
