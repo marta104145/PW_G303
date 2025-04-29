@@ -395,3 +395,55 @@ body {
   font-size: 1.5em;
   display: block;
 }
+
+.contactos {
+  background-color: white;
+  padding: 4em 2em;
+}
+
+.contactos-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4em;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.contactos-imagem img {
+  max-width: 350px;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.contactos-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.contactos-info h2 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  color: #333;
+}
+
+.contactos-info p {
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  color: #333;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 0.5em 1em;
+  border-radius: 8px;
+}
+
+.contact-icon {
+  width: 24px;
+  height: 24px;
+}
