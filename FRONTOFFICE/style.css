@@ -75,8 +75,18 @@ body {
   justify-content: space-between;
   background-color: #3C5E4B;
   color: white;
-  padding: 9em 10em;
   position: relative;
+  gap: 2em;
+  padding: 1em 4em 0.5em 4em;
+}
+
+.hero-text {
+  max-width: 600px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .hero-text h1 {
@@ -85,6 +95,7 @@ body {
   font-weight: normal;
   color: #ACACAC;
 }
+
 .hero-text p {
   font-size: 1.5em;
   margin: 0.2em 0;
@@ -92,27 +103,27 @@ body {
   color: #ACACAC
 }
 
-.hero-text button {
-  margin-top: 1em;
-  padding: 1.2em 2em;
+.hero-btn {
+  margin-top: 2em;
+  padding: 1em 2.5em;
   background-color: #3C5E4B;
-  color:#ACACAC;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra ao redor do botão */
-  transition: box-shadow 0.3s ease; /* Transição suave para quando o botão for hover */
+  color: #ACACAC;
+  font-size: 1.1em;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-button:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Aumenta a sombra ao passar o mouse */
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
 }
 
 .hero-img {
-  position: absolute; /* Permite posicionar a imagem livremente dentro da hero */
-  bottom: -50px; /* Ajuste para que a imagem se sobreponha à parte branca */
-  right: 0; /* Move a imagem para o canto direito */
-  max-height: 400px; /* Ajuste o tamanho da imagem conforme necessário */
-  width: auto; /* Garante que a imagem mantenha a proporção */
+  max-width: 450px;
+  height: auto;
+  margin-right: -5em; /* "puxa" a imagem até à margem direita */
 }
 
 section {
@@ -152,7 +163,7 @@ section {
   align-items: center; /* Alinha o conteúdo horizontalmente */
   transition: transform 0.3s ease;
   flex-shrink: 0; /* impedir de encolher */
-  
+  text-decoration: none;
 }
 
 .card p {
@@ -320,19 +331,6 @@ body {
   transform: scale(1.1); /* Aumenta o tamanho do botão para 110% */
   background-color: #2e4e3f;  /* Altera a cor ao passar o mouse */
 }
-.contactos {
-  background-color: #ffffff;
-  text-align: center;
-}
-
-.contacto-info p {
-  margin: 0.5em 0;
-}
-
-.contactos img {
-  max-width: 300px;
-  margin-top: 1em;
-}
 
 .feedback {
   background-color: #2e4e3f;
@@ -394,4 +392,59 @@ body {
 .metrica strong {
   font-size: 1.5em;
   display: block;
+}
+
+
+.contactos {
+  background-color: white;
+  padding: 4em 2em;
+}
+
+.contactos-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+  padding: 2em 0; /* controlo de altura vertical */
+}
+
+.contactos-imagem img {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+.contactos-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5em;
+  margin-top: -50px; 
+}
+
+.contactos-info h2 {
+  font-size: 2.5em;
+  margin-bottom: 0.75em;
+  color: #333;
+}
+
+.contactos-info p {
+  font-size: 1.2em;
+  display: flex;
+  align-items: center; /* alinha verticalmente com o ícone */
+  gap: 1.2em; /* menos espaço entre ícone e texto */
+  margin: 0;
+  color: #333;
+}
+
+.contact-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0; /* ícone nunca encolhe */
+  vertical-align: middle;
+  margin-top: -2px;
 }

@@ -36,171 +36,188 @@
 
 <body>
 
-<div class="alert" id="alertMessage"></div>
+  <div class="alert" id="alertMessage"></div>
 
-<header class="header">
-  <nav class="navbar">
-    <div class="navbar-logo">
-      <img src="images/logo.png" alt="Logo" />
-    </div>
-    <ul class="navbar-menu">
-      <li><a href="homeuser.html">HOME</a></li>
-      <li><a href="minhas_ocorrencias.html">MINHAS OCORRÊNCIAS</a></li>
-      <li><a href="perfiluser.html">PERFIL</a></li>
-    </ul>
-  </nav>
-</header>
+  <header class="header">
+    <nav class="navbar">
+      <div class="navbar-logo">
+        <img src="images/logo.png" alt="Logo" />
+      </div>
+      <ul class="navbar-menu">
+        <li><a href="homeuser.html">HOME</a></li>
+        <li><a href="minhas_ocorrencias.html">MINHAS OCORRÊNCIAS</a></li>
+        <li><a href="perfiluser.html">PERFIL</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<main>
-  <section class="page-title">
-    <h1>Mapa de Ocorrências</h1>
-  </section>
+  <main>
+    <section class="page-title">
+      <h1>Mapa de Ocorrências</h1>
+    </section>
 
-  <section class="map-section">
-    <div class="search-bar">
-      <input type="text" placeholder="Procurar ocorrências ativas" />
-      <span class="search-icon"><i class="fas fa-search"></i></span>
-    </div>
+    <section class="map-section">
+      <div class="search-bar">
+        <input type="text" placeholder="Procurar ocorrências ativas" />
+        <span class="search-icon"><i class="fas fa-search"></i></span>
+      </div>
 
-    <div class="map-container">
-      <div id="map"></div>
-    </div>
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
 
-    <script>
-      function initMap() {
-        const centro = { lat: 41.450491, lng: -8.294101 };
-        const map = new google.maps.Map(document.getElementById("map"), {
-          center: centro,
-          zoom: 16,
-        });
+      <script>
+        function initMap() {
+          const centro = { lat: 41.450491, lng: -8.294101 };
+          const map = new google.maps.Map(document.getElementById("map"), {
+            center: centro,
+            zoom: 16,
+          });
 
-        const marker = new google.maps.Marker({
-          position: centro,
-          map: map,
-          title: "Estou aqui!"
-        });
-      }
-    </script>
+          const marker = new google.maps.Marker({
+            position: centro,
+            map: map,
+            title: "Estou aqui!"
+          });
+        }
+      </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap" async defer></script>
-  </section>
-</main>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap"
+        async defer></script>
+    </section>
+  </main>
 
-<button class="register-button" id="openModal">
-  <i class="fas fa-plus"></i> Registar Ocorrência
-</button>
+  <button class="register-button" id="openModal">
+    <i class="fas fa-plus"></i> Registar Ocorrência
+  </button>
 
-<div class="modal" id="registerModal">
-  <div class="modal-content">
-    <span class="close-modal" id="closeModal">&times;</span>
-    <h2>Nova Ocorrência</h2>
+  <div class="modal" id="registerModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h2>Nova Ocorrência</h2>
 
-    <div class="form-section">
-      <label for="tipo">Tipo de Ocorrência *</label>
-      <select id="tipo" required>
-        <option value="">Selecionar...</option>
-        <option value="arvore">Árvores em risco de queda</option>
-        <option value="verdes">Espaços verdes negligenciados</option>
-        <option value="outro">Outro</option>
-      </select>
+      <div class="form-section">
+        <label for="tipo">Tipo de Ocorrência *</label>
+        <select id="tipo" required>
+          <option value="">Selecionar...</option>
+          <option>Árvores em risco de queda</option>
+          <option>Espaços verdes negligenciados</option>
+          <option>Iluminação pública avariada</option>
+          <option>Parque Vandalizado</option>
+          <option>Outro</option>
+        </select>
 
-      <label for="location">Morada *</label>
-      <input type="text" id="location" placeholder="Introduza a morada" required>
+        <label for="location">Morada *</label>
+        <input type="text" id="location" placeholder="Introduza a morada" required>
 
-      <label for="postal">Código Postal *</label>
-      <input type="text" id="postal" placeholder="Formato: XXXX-XXX" required>
+        <label for="postal">Código Postal *</label>
+        <input type="text" id="postal" placeholder="Formato: XXXX-XXX" required>
 
-      <label for="description">Descrição *</label>
-      <textarea id="description" rows="5" placeholder="Adicionar texto..." required></textarea>
+        <label for="description">Descrição *</label>
+        <textarea id="description" rows="5" placeholder="Adicionar texto..." required></textarea>
 
-      <label for="photo">Fotos *</label>
-      <input type="file" id="photo" required>
-    </div>
+        <label for="photo">Fotos *</label>
+        <input type="file" id="photo" required>
+      </div>
 
-    <div class="form-buttons">
-      <button class="cancel-button" id="cancelModal">Cancelar</button>
-      <button class="submit-button" id="submitBtn">Submeter</button>
+      <div class="form-buttons">
+        <button class="cancel-button" id="cancelModal">Cancelar</button>
+        <button class="submit-button" id="submitBtn">Submeter</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-function showAlert(message) {
-  const alertBox = document.getElementById("alertMessage");
-  alertBox.textContent = message;
-  alertBox.classList.add("show");
-  setTimeout(() => {
-    alertBox.classList.remove("show");
-  }, 5000);
-}
+  <script>
+    function showAlert(message) {
+      const alertBox = document.getElementById("alertMessage");
+      alertBox.textContent = message;
+      alertBox.classList.add("show");
+      setTimeout(() => {
+        alertBox.classList.remove("show");
+      }, 5000);
+    }
 
-const openModal = document.getElementById("openModal");
-const closeModal = document.getElementById("closeModal");
-const cancelModal = document.getElementById("cancelModal");
-const modal = document.getElementById("registerModal");
-const submitBtn = document.getElementById("submitBtn");
+    const openModal = document.getElementById("openModal");
+    const closeModal = document.getElementById("closeModal");
+    const cancelModal = document.getElementById("cancelModal");
+    const modal = document.getElementById("registerModal");
+    const submitBtn = document.getElementById("submitBtn");
 
-openModal.onclick = () => modal.style.display = "flex";
-closeModal.onclick = () => modal.style.display = "none";
-cancelModal.onclick = () => modal.style.display = "none";
+    openModal.onclick = () => modal.style.display = "flex";
+    closeModal.onclick = () => modal.style.display = "none";
+    cancelModal.onclick = () => modal.style.display = "none";
 
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
 
-submitBtn.onclick = function() {
-  const tipo = document.getElementById("tipo").value;
-  const location = document.getElementById("location").value.trim();
-  const postal = document.getElementById("postal").value.trim();
-  const description = document.getElementById("description").value.trim();
-  const photo = document.getElementById("photo").files.length;
+    submitBtn.onclick = function () {
+      const tipoSelect = document.getElementById("tipo");
+      const tipo = tipoSelect.options[tipoSelect.selectedIndex].text;
 
-  if (!tipo || !location || !postal || !description || !photo) {
-    showAlert("Preencha todos os campos obrigatórios!");
-    return;
-  }
+      const location = document.getElementById("location").value.trim();
+      const postal = document.getElementById("postal").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const photoInput = document.getElementById("photo");
 
-  const postalRegex = /^\d{4}-\d{3}$/;
-  if (!postalRegex.test(postal)) {
-    showAlert("O Código Postal deve ter o formato XXXX-XXX.");
-    return;
-  }
+      if (!tipo || !location || !postal || !description || !photoInput.files.length) {
+        showAlert("Preencha todos os campos obrigatórios!");
+        return;
+      }
 
-  const primeiraSequencia = parseInt(postal.split("-")[0], 10);
-  if (primeiraSequencia < 4700 || primeiraSequencia > 4899) {
-    showAlert("Não atuamos nessa zona.");
-    return;
-  }
+      const postalRegex = /^\d{4}-\d{3}$/;
+      if (!postalRegex.test(postal)) {
+        showAlert("O Código Postal deve ter o formato XXXX-XXX.");
+        return;
+      }
 
-  const token = sessionStorage.getItem("google_credential");
-  if (token) {
-    const userData = jwt_decode(token);
-    const email = userData.email;
+      const primeiraSequencia = parseInt(postal.split("-")[0], 10);
+      if (primeiraSequencia < 4700 || primeiraSequencia > 4899) {
+        showAlert("Não atuamos nessa zona.");
+        return;
+      }
 
-    const ocorrencia = {
-      tipo: tipo,
-      morada: location,
-      codigoPostal: postal,
-      descricao: description,
-      userEmail: email,
-      data: new Date().toISOString()
+      const token = sessionStorage.getItem("google_credential");
+      if (token) {
+        const userData = jwt_decode(token);
+        const email = userData.email;
+        const nome = userData.name;
+        const photoFile = photoInput.files[0];
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const photoBase64 = event.target.result;
+
+          const ocorrencia = {
+            tipo: tipo,
+            morada: location,
+            codigoPostal: postal,
+            descricao: description,
+            userEmail: email,
+            userName: nome,
+            data: new Date().toISOString(),
+            photo: photoBase64
+          };
+
+          let ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+          ocorrencias.push(ocorrencia);
+          localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias));
+
+          showAlert("Ocorrência registada com sucesso!");
+          setTimeout(() => {
+            modal.style.display = "none";
+          }, 5000);
+        };
+
+        reader.readAsDataURL(photoFile);
+      } else {
+        showAlert("Erro: Utilizador não autenticado.");
+      }
     };
 
-    let ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
-    ocorrencias.push(ocorrencia);
-    localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias));
-
-    showAlert("Ocorrência registada com sucesso!");
-    setTimeout(() => {
-      modal.style.display = "none";
-    }, 5000);
-  } else {
-    showAlert("Erro: Utilizador não autenticado.");
-  }
-};
-</script>
+  </script>
 
 </body>
 
