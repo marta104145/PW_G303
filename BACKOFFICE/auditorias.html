@@ -4,11 +4,67 @@
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auditorias.css">
   <script src="js/loadHeader.js" defer></script>
 
   <link rel="icon" type="image/png" href="images/logo.png">
+  <script>
+    function toggleDetails(el) {
+      const row = el.closest('tr');
+      row.classList.toggle('expanded');
+    }
+  </script>
 </head>
 <body>
   <div id="header-container"></div>
+  <main style="padding-top: 80px">
+
+    <section class="map-section">
+      <div class="search-bar">
+        <input type="text" placeholder="Procurar Auditoria">
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <div class="map-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Auditoria</th>
+              <th>Localização</th>
+              <th>Utilizador</th>
+              <th>Data</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Auditoria 1 -->
+            <tr class="audit-row">
+              <td>Auditoria 1</td>
+              <td>Morada, Código Postal</td>
+              <td>username</td>
+              <td>01/01/2024 03:00</td>
+              <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
+            </tr>
+            <tr class="details">
+              <td colspan="5">
+                <strong>Descrição:</strong><br>
+                Descrição da Ocorrência<br><br>
+                <strong>Materiais e Equipamentos:</strong><br>
+                Nome, tipo, descrição, quantidade<br><br>
+                <div class="actions">
+                  <button class="remove">Remover</button>
+                  <button class="edit">Editar</button>
+                </div>
+              </td>
+            </tr>
+            <!-- Repetir para Auditorias 2 a 7 -->
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+  </main>
+</body>
+</html>
 </body>
 </html>
