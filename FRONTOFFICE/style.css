@@ -94,7 +94,7 @@ body {
 
 .hero-text button {
   margin-top: 1em;
-  padding: 0.7em 1.5em;
+  padding: 1.2em 2em;
   background-color: #3C5E4B;
   color:#ACACAC;
   border: none;
@@ -138,7 +138,7 @@ section {
 }
 
 .card {
-  background-color: #2e4e3f;
+  background-color: #3C5E4B;
   color: white;
   padding: 1.5em;
   border-radius: 10px;
@@ -193,8 +193,8 @@ section {
 }
 
 .circle-cards img {
-  width: 65%;
-  height: 215px;
+  width: 55%;
+  height: 225px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -222,7 +222,7 @@ body {
 
 .auditorias {
   padding: 2em;
-  background-color: #3C5E4B;
+  background-color: #2e4e3f;
   color: white;
   margin-top: 80px; /* Distância do topo para a seção de auditorias */
 }
@@ -231,6 +231,7 @@ body {
   font-size: 2.5em;
   font-weight: bold;
   margin-bottom: 1.5em;
+  margin-left: 30px;
 }
 
 .auditoria-content {
@@ -279,7 +280,46 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+.ocorrencias {
+  background-color: #f2f2f2;  /* Cor de fundo */
+  padding: 2em;
+}
 
+.ocorrencias h2 {
+  margin-left: 30px;
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.ocorrencias-content {
+  display: flex;
+  justify-content: flex-start; /* Alinha os botões à direita */
+  gap: 2em;  /* Espaço entre os botões */
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;  /* Espaçamento entre os botões */
+}
+
+.buttons-container button {
+  font-size: 1.1em; /* Ajuste o tamanho conforme necessário */
+  padding: 1.8em; /* Aumenta o tamanho dos botões */
+  background-color: #3C5E4B;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Transição para o aumento de tamanho */
+  width: 400px;  /* Ajuste da largura para um botão maior */
+}
+
+.buttons-container button:hover {
+  transform: scale(1.1); /* Aumenta o tamanho do botão para 110% */
+  background-color: #2e4e3f;  /* Altera a cor ao passar o mouse */
+}
 .contactos {
   background-color: #ffffff;
   text-align: center;
