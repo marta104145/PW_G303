@@ -6,14 +6,14 @@
   <title>Login</title>
   <link rel="stylesheet" href="BACKOFFICE/css/login.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  
+
   <!-- Google Login -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
   <meta name="google-signin-client_id"
     content="489122318578-mh2cd8k3s2quna67qfqn47a25dg33kdf.apps.googleusercontent.com">
 
-    <link rel="icon" type="image/png" href="FRONTOFFICE/logo.png">
+  <link rel="icon" type="image/png" href="FRONTOFFICE/logo.png">
 </head>
 
 <body>
@@ -42,6 +42,9 @@
     function handleCredentialResponse(response) {
       const data = jwt_decode(response.credential);
       const email = data.email;
+
+      // Guarda o token para uso posterior (como em perfil.html)
+      sessionStorage.setItem("google_credential", response.credential);
 
       document.getElementById("popup-success").classList.remove("hidden");
 

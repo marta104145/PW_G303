@@ -1,136 +1,237 @@
 /* RESET */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Corpo */
-  body {
-    font-family: 'Roboto', sans-serif;
-    background: #f2f2f2;
-    color: #333;
-  }
-  
-  /* Título da página */
-  .page-title {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 20px;
-  }
-  
-  .page-title h1 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-  }
-  
-  /* Secção principal */
-  .map-section {
-    max-width: 1200px;
-    margin: 0 auto 40px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 12px;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
-  }
-  
-  /* Barra de pesquisa */
-  .search-bar {
-    background-color: #DFF0D8;
-    border-radius: 50px;
-    padding: 10px 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .search-bar input {
-    border: none;
-    outline: none;
-    background: none;
-    width: 100%;
-    font-size: 16px;
-    color: #333;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .search-icon {
-    font-size: 18px;
-    color: #2B5314;
-    margin-left: 10px;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* Tabela */
-  .map-container {
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    text-align: left !important;
-  }
-  
-  .map-container table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-  
-  th, td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .expand-btn {
-    cursor: pointer;
-    transform: rotate(0deg);
-    transition: transform 0.2s;
-  }
-  
-  .audit-row.expanded .expand-btn {
-    transform: rotate(90deg);
-  }
-  
-  .details {
-    display: none;
-    background: #f3f3f3;
-    padding: 15px;
-  }
-  
-  .audit-row.expanded + .details {
-    display: table-row;
-  }
-  
-  /* Botões */
-  .actions button {
-    margin-right: 10px;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .edit {
-    background-color: #e1f3e1;
-  }
-  
-  .remove {
-    background-color: #f8d7da;
-  }
-  
-  .expand-btn {
-    cursor: pointer;
-    font-size: 16px;
-    color: #2B5314;
-    background-color: transparent;
-    border: none;
-  }
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f2f2f2;
+  color: #333;
+}
+
+.page-title {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.page-title h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.map-section {
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+  background-color: #DFF0D8;
+  border-radius: 50px;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+  font-size: 16px;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+
+.search-icon {
+  font-size: 18px;
+  color: #2B5314;
+  margin-left: 10px;
+}
+
+.map-container {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  text-align: left !important;
+}
+
+.map-container table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.expand-btn {
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: transform 0.2s;
+}
+
+.audit-row.expanded .expand-btn {
+  transform: rotate(90deg);
+}
+
+.details {
+  display: none;
+  background: #f3f3f3;
+  padding: 15px;
+}
+
+.audit-row.expanded + .details {
+  display: table-row;
+}
+
+.actions button {
+  margin-right: 10px;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit {
+  background-color: #e1f3e1;
+}
+
+.remove {
+  background-color: #f8d7da;
+}
+
+.expand-btn {
+  cursor: pointer;
+  font-size: 16px;
+  color: #2B5314;
+  background-color: transparent;
+  border: none;
+}
+
+.box {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+button {
+  background-color: #2B5314;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #3f7423;
+}
+
+button[type="button"] {
+  background-color: #888;
+}
+
+button[type="button"]:hover {
+  background-color: #666;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#modalFormulario {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: auto; /* permite scroll no fundo, caso necessário */
+}
+
+#formAuditoria {
+  background-color: #fff; /* fundo branco opaco */
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 10000;
+}
+
+.formulario-auditoria {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto; /* permite scroll interno */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.formulario-auditoria label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.formulario-auditoria input,
+.formulario-auditoria textarea,
+.formulario-auditoria select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.formulario-auditoria fieldset {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.formulario-auditoria legend {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
