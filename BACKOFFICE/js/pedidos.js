@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const o = ocorrencias[index];
             const conteudo = `
 <div style="max-width: 900px; margin: 0 auto; font-family: Arial, sans-serif; padding: 20px; background-color: #f8f9fa; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-    <h1 style="margin: 0 0 20px 0; color: #2c3e50; font-size: 28px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">${o.tipo}</h1>
+    <h1 style="margin: 0 0 20px 0; color:rgb(0, 0, 0); font-size: 28px; border-bottom: 2px solidrgb(0, 0, 0); padding-bottom: 10px;">${o.tipo}</h1>
     
     <div style="display: flex; gap: 30px; margin-bottom: 25px;">
         <!-- Coluna da Foto -->
@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Coluna de Informações -->
         <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                <h2 style="margin: 0 0 10px 0; font-size: 18px; color: #3498db;">Localização</h2>
+                <h2 style="margin: 0 0 10px 0; font-size: 18px; color:rgb(0, 0, 0);">Localização</h2>
                 <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Morada:</strong> ${o.morada}</p>
                 <p style="margin: 0; font-size: 16px;"><strong>Código Postal:</strong> ${o.codigoPostal}</p>
             </div>
             
             <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                <h2 style="margin: 0 0 10px 0; font-size: 18px; color: #3498db;">Informação do Utilizador</h2>
+                <h2 style="margin: 0 0 10px 0; font-size: 18px; color:rgb(0, 0, 0);">Informação do Utilizador</h2>
                 <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Nome:</strong> ${o.userName}</p>
                 <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Email:</strong> ${o.userEmail}</p>
                 <p style="margin: 0; font-size: 16px;"><strong>Data do Reporte:</strong> ${new Date(o.data).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     <!-- Área de Descrição Expandida -->
     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-        <h2 style="margin: 0 0 15px 0; font-size: 20px; color: #3498db;">Descrição Detalhada</h2>
+        <h2 style="margin: 0 0 15px 0; font-size: 20px; color:rgb(0, 0, 0);">Descrição Detalhada</h2>
         <p style="margin: 0; font-size: 16px; line-height: 1.6; white-space: pre-line;">${o.descricao}</p>
     </div>
     
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <button onclick="aceitar(${index})" style="padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; background-color: #27ae60; color: white; font-size: 16px; font-weight: bold; transition: all 0.3s;">
             <i class="fas fa-check"></i> Aceitar
         </button>
-        <button onclick="devolver(${index})" style="padding: 12px 25px; border: 2px solid #3498db; border-radius: 6px; cursor: pointer; background-color: white; color: #3498db; font-size: 16px; font-weight: bold; transition: all 0.3s;">
+        <button onclick="devolver(${index})" style="padding: 12px 25px; border: 2px solidrgb(0, 0, 0); border-radius: 6px; cursor: pointer; background-color: white; color:rgb(0, 0, 0); font-size: 16px; font-weight: bold; transition: all 0.3s;">
             <i class="fas fa-arrow-right"></i> Devolver
         </button>
         <button onclick="rejeitar(${index})" style="padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; background-color: #e74c3c; color: white; font-size: 16px; font-weight: bold; transition: all 0.3s;">
@@ -130,8 +130,15 @@ function classEstado(estado) {
 window.aceitar = (i) => {
     ocorrencias[i].estado = 'Aceite';
     localStorage.setItem('ocorrencias', JSON.stringify(ocorrencias));
+  
+    // Adiciona à lista de ocorrências aceites
+    const aceites = JSON.parse(localStorage.getItem('ocorrenciasAceites')) || [];
+    aceites.push(ocorrencias[i]);
+    localStorage.setItem('ocorrenciasAceites', JSON.stringify(aceites));
+  
     location.reload();
-};
+  };
+  
 
 window.rejeitar = (i) => {
     ocorrencias[i].estado = 'Não aceite';

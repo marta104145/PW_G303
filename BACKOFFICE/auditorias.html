@@ -6,18 +6,14 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auditorias.css">
   <script src="js/loadHeader.js" defer></script>
+  <script src="js/auditorias.js" defer></script>
   <link rel="icon" type="image/png" href="images/logo.png">
-  <script>
-    function toggleDetails(el) {
-      const row = el.closest('tr');
-      row.classList.toggle('expanded');
-    }
-  </script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
+
 <body>
   <div id="header-container"></div>
+
   <main style="padding-top: 80px">
     <section class="map-section">
       <div class="search-bar">
@@ -29,7 +25,7 @@
         <table id="ocorrenciasAceites" class="table">
           <thead>
             <tr>
-              <th>Ocorrência</th>
+              <th>Tipo</th>
               <th>Localização</th>
               <th>Utilizador</th>
               <th>Data</th>
@@ -37,13 +33,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Ocorrência 1</td>
-              <td>Lisboa</td>
-              <td>João Silva</td>
-              <td>2025-04-28</td>
-              <td><button onclick="abrirFormulario(this)">Realizar Auditoria</button></td>
-            </tr>
+            <!-- Linhas serão carregadas via JavaScript -->
           </tbody>
         </table>
       </div>
@@ -67,240 +57,56 @@
       </div>
     </section>
 
-    <!-- Formulário modal -->
+    <!-- Formulário Modal para criar auditorias -->
     <div id="modalFormulario">
       <form id="formAuditoria" class="formulario-auditoria">
         <h2>Nova Auditoria</h2>
-      
+
         <label>Nome:</label>
         <input type="text" name="nome" required>
-      
+
         <label>Origem:</label>
         <select name="origem" required>
           <option value="">-- Selecionar --</option>
           <option value="interna">Interna</option>
           <option value="externa">Externa</option>
         </select>
-      
+
         <label>Descrição:</label>
         <textarea name="descricao" required></textarea>
-      
+
         <label>Tipo:</label>
         <input type="text" name="tipo" required>
-      
+
         <fieldset>
           <legend>Local Auditado</legend>
-      
           <label>Rua</label>
           <input type="text" name="local_nome" required>
-      
           <label>Código Postal</label>
           <input type="text" name="local_tipo" required>
         </fieldset>
-      
+
         <label>Peritos Responsáveis:</label>
         <input type="text" name="equipa" required>
 
         <label>N.º de Profissionais Necessários:</label>
         <input type="number" name="nr_profissionais" min="1" required>
-      
+
         <label>Materiais:</label>
         <div id="materiaisContainer"></div>
-      
+
         <label>Data:</label>
         <input type="datetime-local" name="data" required>
-      
+
         <label>Duração Estimada (em horas):</label>
         <input type="number" name="duracao" required>
-      
+
         <div class="form-buttons">
           <button type="submit">Guardar Auditoria</button>
           <button type="button" onclick="fecharFormulario()">Cancelar</button>
         </div>
       </form>
     </div>
-
-    <script>
-      function abrirFormulario(btn) {
-        document.getElementById('modalFormulario').style.display = 'flex';
-        document.body.classList.add('modal-open');
-        window.ocorrenciaClicada = btn.closest('tr');
-        carregarMateriais();
-      }
-
-      function fecharFormulario() {
-        document.getElementById('modalFormulario').style.display = 'none';
-        document.body.classList.remove('modal-open');
-        document.getElementById('formAuditoria').reset();
-      }
-
-      document.getElementById('formAuditoria').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const dados = Object.fromEntries(new FormData(this));
-        // Extrair materiais e quantidades
-      const materiaisSelecionados = [];
-      document.querySelectorAll('#materiaisContainer input[type="number"]').forEach(input => {
-        const quantidade = parseInt(input.value);
-        if (quantidade > 0) {
-          materiaisSelecionados.push({
-            nome: input.dataset.nome,
-            quantidade
-          });
-        }
-      });
-      dados.materiais = materiaisSelecionados;
-        dados.dataFormatada = new Date(dados.data).toLocaleString();
-
-        const auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
-        auditorias.push(dados);
-        localStorage.setItem('auditorias', JSON.stringify(auditorias));
-        gerarPDF(dados);
-
-        adicionarAuditoriaNaTabela(dados);
-        window.ocorrenciaClicada.remove();
-        fecharFormulario();
-      });
-
-      function removerAuditoria(btn) {
-        const detailsRow = btn.closest('tr');
-        const mainRow = [...document.querySelectorAll('.audit-row')].find(
-          row => row.nextElementSibling === detailsRow
-        );
-        if (mainRow && detailsRow) {
-          mainRow.remove();
-          detailsRow.remove();
-        }
-      }
-
-      function adicionarAuditoriaNaTabela(dados) {
-        const tbody = document.querySelector('#auditoriasRealizadas tbody');
-
-        const linha = document.createElement('tr');
-        linha.classList.add('audit-row');
-        linha.innerHTML = `
-          <td>${dados.nome}</td>
-          <td>${dados.local_nome}</td>
-          <td>${dados.equipa}</td>
-          <td>${dados.dataFormatada}</td>
-          <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
-        `;
-
-        const detalhes = document.createElement('tr');
-        detalhes.classList.add('details');
-        detalhes.innerHTML = `
-        <td colspan="5">
-          <strong>Descrição:</strong><br>${dados.descricao}<br><br>
-          <strong>Materiais:</strong><br>
-          <ul style="padding-left: 20px; margin-top: 5px;">
-          ${dados.materiais.map(m => `<li>${m.nome}: ${m.quantidade}</li>`).join('')}
-          </ul><br>
-          <strong>N.º de Profissionais Necessários:</strong> ${dados.nr_profissionais}<br><br>
-          <strong>Duração Estimada:</strong> ${dados.duracao} horas<br><br>
-          <div class="actions">
-          <button class="remove" onclick="removerAuditoria(this)">Remover</button>
-          </div>
-        </td>
-        `;
-
-        tbody.appendChild(linha);
-        tbody.appendChild(detalhes);
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const guardadas = JSON.parse(localStorage.getItem('auditorias')) || [];
-        guardadas.forEach(adicionarAuditoriaNaTabela);
-      });
-
-      function carregarMateriais() {
-        const container = document.getElementById("materiaisContainer");
-        const materiais = JSON.parse(localStorage.getItem("materiais")) || [];
-
-        container.innerHTML = ""; // limpa anteriores
-
-        materiais.forEach((material, index) => {
-          const div = document.createElement("div");
-          div.style.marginBottom = "10px";
-
-          div.innerHTML = `
-            <label style="font-weight: bold;">${material.nome} (${material.quantidade} disponíveis):</label>
-            <input type="number" name="materiais[${index}].quantidade" 
-                max="${material.quantidade}" min="0" value="0" 
-                data-nome="${material.nome}" 
-                placeholder="0" style="width: 60px; margin-left: 10px;">
-            `;
-
-        container.appendChild(div);
-      });
-      }
-
-      document.getElementById('searchInput').addEventListener('input', function () {
-        const filtro = this.value.toLowerCase();
-        const linhas = document.querySelectorAll('#auditoriasRealizadas tbody .audit-row');
-
-        linhas.forEach(linha => {
-          const texto = linha.textContent.toLowerCase();
-          const detalhes = linha.nextElementSibling;
-
-          const visivel = texto.includes(filtro);
-          linha.style.display = visivel ? '' : 'none';
-
-          // Esconde também os detalhes se a linha for ocultada
-          if (detalhes && detalhes.classList.contains('details')) {
-            detalhes.style.display = visivel ? '' : 'none';
-          }
-        });
-      });
-      
-      function gerarPDF(dados) {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        const materiais = dados.materiais || [];
-        const precos = {
-          "Cordas de segurança": 2.5,
-          "Placas de aviso": 4.0,
-          "Produtos de limpeza": 1.75,
-         "Ferramentas": 12.0
-        };
-
-        let custoMateriais = 0;
-        const materiaisTexto = materiais.map(m => {
-          const preco = precos[m.nome] || 0;
-          const total = m.quantidade * preco;
-          custoMateriais += total;
-          return `${m.nome}: ${m.quantidade} × ${preco.toFixed(2)}€ = ${total.toFixed(2)}€`;
-        }).join('\n');
-
-        const custoProfissionais = (parseInt(dados.nr_profissionais) || 0) * 7 * (parseInt(dados.duracao) || 0);
-        const custoTotal = custoMateriais + custoProfissionais;
-
-        doc.setFontSize(14);
-        doc.text("Relatório de Auditoria", 20, 20);
-
-        doc.setFontSize(10);
-        doc.text(`Nome: ${dados.nome}`, 20, 30);
-        doc.text(`Origem: ${dados.origem}`, 20, 36);
-        doc.text(`Descrição: ${dados.descricao}`, 20, 42);
-        doc.text(`Tipo: ${dados.tipo}`, 20, 48);
-        doc.text(`Rua: ${dados.local_nome}`, 20, 54);
-        doc.text(`Código Postal: ${dados.local_tipo}`, 20, 60);
-        doc.text(`Peritos Responsáveis: ${dados.equipa}`, 20, 66);
-        doc.text(`N.º de Profissionais: ${dados.nr_profissionais}`, 20, 72);
-        doc.text(`Duração Estimada: ${dados.duracao} horas`, 20, 78);
-        doc.text(`Data: ${dados.dataFormatada}`, 20, 84);
-
-        doc.text("Materiais Utilizados:", 20, 94);
-        const materiaisFormatados = doc.splitTextToSize(materiaisTexto || "Nenhum", 170);
-        doc.text(materiaisFormatados, 25, 100);
-
-        doc.text(`\nCusto Materiais: ${custoMateriais.toFixed(2)} €`, 20, 130);
-        doc.text(`Custo Profissionais: ${custoProfissionais.toFixed(2)} €`, 20, 136);
-        doc.text(`Custo Total: ${custoTotal.toFixed(2)} €`, 20, 142);
-
-        doc.save(`Orçamento_${dados.nome.replace(/\s+/g, '_')}.pdf`);
-      }
-    </script>
   </main>
 </body>
 </html>
