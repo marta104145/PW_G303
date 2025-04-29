@@ -1,41 +1,72 @@
-
+/* Estilos para o body */
 body {
   margin: 0;
-  font-family: 'Roboto';
+  font-family: 'Inter', sans-serif;
   background-color: #f2f2f2;
   color: #333;
-  padding: 0; /* Remove o padding padrão */
-  width: 100%;  /* Garante que o body e o html ocupem toda a largura da tela */
-  height: 100%; /* Garante que o body ocupe toda a altura */
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
+/* Estilo para o cabeçalho */
 .header {
+  background-color: #3C5E4B;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em 2em;
-  background-color: #3C5E4B;
-  color: white;
+  padding: 1rem 2rem;
+  position: fixed; /* Makes the header stick to the top */
+  top: 0; /* Positions at the very top */
+  width: 100%; /* Full width */
+  z-index: 1000; /* Ensures header stays above other content */
+  box-sizing: border-box; /* Includes padding in width calculation */
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
 }
 
 .header .logo {
-  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  font-size: 1.8em;
   font-weight: normal;
 }
 
-.header nav ul {
-  list-style: none;
+.header .logo-img {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header .logo-text {
+ font-size: xx-large;
+ color: #E1E1E1;
+}
+
+.header nav{
   display: flex;
-  gap: 1.5em;
+  gap:120px;
 }
 
-.header nav ul li a {
-  color: #ACACAC;
+.header nav a{
   text-decoration: none;
+  color: #ACACAC;
+  font-size: larger;
 }
 
-.search-icon {
-  font-size: 1.2em;
+.icon{
+  width:20px;
+  height: 20px;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .hero {
@@ -44,7 +75,7 @@ body {
   justify-content: space-between;
   background-color: #3C5E4B;
   color: white;
-  padding: 4em 10em;
+  padding: 9em 10em;
   position: relative;
 }
 
@@ -64,11 +95,16 @@ body {
 .hero-text button {
   margin-top: 1em;
   padding: 0.7em 1.5em;
-  background-color: #2e4e3f;
-  color: #3C5E4B;
+  background-color: #3C5E4B;
+  color:#ACACAC;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra ao redor do botão */
+  transition: box-shadow 0.3s ease; /* Transição suave para quando o botão for hover */
+}
+button:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Aumenta a sombra ao passar o mouse */
 }
 
 .hero-img {
@@ -81,44 +117,120 @@ body {
 
 section {
   padding: 2em;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: auto;
 }
 
-.cards, .testemunhos, .metricas {
+.cards {
   display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
+  justify-content: center; /* Centraliza os itens */
+  gap: 1em; /* Espaçamento entre os botões */
   margin-top: 1.5em;
+  flex-wrap: nowrap; /* Impede quebras de linha */
 }
 
-.card, .box, .metricas div, .botoes button {
+.botoes {
+  display: flex;        /* MUITO IMPORTANTE */
+  margin-top: 2rem;
+  justify-content: center; /* Alinha no centro */
+  gap: 2rem;             /* Espaço entre cards */
+  flex-direction: row;
+}
+
+.card {
   background-color: #2e4e3f;
   color: white;
-  padding: 1em;
+  padding: 1.5em;
   border-radius: 10px;
-  flex: 1;
   text-align: center;
+  cursor: pointer;
+  width: 180px; /* Ajuste a largura */
+  height: 125px; /* Ajuste a altura */
+  display: flex;
+  flex-direction: column; /* Alinha o texto verticalmente */
+  justify-content: center; /* Centraliza o conteúdo verticalmente */
+  align-items: center; /* Alinha o conteúdo horizontalmente */
+  transition: transform 0.3s ease;
+  flex-shrink: 0; /* impedir de encolher */
+  
+}
+
+.card p {
+  font-size: 1.5em;
+  font-weight: normal;
+  margin: 0; /* remove margens extra */
+  height: 50px; /* força todos os títulos a ocupar o mesmo espaço */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.card small {
+  font-size: 0.7em;
+  color: white; /* Cor do texto pequeno */
+  margin-top: 0.5em;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
 }
 
 .circle-cards {
   display: flex;
-  gap: 1.5em;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: 1.5em;
+  justify-content: center; /* Garante que as imagens fiquem centralizadas */
   margin-top: 1em;
 }
 
-.circle-cards img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.circle-cards .item {
+  text-align: center;
+  width: 70px;  /* Define a largura do círculo */
+  height: 210px; /* Define a altura do círculo */
+  flex: 0 1 30%; /* Controla a largura das imagens */
+ 
 }
 
-.auditorias ul {
-  padding-left: 1.5em;
+.circle-cards img {
+  width: 65%;
+  height: 215px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.circle-cards .item:nth-child(4),
+.circle-cards .item:nth-child(5) {
+  /* Força as duas últimas imagens a ficarem centralizadas */
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 40px; 
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 70px; /* Espaçamento superior */
+}
+
+.auditorias {
+  padding: 2em;
+  background-color: #3C5E4B;
+  color: white;
+  margin-top: 80px; /* Distância do topo para a seção de auditorias */
+}
+
+.auditorias h2 {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 1.5em;
 }
 
 .auditoria-content {
@@ -126,21 +238,47 @@ section {
   justify-content: space-between;
   gap: 2em;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.auditoria-content img, .ocorrencias img {
-  max-width: 100%;
-  border: 3px solid #2e4e3f;
-  border-radius: 8px;
+.auditoria-content ul {
+  padding-left: 0;
+  list-style: none;
+  flex: 1;
+  max-width: 600px;
 }
 
-.botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  margin-top: 1em;
+.auditoria-content ul li {
+  background-color: #2e4e3f;
+  margin-bottom: 1em;
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+.auditoria-content ul li strong {
+  font-size: 1.2em;
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.auditoria-content ul li p {
+  font-size: 1em;
+  margin: 0;
+}
+
+.map-container {
+  flex: 1;
+  max-width: 500px;
+}
+
+.auditoria-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 
 .contactos {
   background-color: #ffffff;

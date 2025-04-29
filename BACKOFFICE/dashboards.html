@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- TailwindCSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Vue.js 3 via CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/style.css"> 
+  <link rel="stylesheet" href="css/dashboards.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+</head>
+<body>
+
+<!-- Aqui o header vai ser carregado -->
+<div id="header-container"></div> 
+<script src="js/loadHeader.js"></script>
+
+<!-- App Vue -->
+<div id="app" class="container">
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+    <div class="bg-[#cccc] text-black p-6 rounded-lg text-center">
+      <i class="fas fa-exclamation-triangle text-3xl text-[#2c5f2d] mb-2"></i> <!-- Ícone -->
+      <h2 class="text-2xl font-bold">{{ ocorrencias }}</h2>
+      <p class="mt-2">Ocorrências resolvidas</p>
+    </div>
+    <div class="bg-[#cccc] text-black p-6 rounded-lg text-center">
+      <i class="fas fa-file-alt text-3xl text-[#2c5f2d] mb-2"></i> <!-- Ícone -->
+      <h2 class="text-2xl font-bold">{{ auditorias }}</h2> 
+      <p class="mt-2">Auditorias realizadas</p>
+    </div>
+    <div class="bg-[#cccc] text-black p-6 rounded-lg text-center">
+      <i class="fas fa-trash text-3xl text-[#2c5f2d] mb-2"></i> <!-- Ícone -->
+      <h2 class="text-2xl font-bold">{{ custoMaterial }} €</h2>
+      <p class="mt-2">Custo de materiais</p>
+    </div>
+    <div class="bg-[#cccc] text-black p-6 rounded-lg text-center">
+      <i class="fas fa-user text-3xl text-[#2c5f2d] mb-2"></i> <!-- Ícone -->
+      <h2 class="text-2xl font-bold">{{ peritosDisponiveis }}</h2>
+      <p class="mt-2">Profissionais Registados</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white p-4 rounded-lg shadow">
+      <canvas id="ocorrenciasChart"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow">
+      <canvas id="auditoriasChart"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow">
+      <canvas id="materiaisChart"></canvas>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+  
+    <!-- Lista de Auditorias resolvidas -->
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Auditorias resolvidas</h2>
+      <ul class="space-y-4">
+        <li v-for="(auditoria, index) in auditoriasResolvidas" :key="index" class="flex items-center justify-between p-3 border rounded">
+          <div class="flex items-center gap-3">
+            <i class="fas fa-sync-alt text-[#2c5f2d]"></i> 
+            <span>{{ auditoria }}</span>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Lista de Materiais disponíveis -->
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Materiais disponíveis em armazém</h2>
+      <ul class="space-y-4">
+        <li v-for="(material, index) in materiaisDisponiveis" :key="index" class="flex items-center justify-between p-3 border rounded">
+          <div class="flex items-center gap-3">
+            <i :class="['fas', material.icone, 'text-[#2c5f2d]']"></i> 
+            <span>{{ material.nome }}</span>
+          </div>
+          <span class="text-gray-600 font-semibold">{{ material.quantidade }}</span> <!-- Quantidade -->
+        </li>
+      </ul>
+    </div>
+  
+  </div>
+</div>
+
+<!-- Carregar o header -->
+<script src="loadheader.js"></script>
+
+<!-- Vue App -->
+<script>
+const { createApp, ref, onMounted } = Vue;
+
+createApp({
+  setup() {
+    const ocorrencias = ref(0);
+    const auditorias = ref(0);
+    const custoMaterial = ref(0);
+    const peritosDisponiveis = ref(0); // começa a 0
+    const auditoriasResolvidas = ref([]);
+    const materiaisDisponiveis = ref([]);
+
+    onMounted(() => {
+      // Obter peritos guardados no localStorage
+      const peritosGuardados = JSON.parse(localStorage.getItem('peritos')) || [];
+      animarContador(peritosDisponiveis, peritosGuardados.length);; // Número de peritos
+
+      auditoriasResolvidas.value = [
+        "Inspeção Parque Norte",
+        "Verificação Jardim Central",
+        "Auditoria Zona Infantil",
+        "Inspeção das Árvores de Sombra"
+      ];
+
+      materiaisDisponiveis.value = [
+        { nome: "Cordas de segurança", quantidade: 15, icone: "fa-link" },
+        { nome: "Placas de aviso", quantidade: 8, icone: "fa-map-signs" },
+        { nome: "Produtos de limpeza", quantidade: 25, icone: "fa-spray-can" },
+        { nome: "Kit primeiros socorros", quantidade: 12, icone: "fa-briefcase-medical" }
+      ];
+
+      // Gráficos
+      new Chart(document.getElementById('ocorrenciasChart'), {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+          datasets: [{
+            label: 'Ocorrências resolvidas',
+            data: [10, 25, 40, 30, 50, 60],
+            borderColor: '#2c5f2d',
+            backgroundColor: 'rgba(44, 95, 45, 0.2)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      new Chart(document.getElementById('auditoriasChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Jardins', 'Parques', 'Árvores', 'Outros'],
+          datasets: [{
+            data: [30, 25, 20, 25],
+            backgroundColor: ['#2c5f2d', '#244c23', '#6fa26f', '#99c199'],
+            hoverOffset: 4
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      new Chart(document.getElementById('materiaisChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Cordas', 'Sinalização', 'Ferramentas', 'Placas', 'Produtos químicos'],
+          datasets: [{
+            label: 'Materiais usados',
+            data: [50, 30, 20, 40, 25],
+            backgroundColor: [
+              '#2c5f2d', // Cordas
+              '#6fa26f', // Sinalização
+              '#99c199', // Ferramentas
+              '#244c23', // Placas
+              '#4d774e'  // Produtos químicos
+          ]
+          }]
+        },
+        options: { responsive: true }
+      });
+
+      function animarContador(refVariavel, valorFinal, duracao = 1000) {
+        let start = 0;
+        const incremento = valorFinal / (duracao / 16); // 16ms ~ 60fps
+        const contador = setInterval(() => {
+          start += incremento;
+          if (start >= valorFinal) {
+            start = valorFinal;
+            clearInterval(contador);
+          }
+        refVariavel.value = Math.floor(start); // Só valores inteiros
+        }, 16);
+      }
+
+      animarContador(ocorrencias, 200);
+      animarContador(auditorias, 250);
+      animarContador(custoMaterial, 1234.56);
+    });
+
+    return { ocorrencias, auditorias, custoMaterial, peritosDisponiveis, auditoriasResolvidas, materiaisDisponiveis };
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
