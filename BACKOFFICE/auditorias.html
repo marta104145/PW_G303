@@ -87,7 +87,7 @@
         <input type="text" name="tipo" required>
       
         <fieldset>
-          <legend><strong>Locais Auditados</strong></legend>
+          <legend>Locais Auditados</legend>
       
           <label>Nome:</label>
           <input type="text" name="local_nome" required>
@@ -102,11 +102,11 @@
           <input type="text" name="local_morada" required>
         </fieldset>
       
-        <label>Equipa de Auditores:</label>
+        <label>Peritos Atribuidos:</label>
         <input type="text" name="equipa" required>
       
-        <label>Materiais e Equipamentos:</label>
-        <textarea name="materiais" required></textarea>
+        <label>Materiais:</label>
+        <div id="materiaisContainer"></div>
       
         <label>Data:</label>
         <input type="datetime-local" name="data" required>
@@ -124,11 +124,14 @@
     <script>
       function abrirFormulario(btn) {
         document.getElementById('modalFormulario').style.display = 'flex';
+        document.body.classList.add('modal-open');
         window.ocorrenciaClicada = btn.closest('tr');
+        carregarMateriais();
       }
 
       function fecharFormulario() {
         document.getElementById('modalFormulario').style.display = 'none';
+        document.body.classList.remove('modal-open');
         document.getElementById('formAuditoria').reset();
       }
 
@@ -136,6 +139,18 @@
         e.preventDefault();
 
         const dados = Object.fromEntries(new FormData(this));
+        // Extrair materiais e quantidades
+      const materiaisSelecionados = [];
+      document.querySelectorAll('#materiaisContainer input[type="number"]').forEach(input => {
+        const quantidade = parseInt(input.value);
+        if (quantidade > 0) {
+          materiaisSelecionados.push({
+            nome: input.dataset.nome,
+            quantidade
+          });
+        }
+      });
+      dados.materiais = materiaisSelecionados;
         dados.dataFormatada = new Date(dados.data).toLocaleString();
 
         const auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
@@ -187,7 +202,10 @@
         detalhes.innerHTML = `
           <td colspan="5">
             <strong>Descrição:</strong><br>${dados.descricao}<br><br>
-            <strong>Materiais e Equipamentos:</strong><br>${dados.materiais}<br><br>
+            <strong>Materiais e Equipamentos:</strong><br>
+            <ul>
+              ${dados.materiais.map(m => `<li>${m.nome}: ${m.quantidade}</li>`).join('')}
+            </ul><br>
             <div class="actions">
              <button class="remove" onclick="removerAuditoria(this)">Remover</button>
              <button class="edit" onclick="editarAuditoria(this)">Editar</button>
@@ -203,6 +221,28 @@
         const guardadas = JSON.parse(localStorage.getItem('auditorias')) || [];
         guardadas.forEach(adicionarAuditoriaNaTabela);
       });
+
+      function carregarMateriais() {
+        const container = document.getElementById("materiaisContainer");
+        const materiais = JSON.parse(localStorage.getItem("materiais")) || [];
+
+        container.innerHTML = ""; // limpa anteriores
+
+        materiais.forEach((material, index) => {
+          const div = document.createElement("div");
+          div.style.marginBottom = "10px";
+
+          div.innerHTML = `
+            <label style="font-weight: bold;">${material.nome} (${material.quantidade} disponíveis):</label>
+            <input type="number" name="materiais[${index}].quantidade" 
+                max="${material.quantidade}" min="0" value="0" 
+                data-nome="${material.nome}" 
+                placeholder="0" style="width: 60px; margin-left: 10px;">
+            `;
+
+        container.appendChild(div);
+      });
+      }
     </script>
   </main>
 </body>
