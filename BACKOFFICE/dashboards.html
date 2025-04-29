@@ -70,7 +70,7 @@
   
     <!-- Lista de Auditorias resolvidas -->
     <div class="bg-white p-6 rounded-lg shadow">
-      <h2 class="text-xl font-semibold mb-4">Auditorias resolvidas</h2>
+      <h2 class="text-xl font-semibold mb-4">Auditorias realizadas</h2>
       <ul class="space-y-4">
         <li v-for="(auditoria, index) in auditoriasResolvidas" :key="index" class="flex items-center justify-between p-3 border rounded">
           <div class="flex items-center gap-3">
@@ -141,12 +141,16 @@ createApp({
       const peritosGuardados = JSON.parse(localStorage.getItem('peritos')) || [];
       animarContador(peritosDisponiveis, peritosGuardados.length);; // Número de peritos
 
-      auditoriasResolvidas.value = [
-        "Inspeção Parque Norte",
-        "Verificação Jardim Central",
-        "Auditoria Zona Infantil",
-        "Inspeção das Árvores de Sombra"
-      ];
+      const auditoriasGuardadas = JSON.parse(localStorage.getItem('auditorias')) || [];
+      auditoriasResolvidas.value = auditoriasGuardadas.map(a => `${a.nome} (${a.local_nome})`);
+
+      // Contar número de auditorias por mês
+    const auditoriasPorMes = Array(12).fill(0);
+    auditoriasGuardadas.forEach(a => {
+      const data = new Date(a.data);
+      const mes = data.getMonth(); // 0 = Jan
+      auditoriasPorMes[mes]++;
+    });
 
       const defaultMateriais = [
         { nome: "Cordas de segurança", quantidade: 15, icone: "fa-link", precoUnitario: 2.5 },
@@ -160,20 +164,20 @@ createApp({
 
       // Gráficos
       new Chart(document.getElementById('ocorrenciasChart'), {
-        type: 'line',
-        data: {
-          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-          datasets: [{
-            label: 'Ocorrências resolvidas',
-            data: [10, 25, 40, 30, 50, 60],
-            borderColor: '#2c5f2d',
-            backgroundColor: 'rgba(44, 95, 45, 0.2)',
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: { responsive: true }
-      });
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+        datasets: [{
+          label: 'Ocorrências resolvidas',
+          data: auditoriasPorMes,
+          borderColor: '#2c5f2d',
+          backgroundColor: 'rgba(44, 95, 45, 0.2)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: { responsive: true }
+    });
 
       new Chart(document.getElementById('auditoriasChart'), {
         type: 'doughnut',
@@ -223,8 +227,8 @@ createApp({
         }, 16);
       }
 
-      animarContador(ocorrencias, 200);
-      animarContador(auditorias, 250);
+      animarContador(ocorrencias, auditoriasGuardadas.length);
+      animarContador(auditorias, auditoriasGuardadas.length);
       animarContador(custoMaterial, 1234);
     });
 
