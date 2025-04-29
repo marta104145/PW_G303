@@ -244,3 +244,31 @@ button[type="button"]:hover {
 body.modal-open {
   overflow: hidden;
 }
+
+.actions button {
+  margin-right: 10px;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.remove {
+  background-color: #f44336;
+  color: white;
+}
+
+.remove:hover {
+  background-color: #d32f2f;
+}
+
+.concluir {
+  background-color: #4caf50;
+  color: white;
+}
+
+.concluir:hover {
+  background-color: #388e3c;
+}

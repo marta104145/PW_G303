@@ -65,6 +65,24 @@
           </tbody>
         </table>
       </div>
+
+      <div class="box">
+        <h2>Ocorrências Resolvidas</h2>
+        <table id="ocorrenciasResolvidas" class="table">
+          <thead>
+            <tr>
+              <th>Auditoria</th>
+              <th>Localização</th>
+              <th>Peritos Responsáveis</th>
+              <th>Data</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Auditorias concluídas serão inseridas aqui -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Formulário modal -->
@@ -199,6 +217,7 @@
           <strong>Duração Estimada:</strong> ${dados.duracao} horas<br><br>
           <div class="actions">
           <button class="remove" onclick="removerAuditoria(this)">Remover</button>
+          <button class="edit" onclick="concluirAuditoria(this)">Concluir</button>
           </div>
         </td>
         `;
@@ -210,6 +229,8 @@
       document.addEventListener('DOMContentLoaded', () => {
         const guardadas = JSON.parse(localStorage.getItem('auditorias')) || [];
         guardadas.forEach(adicionarAuditoriaNaTabela);
+        const resolvidasGuardadas = JSON.parse(localStorage.getItem('resolvidas')) || [];
+        resolvidasGuardadas.forEach(adicionarOcorrenciaResolvida);
       });
 
       function carregarMateriais() {
@@ -299,6 +320,46 @@
         doc.text(`Custo Total: ${custoTotal.toFixed(2)} €`, 20, 142);
 
         doc.save(`Orçamento_${dados.nome.replace(/\s+/g, '_')}.pdf`);
+      }
+
+      function concluirAuditoria(btn) {
+        const detailsRow = btn.closest('tr');
+        const mainRow = [...document.querySelectorAll('.audit-row')].find(
+        row => row.nextElementSibling === detailsRow
+        );
+
+        if (mainRow && detailsRow) {
+          const dados = {
+            nome: mainRow.cells[0].innerText,
+            local_nome: mainRow.cells[1].innerText,
+            equipa: mainRow.cells[2].innerText,
+            dataFormatada: mainRow.cells[3].innerText,
+          };
+
+          // Guardar em localStorage
+          const resolvidas = JSON.parse(localStorage.getItem('resolvidas')) || [];
+          resolvidas.push(dados);
+          localStorage.setItem('resolvidas', JSON.stringify(resolvidas));
+
+          adicionarOcorrenciaResolvida(dados);
+          mainRow.remove();
+          detailsRow.remove();
+        }
+      }   
+
+      function adicionarOcorrenciaResolvida(dados) {
+        const tbody = document.querySelector('#ocorrenciasResolvidas tbody');
+
+        const linha = document.createElement('tr');
+        linha.innerHTML = `
+          <td>${dados.nome}</td>
+          <td>${dados.local_nome}</td>
+          <td>${dados.equipa}</td>
+          <td>${dados.dataFormatada}</td>
+          <td></td>
+        `;
+
+        tbody.appendChild(linha);
       }
     </script>
   </main>

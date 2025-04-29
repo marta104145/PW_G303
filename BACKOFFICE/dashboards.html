@@ -43,7 +43,7 @@
       <p class="mt-2">Auditorias realizadas</p>
     </div>
     <div class="bg-[#cccc] text-black p-6 rounded-lg text-center">
-      <i class="fas fa-trash text-3xl text-[#2c5f2d] mb-2"></i> <!-- Ícone -->
+      <i class="fas fa-coins text-3xl text-[#2c5f2d] mb-2"></i> <!-- Ícone -->
       <h2 class="text-2xl font-bold">{{ custoMaterial }} €</h2>
       <p class="mt-2">Custo de materiais</p>
     </div>
@@ -136,6 +136,11 @@ createApp({
 
     let materiaisChart = null;
 
+    function atualizarCustoTotal() {
+      const total = materiaisDisponiveis.value.reduce((acc, m) => acc + m.quantidade * m.precoUnitario, 0);
+      custoMaterial.value = Math.round(total); // ou usa `toFixed(2)` se quiseres casas decimais
+    }
+
     onMounted(() => {
       // Obter peritos guardados no localStorage
       const peritosGuardados = JSON.parse(localStorage.getItem('peritos')) || [];
@@ -161,6 +166,16 @@ createApp({
 
       const guardados = JSON.parse(localStorage.getItem("materiais"));
       materiaisDisponiveis.value = guardados?.length ? guardados : defaultMateriais;
+    
+      const resolvidas = JSON.parse(localStorage.getItem("resolvidas")) || [];
+      animarContador(ocorrencias, resolvidas.length);
+      // Criar contagem mensal de ocorrências resolvidas
+      const ocorrenciasPorMes = Array(12).fill(0);
+      resolvidas.forEach(o => {
+        const data = new Date(o.dataFormatada);
+        const mes = data.getMonth(); // 0 = Janeiro
+        ocorrenciasPorMes[mes]++;
+      });
 
       // Gráficos
       new Chart(document.getElementById('ocorrenciasChart'), {
@@ -169,7 +184,7 @@ createApp({
         labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         datasets: [{
           label: 'Ocorrências resolvidas',
-          data: auditoriasPorMes,
+          data: ocorrenciasPorMes,
           borderColor: '#2c5f2d',
           backgroundColor: 'rgba(44, 95, 45, 0.2)',
           fill: true,
@@ -227,9 +242,11 @@ createApp({
         }, 16);
       }
 
-      animarContador(ocorrencias, auditoriasGuardadas.length);
       animarContador(auditorias, auditoriasGuardadas.length);
-      animarContador(custoMaterial, 1234);
+      const custoTotalMateriais = materiaisDisponiveis.value.reduce((total, m) => {
+      return total + (m.quantidade * m.precoUnitario);
+      }, 0);
+      animarContador(custoMaterial, custoTotalMateriais);
     });
 
     const mostrarModal = ref(false);
@@ -251,6 +268,7 @@ createApp({
         materiaisDisponiveis.value[materialSelecionado.value].quantidade = novaQuantidade.value;
         mostrarModal.value = false;
         localStorage.setItem("materiais", JSON.stringify(materiaisDisponiveis.value));
+        atualizarCustoTotal();
 
         // Atualizar gráfico
         if (materiaisChart) {
