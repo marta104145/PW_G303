@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Minhas Ocorrências</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style-user.css">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+</head>
+
+<body>
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <img src="images/logo.png" alt="Logo" />
+    </div>
+    <ul class="navbar-menu">
+      <li><a href="homeuser.html">HOME</a></li>
+      <li><a href="minhas_ocorrencias.html">MINHAS OCORRÊNCIAS</a></li>
+      <li><a href="perfiluser.html">PERFIL</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="page-title">
+    <h1>Minhas Ocorrências</h1>
+  </section>
+
+  <section class="map-section">
+    <div id="ocorrencias-lista"></div>
+  </section>
+</main>
+
+<script>
+window.onload = function() {
+  const token = sessionStorage.getItem("google_credential");
+  if (!token) {
+    window.location.href = "/PW_G303/login.html";
+    return;
+  }
+
+  const userData = jwt_decode(token);
+  const email = userData.email;
+
+  const todasOcorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+  const minhasOcorrencias = todasOcorrencias.filter(o => o.userEmail === email);
+
+  const listaDiv = document.getElementById("ocorrencias-lista");
+
+  if (minhasOcorrencias.length === 0) {
+    listaDiv.innerHTML = "<p>Não existem ocorrências registadas.</p>";
+  } else {
+    minhasOcorrencias.forEach(ocorrencia => {
+      const ocorrenciaCard = document.createElement("div");
+      ocorrenciaCard.style.background = "#fafafa";
+      ocorrenciaCard.style.border = "1px solid #ddd";
+      ocorrenciaCard.style.borderRadius = "8px";
+      ocorrenciaCard.style.padding = "20px";
+      ocorrenciaCard.style.marginBottom = "20px";
+
+      ocorrenciaCard.innerHTML = `
+        <h3>${ocorrencia.tipo}</h3>
+        <p><strong>Morada:</strong> ${ocorrencia.morada}</p>
+        <p><strong>Código Postal:</strong> ${ocorrencia.codigoPostal}</p>
+        <p><strong>Descrição:</strong> ${ocorrencia.descricao}</p>
+        <p><strong>Data:</strong> ${new Date(ocorrencia.data).toLocaleString()}</p>
+      `;
+
+      listaDiv.appendChild(ocorrenciaCard);
+    });
+  }
+};
+</script>
+
+</body>
+
+</html>

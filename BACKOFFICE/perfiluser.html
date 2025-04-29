@@ -45,19 +45,20 @@
       color: #2B5314;
     }
 
-    .editar-btn {
+    .editar-btn, .logout-btn {
       background-color: #f0f0f0;
       border: none;
       border-radius: 15px;
       padding: 10px 20px;
       margin-top: 25px;
+      margin-inline: 10px;
       cursor: pointer;
       font-weight: bold;
       color: #2B5314;
       transition: background-color 0.2s;
     }
 
-    .editar-btn:hover {
+    .editar-btn:hover, .logout-btn:hover {
       background-color: #e0e0e0;
     }
   </style>
@@ -71,9 +72,9 @@
         <img src="images/logo.png" alt="Logo" />
       </div>
       <ul class="navbar-menu">
-        <li><a href="home.html">HOME</a></li>
+        <li><a href="homeuser.html">HOME</a></li>
         <li><a href="minhas_ocorrencias.html">MINHAS OCORRÊNCIAS</a></li>
-        <li><a href="perfil.html">PERFIL</a></li>
+        <li><a href="perfiluser.html">PERFIL</a></li>
       </ul>
     </nav>
   </header>
@@ -89,6 +90,7 @@
       <p><strong>Telemóvel:</strong> - </p>
     </div>
     <button class="editar-btn">Editar</button>
+    <button class="logout-btn" onclick="logout()">Logout</button>
   </main>
 
   <script>
@@ -101,6 +103,11 @@
         document.getElementById("userImage").src = data.picture;
       }
     };
+
+    function logout() {
+      sessionStorage.removeItem("google_credential");
+      window.location.href = "login.html";
+    }
   </script>
 </body>
 
