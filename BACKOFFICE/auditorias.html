@@ -21,8 +21,7 @@
 
     <section class="map-section">
       <div class="search-bar">
-        <input type="text" placeholder="Procurar Auditoria">
-        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Procurar Auditoria">
       </div>
 
       <div class="map-container">
@@ -58,9 +57,49 @@
               </td>
             </tr>
             <!-- Repetir para Auditorias 2 a 7 -->
+            <tr class="audit-row">
+              <td>ola</td>
+              <td>Morada, Código Postal</td>
+              <td>username</td>
+              <td>01/01/2024 03:00</td>
+              <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
+            </tr>
+            <tr class="details">
+              <td colspan="5">
+                <strong>Descrição:</strong><br>
+                Descrição da Ocorrência<br><br>
+                <strong>Materiais e Equipamentos:</strong><br>
+                Nome, tipo, descrição, quantidade<br><br>
+                <div class="actions">
+                  <button class="remove">Remover</button>
+                  <button class="edit">Editar</button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const searchInput = document.getElementById("searchInput");
+      
+          searchInput.addEventListener("input", () => {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll(".audit-row");
+      
+            rows.forEach(row => {
+              const text = row.textContent.toLowerCase();
+              row.style.display = text.includes(filter) ? "" : "none";
+      
+              // também esconder a linha de detalhes se for filtrada
+              const detailsRow = row.nextElementSibling;
+              if (detailsRow && detailsRow.classList.contains("details")) {
+                detailsRow.style.display = text.includes(filter) ? "" : "none";
+              }
+            });
+          });
+        });
+      </script> 
 
     </section>
   </main>
