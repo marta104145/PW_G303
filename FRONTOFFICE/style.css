@@ -221,14 +221,10 @@ body {
 }
 
 .auditorias {
+  padding: 2em;
   background-color: #2e4e3f;
   color: white;
-  margin: 4em auto;
-  padding: 3em 2em;
-  border-radius: 30px;
-  width: 90%;
-  max-width: 1200px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-top: 80px; /* Distância do topo para a seção de auditorias */
 }
 
 .auditorias h2 {

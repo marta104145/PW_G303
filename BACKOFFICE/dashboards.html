@@ -134,6 +134,8 @@ createApp({
     const auditoriasResolvidas = ref([]);
     const materiaisDisponiveis = ref([]);
 
+    let materiaisChart = null;
+
     onMounted(() => {
       // Obter peritos guardados no localStorage
       const peritosGuardados = JSON.parse(localStorage.getItem('peritos')) || [];
@@ -186,23 +188,26 @@ createApp({
         options: { responsive: true }
       });
 
-      new Chart(document.getElementById('materiaisChart'), {
+      materiaisChart = new Chart(document.getElementById('materiaisChart'), {
         type: 'bar',
         data: {
-          labels: ['Cordas', 'Sinalização', 'Ferramentas', 'Placas', 'Produtos químicos'],
+          labels: materiaisDisponiveis.value.map(m => m.nome),
           datasets: [{
-            label: 'Materiais usados',
-            data: [50, 30, 20, 40, 25],
-            backgroundColor: [
-              '#2c5f2d', // Cordas
-              '#6fa26f', // Sinalização
-              '#99c199', // Ferramentas
-              '#244c23', // Placas
-              '#4d774e'  // Produtos químicos
-          ]
-          }]
-        },
-        options: { responsive: true }
+            label: 'Materiais disponíveis',
+            data: materiaisDisponiveis.value.map(m => m.quantidade),
+           backgroundColor: [
+             '#2c5f2d',
+             '#6fa26f',
+             '#99c199',
+             '#244c23',
+             '#4d774e',
+              '#88b378'
+            ]
+         }]
+       },
+       options: {
+          responsive: true
+       }
       });
 
       function animarContador(refVariavel, valorFinal, duracao = 1000) {
@@ -242,8 +247,14 @@ createApp({
         materiaisDisponiveis.value[materialSelecionado.value].quantidade = novaQuantidade.value;
         mostrarModal.value = false;
         localStorage.setItem("materiais", JSON.stringify(materiaisDisponiveis.value));
+
+        // Atualizar gráfico
+        if (materiaisChart) {
+          materiaisChart.data.datasets[0].data = materiaisDisponiveis.value.map(m => m.quantidade);
+          materiaisChart.update();
+        }
       }
-}
+    }
 
 return { ocorrencias, auditorias, custoMaterial, peritosDisponiveis, auditoriasResolvidas, materiaisDisponiveis,mostrarModal, materialSelecionado, novaQuantidade,abrirEdicao, fecharModal, guardarQuantidade};
 }
