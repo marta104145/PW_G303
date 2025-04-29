@@ -221,10 +221,14 @@ body {
 }
 
 .auditorias {
-  padding: 2em;
   background-color: #2e4e3f;
   color: white;
-  margin-top: 80px; /* Distância do topo para a seção de auditorias */
+  margin: 4em auto;
+  padding: 3em 2em;
+  border-radius: 30px;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .auditorias h2 {
@@ -332,4 +336,66 @@ body {
 .contactos img {
   max-width: 300px;
   margin-top: 1em;
+}
+
+.feedback {
+  background-color: #2e4e3f;
+  color: white;
+  padding: 4em 2em;
+  text-align: center;
+  border-radius: 30px;
+  margin: 4em auto;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.feedback h2 {
+  font-size: 2.5em;
+  margin-bottom: 2em;
+}
+
+.feedback-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin-bottom: 3em;
+}
+
+.feedback-card {
+  background-color: #3C5E4B;
+  padding: 2em;
+  border-radius: 15px;
+  width: 300px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.feedback-card p {
+  font-style: italic;
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+
+.feedback-card span {
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #d9d9d9;
+}
+
+.metricas {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 2em;
+}
+
+.metrica {
+  font-size: 1em;
+  line-height: 1.5em;
+}
+
+.metrica strong {
+  font-size: 1.5em;
+  display: block;
 }

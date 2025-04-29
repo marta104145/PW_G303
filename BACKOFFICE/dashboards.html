@@ -89,7 +89,10 @@
         <li v-for="(material, index) in materiaisDisponiveis" :key="index" class="flex items-center justify-between p-3 border rounded">
           <div class="flex items-center gap-3">
             <i :class="['fas', material.icone, 'text-[#2c5f2d]']"></i>
-            <span>{{ material.nome }}</span>
+            <span>
+              {{ material.nome }}
+              <span class="text-sm text-gray-400">({{ material.precoUnitario.toFixed(2) }} €)</span>
+            </span>
           </div>
           <div class="flex items-center gap-4">
             <span class="text-gray-600 font-semibold">{{ material.quantidade }}</span>
@@ -144,10 +147,10 @@ createApp({
       ];
 
       const defaultMateriais = [
-        { nome: "Cordas de segurança", quantidade: 15, icone: "fa-link" },
-        { nome: "Placas de aviso", quantidade: 8, icone: "fa-map-signs" },
-        { nome: "Produtos de limpeza", quantidade: 25, icone: "fa-spray-can" },
-        { nome: "Ferramentas", quantidade: 10, icone: "fa-tools" }
+        { nome: "Cordas de segurança", quantidade: 15, icone: "fa-link", precoUnitario: 2.5 },
+        { nome: "Placas de aviso", quantidade: 8, icone: "fa-map-signs", precoUnitario: 4.0 },
+        { nome: "Produtos de limpeza", quantidade: 25, icone: "fa-spray-can", precoUnitario: 1.75 },
+        { nome: "Ferramentas", quantidade: 10, icone: "fa-tools", precoUnitario: 12.0 }
       ];
 
       const guardados = JSON.parse(localStorage.getItem("materiais"));
