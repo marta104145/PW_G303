@@ -588,3 +588,38 @@ body {
   color: #2c5f2d;
   font-weight: bold;
 }
+
+.popup .ocorrencia-card {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.popup .ocorrencia-card div img {
+  margin-top: 0.5em;
+}
+
+.popup .ocorrencia-card div p.verde {
+  margin: 0;
+  font-size: 0.9em;
+  text-align: center;
+}
+.antes-depois {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1em;
+}
+
+.antes-depois > div {
+  text-align: center;
+}
+
+.antes-depois img {
+  width: 180px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+}

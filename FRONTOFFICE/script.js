@@ -70,3 +70,13 @@ function fecharPopup(id) {
     popup.style.display = "none";
   }
 }
+
+function filtrarOcorrencias(tipo) {
+  if (tipo === 'em aberto') {
+    document.getElementById("popup").style.display = "flex";
+  } else if (tipo === 'em análise') {
+    document.getElementById("popup-analise").style.display = "flex";
+  } else if (tipo === 'concluídas') {
+    document.getElementById("popup-concluidas").style.display = "flex";
+  }
+}
