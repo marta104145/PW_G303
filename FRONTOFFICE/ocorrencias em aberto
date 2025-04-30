@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Ocorrências em aberto</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ocorrências em Aberto</title>
+  <link rel="stylesheet" href="visual da pag o aberto.css" />
 </head>
 <body>
-  <div class="container">
+  <section class="ocorrencias-em-aberto">
     <h1>Ocorrências em aberto</h1>
 
-    <div class="card">
-      <div class="textos">
-        <p><span class="titulo">Ocorrência 1</span> - dd/mm/aaaa</p>
-        <p><strong>-Banco de jardim danificado</strong></p>
+    <div class="ocorrencia-card">
+      <div class="ocorrencia-texto">
+        <p><span class="ocorrencia-id">Ocorrência 1</span> - dd/mm/aaaa</p>
+        <p><strong>Banco de jardim danificado</strong></p>
         <p>Relato: Passeando pelo parque, vi que vários bancos estão partidos e impossíveis de usar, prejudicando o conforto dos visitantes.</p>
       </div>
-      <img src="banco.png" alt="Banco danificado">
+      <img src="ocorrencia 1.png" alt="Banco danificado" class="ocorrencia-img" />
     </div>
 
-    <div class="card">
-      <div class="textos">
-        <p><span class="titulo">Ocorrência 2</span> - dd/mm/aaaa</p>
-        <p><strong>-Lixo na floresta</strong></p>
+    <div class="ocorrencia-card">
+      <div class="ocorrencia-texto">
+        <p><span class="ocorrencia-id">Ocorrência 2</span> - dd/mm/aaaa</p>
+        <p><strong>Lixo na floresta</strong></p>
         <p>Relato: Quando cheguei à floresta reparei que ela estava cheia de lixo espalhado.</p>
       </div>
-      <img src="floresta.png" alt="Lixo na floresta">
+      <img src="ocorrencia 2.png" alt="Lixo na floresta" class="ocorrencia-img" />
     </div>
-  </div>
+  </section>
 </body>
 </html>
