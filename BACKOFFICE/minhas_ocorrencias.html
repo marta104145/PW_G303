@@ -9,6 +9,71 @@
   <link rel="stylesheet" href="css/style-user.css">
   <link rel="icon" type="image/png" href="images/logo.png">
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+  <style>
+    .card-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .card-text {
+      flex: 1;
+    }
+    .card-image {
+      max-width: 200px;
+      height: auto;
+      border-radius: 6px;
+    }
+    .card-buttons {
+      margin-top: 10px;
+    }
+    .card-buttons button {
+      margin-right: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .edit-btn { background-color: #007bff; color: #fff; }
+    .delete-btn { background-color: #dc3545; color: #fff; }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .modal-content input, .modal-content textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal-content h3 {
+      margin-top: 0;
+    }
+    .modal-buttons {
+      text-align: right;
+    }
+    .modal-buttons button {
+      margin-left: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -35,11 +100,27 @@
   </section>
 </main>
 
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h3>Editar Ocorrência</h3>
+    <input type="text" id="editTipo" placeholder="Tipo">
+    <input type="text" id="editMorada" placeholder="Morada">
+    <input type="text" id="editPostal" placeholder="Código Postal">
+    <textarea id="editDescricao" rows="4" placeholder="Descrição"></textarea>
+    <div class="modal-buttons">
+      <button onclick="fecharModal()">Cancelar</button>
+      <button onclick="guardarEdicao()">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <script>
+let ocorrenciaEditIndex = null;
+
 window.onload = function() {
   const token = sessionStorage.getItem("google_credential");
   if (!token) {
-    window.location.href = "/PW_G303/login.html";
+    window.location.href = "login.html";
     return;
   }
 
@@ -50,11 +131,12 @@ window.onload = function() {
   const minhasOcorrencias = todasOcorrencias.filter(o => o.userEmail === email);
 
   const listaDiv = document.getElementById("ocorrencias-lista");
+  listaDiv.innerHTML = "";
 
   if (minhasOcorrencias.length === 0) {
     listaDiv.innerHTML = "<p>Não existem ocorrências registadas.</p>";
   } else {
-    minhasOcorrencias.forEach(ocorrencia => {
+    minhasOcorrencias.forEach((ocorrencia, index) => {
       const ocorrenciaCard = document.createElement("div");
       ocorrenciaCard.style.background = "#fafafa";
       ocorrenciaCard.style.border = "1px solid #ddd";
@@ -62,18 +144,72 @@ window.onload = function() {
       ocorrenciaCard.style.padding = "20px";
       ocorrenciaCard.style.marginBottom = "20px";
 
+      const fotoHTML = ocorrencia.fotoBase64 ? `<img class='card-image' src="${ocorrencia.fotoBase64}" alt="Foto da ocorrência">` : "";
+
       ocorrenciaCard.innerHTML = `
-        <h3>${ocorrencia.tipo}</h3>
-        <p><strong>Morada:</strong> ${ocorrencia.morada}</p>
-        <p><strong>Código Postal:</strong> ${ocorrencia.codigoPostal}</p>
-        <p><strong>Descrição:</strong> ${ocorrencia.descricao}</p>
-        <p><strong>Data:</strong> ${new Date(ocorrencia.data).toLocaleString()}</p>
+        <div class="card-container">
+          <div class="card-text">
+            <h3>${ocorrencia.tipo}</h3>
+            <p><strong>Morada:</strong> ${ocorrencia.morada}</p>
+            <p><strong>Código Postal:</strong> ${ocorrencia.codigoPostal}</p>
+            <p><strong>Descrição:</strong> ${ocorrencia.descricao}</p>
+            <p><strong>Data:</strong> ${new Date(ocorrencia.data).toLocaleString()}</p>
+            <div class="card-buttons">
+              <button class="edit-btn" onclick="editarOcorrencia(${index})">Editar</button>
+              <button class="delete-btn" onclick="eliminarOcorrencia(${index})">Eliminar</button>
+            </div>
+          </div>
+          ${fotoHTML}
+        </div>
       `;
 
       listaDiv.appendChild(ocorrenciaCard);
     });
   }
 };
+
+function eliminarOcorrencia(index) {
+  const todas = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+  const token = sessionStorage.getItem("google_credential");
+  const email = jwt_decode(token).email;
+  const filtradas = todas.filter((o, i) => !(i === index && o.userEmail === email));
+  localStorage.setItem("ocorrencias", JSON.stringify(filtradas));
+  location.reload();
+}
+
+function editarOcorrencia(index) {
+  const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+  const ocorrencia = ocorrencias[index];
+  document.getElementById("editTipo").value = ocorrencia.tipo;
+  document.getElementById("editMorada").value = ocorrencia.morada;
+  document.getElementById("editPostal").value = ocorrencia.codigoPostal;
+  document.getElementById("editDescricao").value = ocorrencia.descricao;
+  ocorrenciaEditIndex = index;
+  document.getElementById("editModal").style.display = "flex";
+}
+
+function fecharModal() {
+  document.getElementById("editModal").style.display = "none";
+  ocorrenciaEditIndex = null;
+}
+
+function guardarEdicao() {
+  const tipo = document.getElementById("editTipo").value;
+  const morada = document.getElementById("editMorada").value;
+  const postal = document.getElementById("editPostal").value;
+  const descricao = document.getElementById("editDescricao").value;
+
+  const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+  if (ocorrenciaEditIndex !== null && ocorrencias[ocorrenciaEditIndex]) {
+    ocorrencias[ocorrenciaEditIndex].tipo = tipo;
+    ocorrencias[ocorrenciaEditIndex].morada = morada;
+    ocorrencias[ocorrenciaEditIndex].codigoPostal = postal;
+    ocorrencias[ocorrenciaEditIndex].descricao = descricao;
+    localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias));
+  }
+  fecharModal();
+  location.reload();
+}
 </script>
 
 </body>

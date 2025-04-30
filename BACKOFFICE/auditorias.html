@@ -55,6 +55,24 @@
           </tbody>
         </table>
       </div>
+
+      <div class="box">
+        <h2>Ocorrências Resolvidas</h2>
+        <table id="ocorrenciasResolvidas" class="table">
+          <thead>
+            <tr>
+              <th>Auditoria</th>
+              <th>Localização</th>
+              <th>Peritos Responsáveis</th>
+              <th>Data</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Auditorias concluídas serão inseridas aqui -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Formulário Modal para criar auditorias -->
@@ -107,6 +125,246 @@
         </div>
       </form>
     </div>
+
+    <script>
+      function abrirFormulario(btn) {
+        document.getElementById('modalFormulario').style.display = 'flex';
+        document.body.classList.add('modal-open');
+        window.ocorrenciaClicada = btn.closest('tr');
+        carregarMateriais();
+      }
+
+      function fecharFormulario() {
+        document.getElementById('modalFormulario').style.display = 'none';
+        document.body.classList.remove('modal-open');
+        document.getElementById('formAuditoria').reset();
+      }
+
+      document.getElementById('formAuditoria').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const dados = Object.fromEntries(new FormData(this));
+        // Extrair materiais e quantidades
+      const materiaisSelecionados = [];
+      document.querySelectorAll('#materiaisContainer input[type="number"]').forEach(input => {
+        const quantidade = parseInt(input.value);
+        if (quantidade > 0) {
+          materiaisSelecionados.push({
+            nome: input.dataset.nome,
+            quantidade
+          });
+        }
+      });
+      dados.materiais = materiaisSelecionados;
+        dados.dataFormatada = new Date(dados.data).toLocaleString();
+
+        const auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+        auditorias.push(dados);
+        localStorage.setItem('auditorias', JSON.stringify(auditorias));
+        gerarPDF(dados);
+
+        adicionarAuditoriaNaTabela(dados);
+        window.ocorrenciaClicada.remove();
+        fecharFormulario();
+      });
+
+      function removerAuditoria(btn) {
+        const detailsRow = btn.closest('tr');
+        const mainRow = [...document.querySelectorAll('.audit-row')].find(
+          row => row.nextElementSibling === detailsRow
+        );
+
+        if (mainRow && detailsRow) {
+          const nome = mainRow.querySelector('td').innerText; // assume-se que o nome é único
+
+          // Atualizar localStorage
+          let auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+          auditorias = auditorias.filter(a => a.nome !== nome);
+          localStorage.setItem('auditorias', JSON.stringify(auditorias));
+
+          // Remover do DOM
+          mainRow.remove();
+          detailsRow.remove();
+        }
+      }
+
+      function adicionarAuditoriaNaTabela(dados) {
+        const tbody = document.querySelector('#auditoriasRealizadas tbody');
+
+        const linha = document.createElement('tr');
+        linha.classList.add('audit-row');
+        linha.innerHTML = `
+          <td>${dados.nome}</td>
+          <td>${dados.local_nome}</td>
+          <td>${dados.equipa}</td>
+          <td>${dados.dataFormatada}</td>
+          <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
+        `;
+
+        const detalhes = document.createElement('tr');
+        detalhes.classList.add('details');
+        detalhes.innerHTML = `
+        <td colspan="5">
+          <strong>Descrição:</strong><br>${dados.descricao}<br><br>
+          <strong>Materiais:</strong><br>
+          <ul style="padding-left: 20px; margin-top: 5px;">
+            ${dados.materiais.map(m => `<li>${m.nome}: ${m.quantidade}</li>`).join('')}
+          </ul><br>
+          <strong>N.º de Profissionais Necessários:</strong> ${dados.nr_profissionais}<br><br>
+          <strong>Duração Estimada:</strong> ${dados.duracao} horas<br><br>
+          <div class="actions">
+            <button class="remove" onclick="removerAuditoria(this)">Remover</button>
+            <button class="concluir" onclick="concluirAuditoria(this)">Concluir</button>
+          </div>
+        </td>
+    `;
+
+        tbody.appendChild(linha);
+        tbody.appendChild(detalhes);
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const guardadas = JSON.parse(localStorage.getItem('auditorias')) || [];
+        guardadas.forEach(adicionarAuditoriaNaTabela);
+        const resolvidasGuardadas = JSON.parse(localStorage.getItem('resolvidas')) || [];
+        resolvidasGuardadas.forEach(adicionarOcorrenciaResolvida);
+      });
+
+      function carregarMateriais() {
+        const container = document.getElementById("materiaisContainer");
+        const materiais = JSON.parse(localStorage.getItem("materiais")) || [];
+
+        container.innerHTML = ""; // limpa anteriores
+
+        materiais.forEach((material, index) => {
+          const div = document.createElement("div");
+          div.style.marginBottom = "10px";
+
+          div.innerHTML = `
+            <label style="font-weight: bold;">${material.nome} (${material.quantidade} disponíveis):</label>
+            <input type="number" name="materiais[${index}].quantidade" 
+                max="${material.quantidade}" min="0" value="0" 
+                data-nome="${material.nome}" 
+                placeholder="0" style="width: 60px; margin-left: 10px;">
+            `;
+
+        container.appendChild(div);
+      });
+      }
+
+      document.getElementById('searchInput').addEventListener('input', function () {
+        const filtro = this.value.toLowerCase();
+        const linhas = document.querySelectorAll('#auditoriasRealizadas tbody .audit-row');
+
+        linhas.forEach(linha => {
+          const texto = linha.textContent.toLowerCase();
+          const detalhes = linha.nextElementSibling;
+
+          const visivel = texto.includes(filtro);
+          linha.style.display = visivel ? '' : 'none';
+
+          // Esconde também os detalhes se a linha for ocultada
+          if (detalhes && detalhes.classList.contains('details')) {
+            detalhes.style.display = visivel ? '' : 'none';
+          }
+        });
+      });
+      
+      function gerarPDF(dados) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const materiais = dados.materiais || [];
+        const precos = {
+          "Cordas de segurança": 2.5,
+          "Placas de aviso": 4.0,
+          "Produtos de limpeza": 1.75,
+         "Ferramentas": 12.0
+        };
+
+        let custoMateriais = 0;
+        const materiaisTexto = materiais.map(m => {
+          const preco = precos[m.nome] || 0;
+          const total = m.quantidade * preco;
+          custoMateriais += total;
+          return `${m.nome}: ${m.quantidade} × ${preco.toFixed(2)}€ = ${total.toFixed(2)}€`;
+        }).join('\n');
+
+        const custoProfissionais = (parseInt(dados.nr_profissionais) || 0) * 7 * (parseInt(dados.duracao) || 0);
+        const custoTotal = custoMateriais + custoProfissionais;
+
+        doc.setFontSize(14);
+        doc.text("Relatório de Auditoria", 20, 20);
+
+        doc.setFontSize(10);
+        doc.text(`Nome: ${dados.nome}`, 20, 30);
+        doc.text(`Origem: ${dados.origem}`, 20, 36);
+        doc.text(`Descrição: ${dados.descricao}`, 20, 42);
+        doc.text(`Tipo: ${dados.tipo}`, 20, 48);
+        doc.text(`Rua: ${dados.local_nome}`, 20, 54);
+        doc.text(`Código Postal: ${dados.local_tipo}`, 20, 60);
+        doc.text(`Peritos Responsáveis: ${dados.equipa}`, 20, 66);
+        doc.text(`N.º de Profissionais: ${dados.nr_profissionais}`, 20, 72);
+        doc.text(`Duração Estimada: ${dados.duracao} horas`, 20, 78);
+        doc.text(`Data: ${dados.dataFormatada}`, 20, 84);
+
+        doc.text("Materiais Utilizados:", 20, 94);
+        const materiaisFormatados = doc.splitTextToSize(materiaisTexto || "Nenhum", 170);
+        doc.text(materiaisFormatados, 25, 100);
+
+        doc.text(`\nCusto Materiais: ${custoMateriais.toFixed(2)} €`, 20, 130);
+        doc.text(`Custo Profissionais: ${custoProfissionais.toFixed(2)} €`, 20, 136);
+        doc.text(`Custo Total: ${custoTotal.toFixed(2)} €`, 20, 142);
+
+        doc.save(`Orçamento_${dados.nome.replace(/\s+/g, '_')}.pdf`);
+      }
+
+      function concluirAuditoria(btn) {
+        const detailsRow = btn.closest('tr');
+        const mainRow = [...document.querySelectorAll('.audit-row')].find(
+          row => row.nextElementSibling === detailsRow
+        );
+
+        if (mainRow && detailsRow) {
+          const nome = mainRow.cells[0].innerText;
+          const local_nome = mainRow.cells[1].innerText;
+          const equipa = mainRow.cells[2].innerText;
+          const dataFormatada = mainRow.cells[3].innerText;
+
+          const dados = { nome, local_nome, equipa, dataFormatada };
+
+          // ➕ Adicionar a resolvidas
+          const resolvidas = JSON.parse(localStorage.getItem('resolvidas')) || [];
+          resolvidas.push(dados);
+          localStorage.setItem('resolvidas', JSON.stringify(resolvidas));
+          adicionarOcorrenciaResolvida(dados);
+
+          // ➖ Remover do localStorage das auditorias
+          let auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+          auditorias = auditorias.filter(a => !(a.nome === nome && a.local_nome === local_nome));
+          localStorage.setItem('auditorias', JSON.stringify(auditorias));
+
+          // ➖ Remover do DOM
+          mainRow.remove();
+          detailsRow.remove();
+        }
+      }
+
+      function adicionarOcorrenciaResolvida(dados) {
+        const tbody = document.querySelector('#ocorrenciasResolvidas tbody');
+
+        const linha = document.createElement('tr');
+        linha.innerHTML = `
+          <td>${dados.nome}</td>
+          <td>${dados.local_nome}</td>
+          <td>${dados.equipa}</td>
+          <td>${dados.dataFormatada}</td>
+          <td></td>
+        `;
+
+        tbody.appendChild(linha);
+      }
+    </script>
   </main>
 </body>
 </html>

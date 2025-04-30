@@ -41,5 +41,17 @@ function scrollToSobre() {
 
 // Ocorrências
 function filtrarOcorrencias(tipo) {
-  alert("A filtrar ocorrências: " + tipo);
+  if (tipo === 'em aberto') {
+    const popup = document.getElementById("popup");
+    if (popup) {
+      popup.style.display = "flex";
+    }
+  }
+}
+
+function fecharPopup() {
+  const popup = document.getElementById("popup");
+  if (popup) {
+    popup.style.display = "none";
+  }
 }
