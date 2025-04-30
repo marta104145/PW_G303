@@ -448,3 +448,73 @@ body {
   vertical-align: middle;
   margin-top: -2px;
 }
+
+/* Fundo escuro por trás do popup */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caixa principal do popup */
+.popup-content {
+  background-color: #f2f2f2;
+  padding: 2em;
+  border-radius: 30px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+/* Botão de fechar */
+.close-btn {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  font-size: 2em;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Cartões de ocorrência */
+.ocorrencia-card {
+  display: flex;
+  justify-content: space-between;
+  background-color: #d9d9d9;
+  border-radius: 15px;
+  padding: 1.5em;
+  margin-bottom: 1.5em;
+  gap: 2em;
+  align-items: center;
+}
+
+/* Imagem da ocorrência */
+.ocorrencia-card img {
+  width: 220px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Texto da ocorrência */
+.ocorrencia-card .texto {
+  flex: 1;
+  text-align: left;
+}
+
+/* Estilo do texto "Ocorrência X" */
+.verde {
+  color: #2c5f2d;
+  font-weight: bold;
+}
