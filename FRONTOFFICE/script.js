@@ -55,3 +55,18 @@ function fecharPopup() {
     popup.style.display = "none";
   }
 }
+
+function filtrarOcorrencias(tipo) {
+  if (tipo === 'em aberto') {
+    document.getElementById("popup").style.display = "flex";
+  } else if (tipo === 'em análise') {
+    document.getElementById("popup-analise").style.display = "flex";
+  }
+}
+
+function fecharPopup(id) {
+  const popup = document.getElementById(id);
+  if (popup) {
+    popup.style.display = "none";
+  }
+}

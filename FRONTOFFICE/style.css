@@ -219,7 +219,7 @@ section {
   margin-top: 40px; 
 }
 
-
+/* Estilos gerais para o body */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -228,14 +228,14 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  padding-top: 70px; /* Espaçamento superior */
 }
 
+/* Estilo para a seção Auditorias */
 .auditorias {
   padding: 2em;
-  background-color: #2e4e3f;
+  background-color: #3C5E4B;
   color: white;
-  margin-top: 80px; /* Distância do topo para a seção de auditorias */
+  margin-top: 80px;
 }
 
 .auditorias h2 {
@@ -245,14 +245,16 @@ body {
   margin-left: 30px;
 }
 
+/* Layout da auditoria-content */
 .auditoria-content {
   display: flex;
   justify-content: space-between;
   gap: 2em;
-  flex-wrap: wrap;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
+/* Lista de auditorias */
 .auditoria-content ul {
   padding-left: 0;
   list-style: none;
@@ -260,39 +262,21 @@ body {
   max-width: 600px;
 }
 
-.auditoria-content ul li {
-  background-color: #2e4e3f;
-  margin-bottom: 1em;
-  padding: 1em;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.auditoria-content ul li strong {
-  font-size: 1.2em;
-  display: block;
-  margin-bottom: 0.5em;
-}
-
-.auditoria-content ul li p {
-  font-size: 1em;
-  margin: 0;
-}
-
+/* Caixa do mapa das auditorias */
 .map-container {
   flex: 1;
-  max-width: 500px;
-}
-
-.auditoria-content img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
+  width: 60%;  /* Ajusta o tamanho do mapa */
+  height: 450px;  /* Altura do mapa */
+  background-color: white;
+  border: 7px solid white;
+  border-radius: 2px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 1em;
 }
 
+/* Estilo para a seção Ocorrências */
 .ocorrencias {
-  background-color: #f2f2f2;  /* Cor de fundo */
+  background-color: #f2f2f2;
   padding: 2em;
 }
 
@@ -303,34 +287,50 @@ body {
   margin-bottom: 1em;
 }
 
+/* Layout da seção de ocorrências */
 .ocorrencias-content {
   display: flex;
-  justify-content: flex-start; /* Alinha os botões à direita */
-  gap: 2em;  /* Espaço entre os botões */
+  justify-content: space-between; /* Alinha os botões à esquerda */
+  gap: 2em;
+  align-items: flex-start;
 }
 
+/* Estilo para os botões */
 .buttons-container {
   display: flex;
   flex-direction: column;
-  gap: 2em;  /* Espaçamento entre os botões */
+  gap: 2em;
 }
 
 .buttons-container button {
-  font-size: 1.1em; /* Ajuste o tamanho conforme necessário */
-  padding: 1.8em; /* Aumenta o tamanho dos botões */
+  font-size: 1.5em;
+  padding: 1.8em;
   background-color: #3C5E4B;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.3s ease; /* Transição para o aumento de tamanho */
-  width: 400px;  /* Ajuste da largura para um botão maior */
+  transition: transform 0.3s ease;
+  width: 400px;
 }
 
 .buttons-container button:hover {
-  transform: scale(1.1); /* Aumenta o tamanho do botão para 110% */
-  background-color: #2e4e3f;  /* Altera a cor ao passar o mouse */
+  transform: scale(1.1);
+  background-color: #2e4e3f;
 }
+
+/* Caixa do mapa das ocorrências */
+#ocorrencias-map {
+  width: 60%; /* Ajusta o tamanho do mapa */
+  height: 450px; /* Altura do mapa */
+  background-color: white;
+  border: 11px solid #2e4e3f;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 1em;
+}
+
+
 
 .feedback {
   background-color: #2e4e3f;
@@ -447,6 +447,76 @@ body {
   flex-shrink: 0; /* ícone nunca encolhe */
   vertical-align: middle;
   margin-top: -2px;
+}
+
+/* Fundo escuro por trás do popup */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caixa principal do popup */
+.popup-content {
+  background-color: #f2f2f2;
+  padding: 2em;
+  border-radius: 30px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+/* Botão de fechar */
+.close-btn {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  font-size: 2em;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Cartões de ocorrência */
+.ocorrencia-card {
+  display: flex;
+  justify-content: space-between;
+  background-color: #d9d9d9;
+  border-radius: 15px;
+  padding: 1.5em;
+  margin-bottom: 1.5em;
+  gap: 2em;
+  align-items: center;
+}
+
+/* Imagem da ocorrência */
+.ocorrencia-card img {
+  width: 220px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Texto da ocorrência */
+.ocorrencia-card .texto {
+  flex: 1;
+  text-align: left;
+}
+
+/* Estilo do texto "Ocorrência X" */
+.verde {
+  color: #2c5f2d;
+  font-weight: bold;
 }
 
 /* Fundo escuro por trás do popup */
