@@ -173,7 +173,16 @@
         const mainRow = [...document.querySelectorAll('.audit-row')].find(
           row => row.nextElementSibling === detailsRow
         );
+
         if (mainRow && detailsRow) {
+          const nome = mainRow.querySelector('td').innerText; // assume-se que o nome é único
+
+          // Atualizar localStorage
+          let auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+          auditorias = auditorias.filter(a => a.nome !== nome);
+          localStorage.setItem('auditorias', JSON.stringify(auditorias));
+
+          // Remover do DOM
           mainRow.remove();
           detailsRow.remove();
         }
@@ -208,7 +217,7 @@
             <button class="concluir" onclick="concluirAuditoria(this)">Concluir</button>
           </div>
         </td>
-      `;
+    `;
 
         tbody.appendChild(linha);
         tbody.appendChild(detalhes);
@@ -313,27 +322,33 @@
       function concluirAuditoria(btn) {
         const detailsRow = btn.closest('tr');
         const mainRow = [...document.querySelectorAll('.audit-row')].find(
-        row => row.nextElementSibling === detailsRow
+          row => row.nextElementSibling === detailsRow
         );
 
         if (mainRow && detailsRow) {
-          const dados = {
-            nome: mainRow.cells[0].innerText,
-            local_nome: mainRow.cells[1].innerText,
-            equipa: mainRow.cells[2].innerText,
-            dataFormatada: mainRow.cells[3].innerText,
-          };
+          const nome = mainRow.cells[0].innerText;
+          const local_nome = mainRow.cells[1].innerText;
+          const equipa = mainRow.cells[2].innerText;
+          const dataFormatada = mainRow.cells[3].innerText;
 
-          // Guardar em localStorage
+          const dados = { nome, local_nome, equipa, dataFormatada };
+
+          // ➕ Adicionar a resolvidas
           const resolvidas = JSON.parse(localStorage.getItem('resolvidas')) || [];
           resolvidas.push(dados);
           localStorage.setItem('resolvidas', JSON.stringify(resolvidas));
-
           adicionarOcorrenciaResolvida(dados);
+
+          // ➖ Remover do localStorage das auditorias
+          let auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+          auditorias = auditorias.filter(a => !(a.nome === nome && a.local_nome === local_nome));
+          localStorage.setItem('auditorias', JSON.stringify(auditorias));
+
+          // ➖ Remover do DOM
           mainRow.remove();
           detailsRow.remove();
         }
-      }   
+      }
 
       function adicionarOcorrenciaResolvida(dados) {
         const tbody = document.querySelector('#ocorrenciasResolvidas tbody');
