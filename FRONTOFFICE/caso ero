@@ -1,4 +1,4 @@
-ultimo codigo do frontofice que tava a funcionar sem os mapas e os botoes das ocorrencias (parte da alfaias)
+ultimo codigo funcional
 
 <!DOCTYPE html>
 <html lang="pt">
@@ -102,44 +102,66 @@ ultimo codigo do frontofice que tava a funcionar sem os mapas e os botoes das oc
   <section class="auditorias" id="auditorias">
     <h2>Auditorias</h2>
     <div class="auditoria-content">
-      <ul id="auditorias-list">
-        <li>
-          <strong>Auditoria 1 - dd/mm/aaaa</strong>
-          <p>Avaliação da manutenção do parque de São Mamede</p>
-        </li>
-        <li>
-          <strong>Auditoria 2 - dd/mm/aaaa</strong>
-          <p>Inspeção do Estado de Manutenção do Parque da Cidade</p>
-        </li>
-        <li>
-          <strong>Auditoria 3 - dd/mm/aaaa</strong>
-          <p>Verificação de erosão do solo</p>
-        </li>
-        <li>
-          <strong>Auditoria 4 - dd/mm/aaaa</strong>
-          <p>Inspeção de Árvores em Risco de Queda</p>
-        </li>
-        <li>
-          <strong>Auditoria 5 - dd/mm/aaaa</strong>
-          <p>Verificação de erosão do solo</p>
-        </li>
-      </ul>
-      <div class="map-container">
-        <img src="img/mapa-auditorias.png" alt="Mapa auditorias" />
+      <div class="auditorias-list">
+        <ul id="auditorias-list">
+          <li>
+            <strong>Auditoria 1 - dd/mm/aaaa</strong>
+            <p>Avaliação da manutenção do parque de São Mamede</p>
+          </li>
+          <li>
+            <strong>Auditoria 2 - dd/mm/aaaa</strong>
+            <p>Inspeção do Estado de Manutenção do Parque da Cidade</p>
+          </li>
+          <li>
+            <strong>Auditoria 3 - dd/mm/aaaa</strong>
+            <p>Verificação de erosão do solo</p>
+          </li>
+          <li>
+            <strong>Auditoria 4 - dd/mm/aaaa</strong>
+            <p>Inspeção de Árvores em Risco de Queda</p>
+          </li>
+          <li>
+            <strong>Auditoria 5 - dd/mm/aaaa</strong>
+            <p>Verificação de erosão do solo</p>
+          </li>
+        </ul>
       </div>
+      <!-- Mapa das Auditorias -->
+      <div class="map-container" id="auditoria-map"></div>
     </div>
   </section>
   
-
   <section class="ocorrencias" id="ocorrencias">
     <h2>Ocorrências</h2>
-    <img src="img/mapa-ocorrencias.png" alt="Mapa ocorrências" />
-    <div class="botoes">
-      <button onclick="filtrarOcorrencias('em aberto')">Ver ocorrências em aberto</button>
-      <button onclick="filtrarOcorrencias('em análise')">Ver ocorrências em análise</button>
-      <button onclick="filtrarOcorrencias('concluídas')">Ver ocorrências concluídas</button>
+    <div class="ocorrencias-content">
+      <div class="buttons-container">
+        <button onclick="filtrarOcorrencias('em aberto')">Ver ocorrências em aberto</button>
+        <button onclick="filtrarOcorrencias('em análise')">Ver ocorrências em análise</button>
+        <button onclick="filtrarOcorrencias('concluídas')">Ver ocorrências concluídas</button>
+      </div>
+      <!-- Mapa das Ocorrências -->
+      <div class="map-container" id="ocorrencias-map"></div>
     </div>
   </section>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap" async defer></script>
+  <script>
+    function initMap() {
+      // Mapa das Auditorias
+      const auditoriaMap = new google.maps.Map(document.getElementById("auditoria-map"), {
+        center: { lat: -33.8688, lng: 151.2093 }, // Coords iniciais de exemplo
+        zoom: 12,
+      });
+  
+      // Mapa das Ocorrências
+      const ocorrenciasMap = new google.maps.Map(document.getElementById("ocorrencias-map"), {
+        center: { lat: -33.8688, lng: 151.2093 }, // Coords iniciais de exemplo
+        zoom: 12,
+      });
+    }
+  </script>
+  
+  
 
   
   <section class="feedback" id="feedback">
@@ -180,7 +202,6 @@ ultimo codigo do frontofice que tava a funcionar sem os mapas e os botoes das oc
       </div>
     </div>
   </section>
-
   <!-- POPUP OCORRÊNCIAS EM ABERTO -->
   <div id="popup" class="popup">
     <div class="popup-content">
@@ -210,6 +231,82 @@ ultimo codigo do frontofice que tava a funcionar sem os mapas e os botoes das oc
   <script src="script.js"></script>
 </body>
 </html>
+
+<!-- POPUP OCORRÊNCIAS EM ANÁLISE -->
+<div id="popup-analise" class="popup">
+  <div class="popup-content">
+    <span class="close-btn" onclick="fecharPopup('popup-analise')">&times;</span>
+    <h2>Ocorrências em análise</h2>
+
+    <div class="ocorrencia-card">
+      <div class="texto">
+        <p><span class="verde">Ocorrência 1</span> - dd/mm/aaaa</p>
+        <p><strong>-Banco de jardim danificado</strong></p>
+        <p>Relato: Passeando pelo parque, vi que vários bancos estão partidos e impossíveis de usar.</p>
+        <p>Estado: Especialistas chegam a dd/mm.</p>
+      </div>
+      <img src="banco-danificado.png" alt="Banco danificado">
+    </div>
+
+    <div class="ocorrencia-card">
+      <div class="texto">
+        <p><span class="verde">Ocorrência 2</span> - dd/mm/aaaa</p>
+        <p><strong>-Lixo na floresta</strong></p>
+        <p>Relato: Quando cheguei à floresta reparei que ela estava cheia de lixo espalhado.</p>
+        <p>Estado: Relato confirmado.<br>Equipa de limpeza chega a dd/mm.</p>
+      </div>
+      <img src="lixo-floresta.jpg" alt="Lixo na floresta">
+    </div>
+  </div>
+</div>
+
+<!-- POPUP OCORRÊNCIAS CONCLUÍDAS -->
+<div id="popup-concluidas" class="popup">
+  <div class="popup-content">
+    <span class="close-btn" onclick="fecharPopup('popup-concluidas')">&times;</span>
+    <h2>Ocorrências concluídas</h2>
+
+    <!-- Ocorrência 1 -->
+    <div class="ocorrencia-card">
+      <div class="texto">
+        <p><span class="verde">Ocorrência 1</span> - dd/mm/aaaa</p>
+        <p><strong>-Rio poluído</strong></p>
+        <p>Relato: Hoje a passear à beira do rio…</p>
+        <p>Estado: Relato confirmado.<br>Tratamento da água realizado a dd/mm.</p>
+      </div>
+      <div class="antes-depois">
+        <div>
+          <p class="verde">Antes</p>
+          <img src="banco-danificado.png" alt="Antes - Banco danificado">
+        </div>
+        <div>
+          <p class="verde">Depois</p>
+          <img src="banco arranjado.png" alt="Depois - Banco novo">
+        </div>
+      </div>
+    </div>
+
+    <!-- Ocorrência 2 -->
+    <div class="ocorrencia-card">
+      <div class="texto">
+        <p><span class="verde">Ocorrência 2</span> - dd/mm/aaaa</p>
+        <p><strong>-Lixo na floresta</strong></p>
+        <p>Relato: Quando cheguei à floresta…</p>
+        <p>Estado: Relato confirmado.<br>Limpeza da floresta realizada a dd/mm.</p>
+      </div>
+      <div class="antes-depois">
+        <div>
+          <p class="verde">Antes</p>
+          <img src="lixo-floresta.jpg" alt="Antes - Lixo na floresta">
+        </div>
+        <div>
+          <p class="verde">Depois</p>
+          <img src="floresta sem lixo.png" alt="Depois - Floresta limpa">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
