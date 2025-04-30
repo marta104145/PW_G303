@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/style-user.css">
   <link rel="icon" type="image/png" href="images/logo.png">
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-  <style>
+<style>
     .alert {
       display: none;
       position: fixed;
@@ -24,18 +24,16 @@
       z-index: 2000;
       font-size: 16px;
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.3s ease;
     }
-
     .alert.show {
       display: block;
       opacity: 1;
     }
-  </style>
+</style>
 </head>
 
 <body>
-
   <div class="alert" id="alertMessage"></div>
 
   <header class="header">
@@ -82,8 +80,7 @@
         }
       </script>
 
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap"
-        async defer></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap" async defer></script>
     </section>
   </main>
 
@@ -156,7 +153,6 @@
     submitBtn.onclick = function () {
       const tipoSelect = document.getElementById("tipo");
       const tipo = tipoSelect.options[tipoSelect.selectedIndex].text;
-
       const location = document.getElementById("location").value.trim();
       const postal = document.getElementById("postal").value.trim();
       const description = document.getElementById("description").value.trim();
@@ -198,7 +194,7 @@
             userEmail: email,
             userName: nome,
             data: new Date().toISOString(),
-            photo: photoBase64
+            fotoBase64: photoBase64 // <-- Nome correto aqui
           };
 
           let ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
@@ -216,9 +212,6 @@
         showAlert("Erro: Utilizador não autenticado.");
       }
     };
-
   </script>
-
 </body>
-
 </html>
