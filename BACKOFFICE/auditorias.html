@@ -199,16 +199,16 @@
           <strong>Descrição:</strong><br>${dados.descricao}<br><br>
           <strong>Materiais:</strong><br>
           <ul style="padding-left: 20px; margin-top: 5px;">
-          ${dados.materiais.map(m => `<li>${m.nome}: ${m.quantidade}</li>`).join('')}
+            ${dados.materiais.map(m => `<li>${m.nome}: ${m.quantidade}</li>`).join('')}
           </ul><br>
           <strong>N.º de Profissionais Necessários:</strong> ${dados.nr_profissionais}<br><br>
           <strong>Duração Estimada:</strong> ${dados.duracao} horas<br><br>
           <div class="actions">
-          <button class="remove" onclick="removerAuditoria(this)">Remover</button>
-          <button class="edit" onclick="concluirAuditoria(this)">Concluir</button>
+            <button class="remove" onclick="removerAuditoria(this)">Remover</button>
+            <button class="concluir" onclick="concluirAuditoria(this)">Concluir</button>
           </div>
         </td>
-        `;
+      `;
 
         tbody.appendChild(linha);
         tbody.appendChild(detalhes);

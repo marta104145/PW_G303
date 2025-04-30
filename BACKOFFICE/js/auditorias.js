@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </ul><br>
         <strong>N.º de Profissionais Necessários:</strong> ${dados.nr_profissionais}<br><br>
         <strong>Duração Estimada:</strong> ${dados.duracao} horas<br><br>
+        <div class="actions">
+          <button class="remove" onclick="removerAuditoria(this)">Remover</button>
+          <button class="concluir" onclick="concluirAuditoria(this)">Concluir</button>
+        </div>
       </td>
     `;
   
