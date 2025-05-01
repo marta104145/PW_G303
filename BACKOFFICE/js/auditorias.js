@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function carregarAuditoriasRealizadas() {
+    const tbody = document.querySelector('#auditoriasRealizadas tbody');
+    tbody.innerHTML = ''; // 🧹 limpar antes de adicionar
     const auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
     auditorias.forEach(adicionarAuditoriaNaTabela);
   }

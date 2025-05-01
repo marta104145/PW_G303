@@ -45,7 +45,7 @@
             <tr>
               <th>Auditoria</th>
               <th>Localização</th>
-              <th>Peritos Responsáveis</th>
+              <th>Perito Responsável</th>
               <th>Data</th>
               <th></th>
             </tr>
@@ -63,7 +63,7 @@
             <tr>
               <th>Auditoria</th>
               <th>Localização</th>
-              <th>Peritos Responsáveis</th>
+              <th>Perito Responsável</th>
               <th>Data</th>
               <th></th>
             </tr>
@@ -104,7 +104,7 @@
           <input type="text" name="local_tipo" required>
         </fieldset>
 
-        <label>Peritos Responsáveis:</label>
+        <label>Perito Responsável:</label>
         <input type="text" name="equipa" required>
 
         <label>N.º de Profissionais Necessários:</label>
@@ -156,15 +156,43 @@
         }
       });
       dados.materiais = materiaisSelecionados;
-        dados.dataFormatada = new Date(dados.data).toLocaleString();
+      dados.dataFormatada = new Date(dados.data).toLocaleString();
 
-        const auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+      // Verificar duplicados ANTES de guardar
+      const auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+      const existe = auditorias.some(a =>
+        a.nome === dados.nome &&
+        a.local_nome === dados.local_nome &&
+        a.dataFormatada === dados.dataFormatada
+      );
+
+      if (!existe) {
         auditorias.push(dados);
         localStorage.setItem('auditorias', JSON.stringify(auditorias));
-        gerarPDF(dados);
-
         adicionarAuditoriaNaTabela(dados);
+        gerarPDF(dados);
+      }
+
         window.ocorrenciaClicada.remove();
+        // Remover do localStorage (ocorrenciasAceites)
+        const linha = window.ocorrenciaClicada;
+        const tipo = linha.cells[0].innerText;
+        const morada = linha.cells[1].innerText;
+        const userName = linha.cells[2].innerText;
+        const data = linha.cells[3].innerText;
+
+        let aceites = JSON.parse(localStorage.getItem('ocorrenciasAceites')) || [];
+        aceites = aceites.filter(o => {
+          const dataFormatada = new Date(o.data).toLocaleDateString();
+          return (
+            o.tipo !== tipo ||
+            o.morada !== morada ||
+            o.userName !== userName ||
+            dataFormatada !== data
+          );
+        });
+        localStorage.setItem('ocorrenciasAceites', JSON.stringify(aceites));
+
         fecharFormulario();
       });
 
@@ -303,7 +331,7 @@
         doc.text(`Tipo: ${dados.tipo}`, 20, 48);
         doc.text(`Rua: ${dados.local_nome}`, 20, 54);
         doc.text(`Código Postal: ${dados.local_tipo}`, 20, 60);
-        doc.text(`Peritos Responsáveis: ${dados.equipa}`, 20, 66);
+        doc.text(`Perito Responsável: ${dados.equipa}`, 20, 66);
         doc.text(`N.º de Profissionais: ${dados.nr_profissionais}`, 20, 72);
         doc.text(`Duração Estimada: ${dados.duracao} horas`, 20, 78);
         doc.text(`Data: ${dados.dataFormatada}`, 20, 84);
