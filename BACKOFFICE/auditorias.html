@@ -370,9 +370,15 @@
           const nome = mainRow.cells[0].innerText;
           const local_nome = mainRow.cells[1].innerText;
           const equipa = mainRow.cells[2].innerText;
-          const dataFormatada = mainRow.cells[3].innerText;
-
-          const dados = { nome, local_nome, equipa, dataFormatada };
+          const dataText = mainRow.cells[3].innerText;
+          const data = new Date(dataText);
+          const dados = {
+            nome,
+            local_nome,
+            equipa,
+            dataFormatada: dataText,
+            dataISO: data.toISOString()
+          };
 
           // ➕ Adicionar a resolvidas
           const resolvidas = JSON.parse(localStorage.getItem('resolvidas')) || [];
