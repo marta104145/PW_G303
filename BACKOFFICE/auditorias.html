@@ -169,6 +169,19 @@
       if (!existe) {
         auditorias.push(dados);
         localStorage.setItem('auditorias', JSON.stringify(auditorias));
+          let materiaisArmazem = JSON.parse(localStorage.getItem("materiais")) || [];
+
+          dados.materiais.forEach(usado => {
+            const index = materiaisArmazem.findIndex(m => m.nome === usado.nome);
+            if (index !== -1) {
+              materiaisArmazem[index].quantidade -= usado.quantidade;
+              if (materiaisArmazem[index].quantidade < 0) {
+                materiaisArmazem[index].quantidade = 0;
+              }
+            }
+          });
+
+        localStorage.setItem("materiais", JSON.stringify(materiaisArmazem));
         adicionarAuditoriaNaTabela(dados);
         gerarPDF(dados);
       }
