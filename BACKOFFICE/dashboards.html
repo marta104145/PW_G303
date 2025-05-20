@@ -172,7 +172,7 @@ createApp({
       // Criar contagem mensal de ocorrências resolvidas
       const ocorrenciasPorMes = Array(12).fill(0);
       resolvidas.forEach(o => {
-        const data = new Date(o.dataFormatada);
+        const data = new Date(o.dataISO || o.dataFormatada);
         const mes = data.getMonth(); // 0 = Janeiro
         ocorrenciasPorMes[mes]++;
       });

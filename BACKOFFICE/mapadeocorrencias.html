@@ -8,42 +8,51 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/mapa.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <link rel="icon" type="image/png" href="images/logo.png">
 </head>
 
 <body>
     <div id="header-container"></div>
     <div id="map"></div>
-    <div class="search-box" id="search-box">
-        <input type="text" id="search-input" placeholder="Pesquisar localização...">
-    </div>
-    <button class="search-button" id="toggle-search">
-        <i class="fas fa-search"></i>
+
+    <!-- Botão de filtro -->
+    <button class="menu-button" id="open-filter-menu" title="Filtrar">
+        <i class="fas fa-filter"></i>
     </button>
 
-    <script>
-        function initMap() {
-            const centro = { lat: 41.450491, lng: -8.294101 };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: centro,
-                zoom: 12,
-            });
+    <!-- Modal/Menu de Filtros -->
+    <div class="filter-modal" id="filter-modal">
+        <div class="filter-content">
+            <h3><i class="fas fa-sliders-h"></i> Filtros de Ocorrências</h3>
+            <label>Data de:</label>
+            <input type="date" id="filter-date-from">
+            <label>até</label>
+            <input type="date" id="filter-date-to">
+            <label>Estado:</label>
+            <select id="filter-estado">
+                <option value="">Todos</option>
+                <option value="Aceite">Aceite</option>
+                <option value="Não aceite">Não Aceite</option>
+                <option value="Devolvido">Devolvido</option>
+            </select>
+            <label>Cidade:</label>
+            <div class="city-autocomplete">
+                <input type="text" id="filter-cidade" placeholder="Escreve ou seleciona uma cidade" autocomplete="off">
+                <div id="city-list" class="city-list"></div>
+            </div>
 
-
-            const marker = new google.maps.Marker({
-                position: centro,
-                map: map,
-                title: "Estou aqui!"
-            });
-        }
-    </script>
+            <datalist id="cidade-sugestoes"></datalist>
+            <div class="filter-actions">
+                <button id="apply-filter"><i class="fas fa-check"></i> Aplicar</button>
+                <button id="close-filter" type="button"><i class="fas fa-times"></i> Fechar</button>
+            </div>
+        </div>
+    </div>
 
     <script src="js/mapa.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap"
         async defer></script>
     <script src="js/loadHeader.js"></script>
-
 </body>
 
 </html>

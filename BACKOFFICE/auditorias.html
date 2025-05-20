@@ -169,6 +169,19 @@
       if (!existe) {
         auditorias.push(dados);
         localStorage.setItem('auditorias', JSON.stringify(auditorias));
+          let materiaisArmazem = JSON.parse(localStorage.getItem("materiais")) || [];
+
+          dados.materiais.forEach(usado => {
+            const index = materiaisArmazem.findIndex(m => m.nome === usado.nome);
+            if (index !== -1) {
+              materiaisArmazem[index].quantidade -= usado.quantidade;
+              if (materiaisArmazem[index].quantidade < 0) {
+                materiaisArmazem[index].quantidade = 0;
+              }
+            }
+          });
+
+        localStorage.setItem("materiais", JSON.stringify(materiaisArmazem));
         adicionarAuditoriaNaTabela(dados);
         gerarPDF(dados);
       }
@@ -357,9 +370,15 @@
           const nome = mainRow.cells[0].innerText;
           const local_nome = mainRow.cells[1].innerText;
           const equipa = mainRow.cells[2].innerText;
-          const dataFormatada = mainRow.cells[3].innerText;
-
-          const dados = { nome, local_nome, equipa, dataFormatada };
+          const dataText = mainRow.cells[3].innerText;
+          const data = new Date(dataText);
+          const dados = {
+            nome,
+            local_nome,
+            equipa,
+            dataFormatada: dataText,
+            dataISO: data.toISOString()
+          };
 
           // ➕ Adicionar a resolvidas
           const resolvidas = JSON.parse(localStorage.getItem('resolvidas')) || [];
