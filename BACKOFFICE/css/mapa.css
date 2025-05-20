@@ -1,49 +1,158 @@
 body, html {
     height: 100%;
     margin: 0;
-  }
-  
-  #map {
+}
+#map {
     height: 100vh;
     width: 100%;
-  }
-  
-  .search-button {
+}
+
+/* Botão flutuante menu/filtro */
+.menu-button {
     position: fixed;
     bottom: 30px;
-    right: 30px;
-    background-color: #2B5314;
+    left: 30px;
+    background: linear-gradient(135deg, #3e7e1f 60%, #1e2d11 100%);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    width: 54px;
+    height: 54px;
+    font-size: 24px;
+    box-shadow: 0 4px 18px rgba(38, 70, 38, 0.32);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 999;
-  }
-  
-  .search-button:hover {
-    background-color: #3e7e1f;
-  }
- 
-  .search-box {
-    position: fixed;
-    bottom: 100px;
-    right: 30px;
-    z-index: 999;
+    z-index: 1001;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.menu-button:hover {
+    background: linear-gradient(135deg, #57c12d 70%, #335d21 100%);
+    box-shadow: 0 6px 24px rgba(38, 70, 38, 0.50);
+}
+
+.filter-modal {
     display: none;
-  }
-  
-  #search-input {
-    padding: 10px;
+    position: fixed;
+    bottom: 90px;
+    left: 30px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(60,120,70,0.28), 0 1.5px 5px #2b531412;
+    padding: 28px 26px 20px 26px;
+    min-width: 290px;
+    z-index: 1002;
+    animation: popIn 0.22s;
+}
+@keyframes popIn {
+    0% { transform: translateY(40px) scale(0.92); opacity: 0.2;}
+    100% { transform: none; opacity: 1;}
+}
+.filter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+.filter-content h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.22rem;
+    color: #25531c;
+    letter-spacing: 0.4px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.filter-content label {
+    font-size: 0.98rem;
+    font-weight: 500;
+    margin-top: 2px;
+}
+.filter-content input,
+.filter-content select {
+    border-radius: 7px;
+    border: 1px solid #b5c6ae;
+    padding: 7px 10px;
+    font-size: 1rem;
+    box-shadow: 0 1px 2px #aee2bf18;
+    margin-bottom: 2px;
+}
+.filter-content input[type="date"] {
+    min-width: 132px;
+}
+.filter-content input:focus,
+.filter-content select:focus {
+    outline: 2px solid #b9e6be;
+    border-color: #5ebc34;
+}
+.filter-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-top: 9px;
+}
+.filter-actions button {
     border-radius: 8px;
-    border: 1px solid #ccc;
-    width: 250px;
-    font-size: 14px;
-  }
-  
+    padding: 7px 16px;
+    border: none;
+    background: #2B5314;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 1px 2px #25531c10;
+    transition: background 0.18s, filter 0.17s;
+}
+.filter-actions button#close-filter {
+    background: #ececec;
+    color: #3e7e1f;
+    border: 1.2px solid #c3c3c3;
+}
+.filter-actions button:hover {
+    filter: brightness(1.08);
+}
+.filter-actions button#close-filter:hover {
+    background: #e2f0d5;
+    color: #143008;
+}
+
+input[list] {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="16" viewBox="0 0 20 20" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 9.293a1 1 0 011.414 0L10 10.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>');
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 1.1em;
+    padding-right: 32px;
+}
+.city-autocomplete {
+    position: relative;
+    width: 100%;
+}
+#filter-cidade {
+    width: 100%;
+}
+.city-list {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 6px 24px #8b8b8b25;
+    z-index: 9999;
+    border: 1px solid #e1e1e1;
+    max-height: 184px;
+    overflow-y: auto;
+}
+.city-list .city-item {
+    padding: 8px 13px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.13s;
+}
+.city-list .city-item:hover,
+.city-list .city-item.selected {
+    background: #e5f8e6;
+    color: #265c22;
+}
