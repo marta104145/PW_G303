@@ -108,18 +108,18 @@ body {
 
 .main-container {
   flex-grow: 1;
-  padding: 20px;
+  padding: 80px 20px 20px 20px; /* top right bottom left */
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
 }
 
 .content-area {
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  min-height: calc(100vh - 100px);
+  margin-bottom: 30px;
 }
 
 .page-header {
