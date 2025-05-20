@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${ocorrencia.userName}</td>
         <td>${new Date(ocorrencia.data).toLocaleDateString()}</td>
         <td><button onclick="abrirFormulario(this)">Realizar Auditoria</button></td>
+        <td>${ocorrencia.prioridade}</td>
       `;
       tabelaAceites.appendChild(row);
     });
