@@ -1,4 +1,4 @@
-let ocorrencias = [];
+let ocorrencias = []; 
 
 document.addEventListener('DOMContentLoaded', () => {
     const tabela = document.getElementById('peritosTable').querySelector('tbody');
@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <td>${ocorrencia.morada}</td>
       <td>${ocorrencia.codigoPostal}</td>
       <td><span class="estado ${classEstado(ocorrencia.estado)}">${ocorrencia.estado || 'Em espera'}</span></td>
+      <td>${ocorrencia.prioridade || '-'}</td>
       <td>
         <button class="botao-verde-claro consultar-btn" data-index="${index}">
           <i class="fas fa-eye"></i> Consultar
@@ -82,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 `;
 
-
             document.getElementById('conteudoModal').innerHTML = conteudo;
             document.getElementById('detalhesModal').style.display = 'block';
         });
@@ -127,18 +127,23 @@ function classEstado(estado) {
     return 'em-espera';
 }
 
+// Atualizada: pede prioridade antes de aceitar
 window.aceitar = (i) => {
-    ocorrencias[i].estado = 'Aceite';
-    localStorage.setItem('ocorrencias', JSON.stringify(ocorrencias));
-  
-    // Adiciona à lista de ocorrências aceites
-    const aceites = JSON.parse(localStorage.getItem('ocorrenciasAceites')) || [];
-    aceites.push(ocorrencias[i]);
-    localStorage.setItem('ocorrenciasAceites', JSON.stringify(aceites));
-  
-    location.reload();
-  };
-  
+    const prioridade = prompt("Atribua um grau de prioridade (Alta, Média, Baixa):", "Média");
+    if (prioridade && ["Alta", "Média", "Baixa"].includes(prioridade)) {
+        ocorrencias[i].estado = 'Aceite';
+        ocorrencias[i].prioridade = prioridade;
+        localStorage.setItem('ocorrencias', JSON.stringify(ocorrencias));
+
+        const aceites = JSON.parse(localStorage.getItem('ocorrenciasAceites')) || [];
+        aceites.push(ocorrencias[i]);
+        localStorage.setItem('ocorrenciasAceites', JSON.stringify(aceites));
+
+        location.reload();
+    } else {
+        alert("Por favor, escolha uma prioridade válida: Alta, Média ou Baixa.");
+    }
+};
 
 window.rejeitar = (i) => {
     ocorrencias[i].estado = 'Não aceite';
