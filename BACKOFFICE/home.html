@@ -3,12 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <title>Home - Mapa de Ocorrências</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Pré-carregar CSS -->
+  <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+  
+  <!-- Estilos críticos inline -->
+  <style>
+    /* Header mínimo para evitar FOUT */
+    #header-container {
+      background-color: #2B5314;
+      height: 60px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Placeholder do header */
+    .header-placeholder {
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+    }
+    
+    /* Espaço para o header fixo */
+    main {
+      padding-top: 80px;
+    }
+    
+    /* Reset básico */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #f2f2f2;
+    }
+  </style>
+  
   <link rel="icon" type="image/png" href="images/logo.png">
+  
+  <!-- Carregar scripts críticos antecipadamente -->
+  <script src="js/loadHeader.js" defer></script>
 </head>
 <body>
-  <div id="header-container"></div>
+  <div id="header-container">
+    <div class="header-placeholder">Carregando...</div>
+  </div>
 
   <main>
     <section class="page-title">
@@ -24,8 +70,7 @@
         <div id="map"></div>
       </div>
       <script src="js/mapa.js"></script>
-       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap"
-        async defer></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap" async defer></script>
     </section>
 
     <section class="listas-home">
@@ -40,7 +85,6 @@
     </section>
   </main>
 
-  <script src="js/loadHeader.js"></script>
   <script src="js/home.js"></script>
 </body>
 </html>

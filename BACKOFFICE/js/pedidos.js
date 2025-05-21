@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <div style="display: flex; gap: 30px; margin-bottom: 25px;">
         <!-- Coluna da Foto -->
         <div style="flex: 1; min-width: 300px;">
-            <img src="${o.photo}" alt="Foto da ocorrência" style="width: 100%; height: auto; max-height: 350px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
+            <img src="${o.fotoBase64}" alt="Foto da ocorrência" style="width: 100%; height: auto; max-height: 350px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
+
         </div>
         
         <!-- Coluna de Informações -->
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2 style="margin: 0 0 10px 0; font-size: 18px; color:rgb(0, 0, 0);">Informação do Utilizador</h2>
                 <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Nome:</strong> ${o.userName}</p>
                 <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Email:</strong> ${o.userEmail}</p>
-                <p style="margin: 0; font-size: 16px;"><strong>Data do Reporte:</strong> ${new Date(o.data).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                <p style="margin: 0; font-size: 16px;"><strong>Data do Report:</strong> ${new Date(o.data).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
         </div>
     </div>
