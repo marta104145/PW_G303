@@ -9,26 +9,43 @@ document.addEventListener('DOMContentLoaded', () => {
   
     tabelaAceites.innerHTML = '';
   
-    aceites.forEach((ocorrencia) => {
+    aceites.forEach((ocorrencia, index) => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${ocorrencia.tipo}</td>
         <td>${ocorrencia.morada}</td>
         <td>${ocorrencia.userName}</td>
         <td>${new Date(ocorrencia.data).toLocaleDateString()}</td>
-        <td><button onclick="abrirFormulario(this)">Realizar Auditoria</button></td>
         <td>${ocorrencia.prioridade}</td>
+        <td><button onclick="abrirFormulario(this, ${index})">Realizar Auditoria</button></td>
       `;
       tabelaAceites.appendChild(row);
     });
   }
   
-  function abrirFormulario(btn) {
-    document.getElementById('modalFormulario').style.display = 'flex';
-    document.body.classList.add('modal-open');
-    window.ocorrenciaClicada = btn.closest('tr');
-    carregarMateriais();
-  }
+function abrirFormulario(btn, index) {
+  document.getElementById('modalFormulario').style.display = 'flex';
+  document.body.classList.add('modal-open');
+
+  // Busca as ocorrências aceites
+  const aceites = JSON.parse(localStorage.getItem('ocorrenciasAceites')) || [];
+  const ocorrencia = aceites[index];
+  window.ocorrenciaClicada = btn.closest('tr');
+  window.ocorrenciaSelecionada = ocorrencia; // Guarda para usar depois se quiseres
+
+  carregarMateriais();
+  carregarPeritos();
+
+  // Preencher os campos do formulário com base na ocorrência aceite
+  document.querySelector('#formAuditoria [name="descricao"]').value = ocorrencia.descricao || '';
+  document.querySelector('#formAuditoria [name="tipo"]').value = ocorrencia.tipo || '';
+  document.querySelector('#formAuditoria [name="local_nome"]').value = ocorrencia.morada || '';
+  document.querySelector('#formAuditoria [name="local_tipo"]').value = ocorrencia.codigoPostal || '';
+  document.querySelector('#formAuditoria [name="data"]').value = new Date().toISOString().slice(0,16);
+  document.getElementById('peritosSelect').selectedIndex = 0;
+}
+
+
   
   function fecharFormulario() {
     document.getElementById('modalFormulario').style.display = 'none';
@@ -53,13 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
       <td>${dados.local_nome}</td>
       <td>${dados.equipa}</td>
       <td>${dados.dataFormatada}</td>
+      <td>${dados.prioridade || '-'}</td>
       <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
     `;
   
     const detalhes = document.createElement('tr');
     detalhes.classList.add('details');
     detalhes.innerHTML = `
-      <td colspan="5">
+      <td colspan="6">
         <strong>Descrição:</strong><br>${dados.descricao}<br><br>
         <strong>Materiais:</strong><br>
         <ul style="padding-left: 20px; margin-top: 5px;">
@@ -103,4 +121,17 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(div);
     });
   }
+
+  function carregarPeritos() {
+  const select = document.getElementById('peritosSelect');
+  select.innerHTML = '<option value="">-- Selecionar --</option>';
+  const peritos = JSON.parse(localStorage.getItem('peritos')) || [];
+  peritos.forEach(p => {
+    const option = document.createElement('option');
+    option.value = p.nome;
+    option.textContent = p.nome;
+    select.appendChild(option);
+  });
+}
+
   

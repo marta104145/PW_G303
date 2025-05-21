@@ -29,8 +29,8 @@
               <th>Localização</th>
               <th>Utilizador</th>
               <th>Data</th>
-              <th>Ação</th>
               <th>Prioridade</th>
+              <th>Ação</th>
             </tr>
           </thead>
           <tbody>
@@ -48,6 +48,7 @@
               <th>Localização</th>
               <th>Perito Responsável</th>
               <th>Data</th>
+              <th>Prioridade</th>
               <th></th>
             </tr>
           </thead>
@@ -106,7 +107,9 @@
         </fieldset>
 
         <label>Perito Responsável:</label>
-        <input type="text" name="equipa" required>
+        <select name="equipa" id="peritosSelect" required>
+        <option value="">-- Selecionar --</option>
+        </select>
 
         <label>N.º de Profissionais Necessários:</label>
         <input type="number" name="nr_profissionais" min="1" required>
@@ -133,6 +136,18 @@
         document.body.classList.add('modal-open');
         window.ocorrenciaClicada = btn.closest('tr');
         carregarMateriais();
+
+        // Obter os dados da ocorrência aceite (cada coluna da linha)
+        const cells = window.ocorrenciaClicada.cells;
+
+        // Preencher os campos do formulário
+        document.querySelector('#formAuditoria [name="descricao"]').value = cells[0]?.innerText || ''; // Tipo ou Descrição conforme a tua tabela
+        document.querySelector('#formAuditoria [name="tipo"]').value = cells[0]?.innerText || '';
+        document.querySelector('#formAuditoria [name="local_nome"]').value = cells[1]?.innerText || '';
+        document.querySelector('#formAuditoria [name="local_tipo"]').value = cells[2]?.innerText || '';
+
+        // Preencher a data com o momento atual (agora)
+        document.querySelector('#formAuditoria [name="data"]').value = new Date().toISOString().slice(0,16);
       }
 
       function fecharFormulario() {
@@ -145,6 +160,7 @@
         e.preventDefault();
 
         const dados = Object.fromEntries(new FormData(this));
+        dados.prioridade = window.ocorrenciaClicada?.cells[4]?.innerText || "";
         // Extrair materiais e quantidades
       const materiaisSelecionados = [];
       document.querySelectorAll('#materiaisContainer input[type="number"]').forEach(input => {
