@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Perfil do Usuário</title>
+  <title>Perfil do Utilizador</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/style-user.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -45,6 +45,13 @@
       color: #2B5314;
     }
 
+    .perfil-info input {
+      padding: 5px;
+      width: 80%;
+      max-width: 400px;
+      margin-top: 4px;
+    }
+
     .editar-btn, .logout-btn {
       background-color: #f0f0f0;
       border: none;
@@ -65,7 +72,6 @@
 </head>
 
 <body>
-  <!-- HEADER -->
   <header class="header">
     <nav class="navbar">
       <div class="navbar-logo">
@@ -83,13 +89,13 @@
     <h2>Perfil</h2>
     <img id="userImage" class="perfil-foto" src="images/default-profile.png" alt="Foto de Perfil">
     <div class="perfil-info">
-      <p id="userName">(Nome)</p>
-      <p><strong>Morada:</strong> - </p>
-      <p><strong>Data de nascimento:</strong> - </p>
+      <p id="userName" style="font-weight: bold; font-size: 2rem;">(Nome)</p>
+      <p><strong>Morada:</strong> <span id="moradaText">-</span><input type="text" id="morada" style="display:none"></p>
+      <p><strong>Data de nascimento:</strong> <span id="nascimentoText">-</span><input type="date" id="nascimento" style="display:none"></p>
       <p><strong>Email:</strong> <span id="userEmail">(Email)</span></p>
-      <p><strong>Telemóvel:</strong> - </p>
+      <p><strong>Telemóvel:</strong> <span id="telemovelText">-</span><input type="text" id="telemovel" style="display:none"></p>
     </div>
-    <button class="editar-btn">Editar</button>
+    <button class="editar-btn" id="editarBtn">Editar</button>
     <button class="logout-btn" onclick="logout()">Logout</button>
   </main>
 
@@ -101,6 +107,17 @@
         document.getElementById("userName").textContent = data.name;
         document.getElementById("userEmail").textContent = data.email;
         document.getElementById("userImage").src = data.picture;
+
+        const userExtra = JSON.parse(localStorage.getItem("userExtraInfo")) || {};
+        if (userExtra[data.email]) {
+          document.getElementById("moradaText").textContent = userExtra[data.email].morada || "-";
+          document.getElementById("nascimentoText").textContent = userExtra[data.email].nascimento || "-";
+          document.getElementById("telemovelText").textContent = userExtra[data.email].telemovel || "-";
+
+          document.getElementById("morada").value = userExtra[data.email].morada || "";
+          document.getElementById("nascimento").value = userExtra[data.email].nascimento || "";
+          document.getElementById("telemovel").value = userExtra[data.email].telemovel || "";
+        }
       }
     };
 
@@ -108,6 +125,44 @@
       sessionStorage.removeItem("google_credential");
       window.location.href = "../login.html";
     }
+
+    document.getElementById("editarBtn").onclick = function () {
+      const btn = document.getElementById("editarBtn");
+      const isEditing = btn.textContent === "Guardar";
+      const email = document.getElementById("userEmail").textContent;
+
+      if (isEditing) {
+        const morada = document.getElementById("morada").value;
+        const nascimento = document.getElementById("nascimento").value;
+        const telemovel = document.getElementById("telemovel").value;
+
+        const userExtra = JSON.parse(localStorage.getItem("userExtraInfo")) || {};
+        userExtra[email] = { morada, nascimento, telemovel };
+        localStorage.setItem("userExtraInfo", JSON.stringify(userExtra));
+
+        document.getElementById("moradaText").textContent = morada;
+        document.getElementById("nascimentoText").textContent = nascimento;
+        document.getElementById("telemovelText").textContent = telemovel;
+
+        document.getElementById("moradaText").style.display = "inline";
+        document.getElementById("nascimentoText").style.display = "inline";
+        document.getElementById("telemovelText").style.display = "inline";
+        document.getElementById("morada").style.display = "none";
+        document.getElementById("nascimento").style.display = "none";
+        document.getElementById("telemovel").style.display = "none";
+
+        btn.textContent = "Editar";
+      } else {
+        document.getElementById("moradaText").style.display = "none";
+        document.getElementById("nascimentoText").style.display = "none";
+        document.getElementById("telemovelText").style.display = "none";
+        document.getElementById("morada").style.display = "inline";
+        document.getElementById("nascimento").style.display = "inline";
+        document.getElementById("telemovel").style.display = "inline";
+
+        btn.textContent = "Guardar";
+      }
+    };
   </script>
 </body>
 

@@ -24,7 +24,28 @@
       max-width: 200px;
       height: auto;
       border-radius: 6px;
+      margin: 0 auto;
     }
+    .estado-wrapper {
+      text-align: center;
+    }
+    .estado-wrapper p {
+      margin: 0 0 4px 0;
+      font-weight: bold;
+      color: black;
+    }
+    .card-status {
+      display: inline-block;
+      min-width: 120px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 20px;
+      padding: 6px 12px;
+    }
+    .estado-Aceite { background-color: green; color: white; }
+    .estado-Não-aceite { background-color: red; color: white; }
+    .estado-Em-espera { background-color: yellow; color: black; }
+    .estado-Devolvido { background-color: orange; color: white; }
     .card-buttons {
       margin-top: 10px;
     }
@@ -38,41 +59,6 @@
     }
     .edit-btn { background-color: #007bff; color: #fff; }
     .delete-btn { background-color: #dc3545; color: #fff; }
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 500px;
-      width: 100%;
-    }
-    .modal-content input, .modal-content textarea {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .modal-content h3 {
-      margin-top: 0;
-    }
-    .modal-buttons {
-      text-align: right;
-    }
-    .modal-buttons button {
-      margin-left: 10px;
-    }
   </style>
 </head>
 
@@ -144,6 +130,7 @@ window.onload = function() {
       ocorrenciaCard.style.padding = "20px";
       ocorrenciaCard.style.marginBottom = "20px";
 
+      const estado = ocorrencia.estado || "Em espera";
       const fotoHTML = ocorrencia.fotoBase64 ? `<img class='card-image' src="${ocorrencia.fotoBase64}" alt="Foto da ocorrência">` : "";
 
       ocorrenciaCard.innerHTML = `
@@ -159,7 +146,11 @@ window.onload = function() {
               <button class="delete-btn" onclick="eliminarOcorrencia(${index})">Eliminar</button>
             </div>
           </div>
-          ${fotoHTML}
+          <div>${fotoHTML}</div>
+          <div class="estado-wrapper">
+            <p>Estado</p>
+            <div class="card-status estado-${estado.replace(/\s/g, '-')}">${estado}</div>
+          </div>
         </div>
       `;
 
@@ -213,5 +204,4 @@ function guardarEdicao() {
 </script>
 
 </body>
-
 </html>
