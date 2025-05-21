@@ -623,3 +623,14 @@ body {
   border-radius: 10px;
   object-fit: cover;
 }
+
+section h2 {
+  margin-left: 4rem;
+  text-align: left;
+}
+
+section p {
+  margin-left: 4rem;
+  max-width: 800px;
+  text-align: left;
+}
