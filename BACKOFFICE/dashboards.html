@@ -194,18 +194,40 @@ createApp({
       options: { responsive: true }
     });
 
-      new Chart(document.getElementById('auditoriasChart'), {
-        type: 'doughnut',
-        data: {
-          labels: ['Jardins', 'Parques', 'Árvores', 'Outros'],
-          datasets: [{
-            data: [30, 25, 20, 25],
-            backgroundColor: ['#2c5f2d', '#244c23', '#6fa26f', '#99c199'],
-            hoverOffset: 4
-          }]
-        },
-        options: { responsive: true }
-      });
+    const resolvidasGuardadas = JSON.parse(localStorage.getItem("resolvidas")) || [];
+    const tiposCount = {};
+
+    // Contar quantos existem de cada tipo
+    resolvidasGuardadas.forEach(o => {
+      const tipo = o.tipo || "Outro";
+      tiposCount[tipo] = (tiposCount[tipo] || 0) + 1;
+    });
+
+    const tiposLabels = Object.keys(tiposCount);
+    const tiposValores = Object.values(tiposCount);
+
+    // Gráfico com os tipos reais de ocorrência
+    new Chart(document.getElementById('auditoriasChart'), {
+      type: 'doughnut',
+      data: {
+        labels: tiposLabels,
+        datasets: [{
+          data: tiposValores,
+          backgroundColor: [
+            '#2c5f2d', '#6fa26f', '#99c199', '#244c23', '#4d774e', '#88b378'
+          ],
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
+          }
+        }
+      }
+  });
 
       materiaisChart = new Chart(document.getElementById('materiaisChart'), {
         type: 'bar',
