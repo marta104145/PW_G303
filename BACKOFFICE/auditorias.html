@@ -45,6 +45,7 @@
           <thead>
             <tr>
               <th>Auditoria</th>
+              <th>Tipo</th>
               <th>Localização</th>
               <th>Perito Responsável</th>
               <th>Data</th>
@@ -64,6 +65,7 @@
           <thead>
             <tr>
               <th>Auditoria</th>
+              <th>Tipo</th>
               <th>Localização</th>
               <th>Perito Responsável</th>
               <th>Data</th>
@@ -384,35 +386,41 @@
         );
 
         if (mainRow && detailsRow) {
-          const nome = mainRow.cells[0].innerText;
-          const local_nome = mainRow.cells[1].innerText;
-          const equipa = mainRow.cells[2].innerText;
-          const dataText = mainRow.cells[3].innerText;
-          const data = new Date(dataText);
-          const dados = {
-            nome,
-            local_nome,
-            equipa,
-            dataFormatada: dataText,
-            dataISO: data.toISOString()
-          };
+        // Ordem das colunas: 0=nome, 1=tipo, 2=local_nome, 3=equipa, 4=data, 5=prioridade
+        const nome = mainRow.cells[0].innerText;
+        const tipo = mainRow.cells[1].innerText;
+        const local_nome = mainRow.cells[2].innerText;
+        const equipa = mainRow.cells[3].innerText;
+        const dataText = mainRow.cells[4].innerText;
+        const prioridade = mainRow.cells[5].innerText;
 
-          // ➕ Adicionar a resolvidas
-          const resolvidas = JSON.parse(localStorage.getItem('resolvidas')) || [];
-          resolvidas.push(dados);
-          localStorage.setItem('resolvidas', JSON.stringify(resolvidas));
-          adicionarOcorrenciaResolvida(dados);
+        const dados = {
+          nome,
+          tipo,
+          local_nome,
+          equipa,
+          dataFormatada: dataText,
+          prioridade
+        };
 
-          // ➖ Remover do localStorage das auditorias
-          let auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
-          auditorias = auditorias.filter(a => !(a.nome === nome && a.local_nome === local_nome));
-          localStorage.setItem('auditorias', JSON.stringify(auditorias));
+        // ➕ Adicionar a resolvidas
+        const resolvidas = JSON.parse(localStorage.getItem('resolvidas')) || [];
+        resolvidas.push(dados);
+        localStorage.setItem('resolvidas', JSON.stringify(resolvidas));
+        adicionarOcorrenciaResolvida(dados);
 
-          // ➖ Remover do DOM
-          mainRow.remove();
-          detailsRow.remove();
-        }
+        // ➖ Remover do localStorage das auditorias
+        let auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
+        auditorias = auditorias.filter(a =>
+          !(a.nome === nome && a.tipo === tipo && a.local_nome === local_nome && a.dataFormatada === dataText)
+        );
+        localStorage.setItem('auditorias', JSON.stringify(auditorias));
+
+        // ➖ Remover do DOM
+        mainRow.remove();
+        detailsRow.remove();
       }
+    }
 
       function adicionarOcorrenciaResolvida(dados) {
         const tbody = document.querySelector('#ocorrenciasResolvidas tbody');
@@ -420,6 +428,7 @@
         const linha = document.createElement('tr');
         linha.innerHTML = `
           <td>${dados.nome}</td>
+          <td>${dados.tipo || '-'}</td>
           <td>${dados.local_nome}</td>
           <td>${dados.equipa}</td>
           <td>${dados.dataFormatada}</td>

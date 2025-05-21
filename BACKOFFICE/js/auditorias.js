@@ -55,46 +55,48 @@ function abrirFormulario(btn, index) {
   
   function carregarAuditoriasRealizadas() {
     const tbody = document.querySelector('#auditoriasRealizadas tbody');
-    tbody.innerHTML = ''; // 🧹 limpar antes de adicionar
+    tbody.innerHTML = ''; //limpar antes de adicionar
     const auditorias = JSON.parse(localStorage.getItem('auditorias')) || [];
     auditorias.forEach(adicionarAuditoriaNaTabela);
   }
   
   function adicionarAuditoriaNaTabela(dados) {
-    const tbody = document.querySelector('#auditoriasRealizadas tbody');
-  
-    const linha = document.createElement('tr');
-    linha.classList.add('audit-row');
-    linha.innerHTML = `
-      <td>${dados.nome}</td>
-      <td>${dados.local_nome}</td>
-      <td>${dados.equipa}</td>
-      <td>${dados.dataFormatada}</td>
-      <td>${dados.prioridade || '-'}</td>
-      <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
-    `;
-  
-    const detalhes = document.createElement('tr');
-    detalhes.classList.add('details');
-    detalhes.innerHTML = `
-      <td colspan="6">
-        <strong>Descrição:</strong><br>${dados.descricao}<br><br>
-        <strong>Materiais:</strong><br>
-        <ul style="padding-left: 20px; margin-top: 5px;">
-          ${dados.materiais.map(m => `<li>${m.nome}: ${m.quantidade}</li>`).join('')}
-        </ul><br>
-        <strong>N.º de Profissionais Necessários:</strong> ${dados.nr_profissionais}<br><br>
-        <strong>Duração Estimada:</strong> ${dados.duracao} horas<br><br>
-        <div class="actions">
-          <button class="remove" onclick="removerAuditoria(this)">Remover</button>
-          <button class="concluir" onclick="concluirAuditoria(this)">Concluir</button>
-        </div>
-      </td>
-    `;
-  
-    tbody.appendChild(linha);
-    tbody.appendChild(detalhes);
-  }
+  const tbody = document.querySelector('#auditoriasRealizadas tbody');
+
+  const linha = document.createElement('tr');
+  linha.classList.add('audit-row');
+  linha.innerHTML = `
+    <td>${dados.nome}</td>
+    <td>${dados.tipo || '-'}</td> <!-- MOSTRA O TIPO -->
+    <td>${dados.local_nome}</td>
+    <td>${dados.equipa}</td>
+    <td>${dados.dataFormatada}</td>
+    <td>${dados.prioridade || '-'}</td>
+    <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
+  `;
+
+  const detalhes = document.createElement('tr');
+  detalhes.classList.add('details');
+  detalhes.innerHTML = `
+    <td colspan="7">
+      <strong>Descrição:</strong><br>${dados.descricao}<br><br>
+      <strong>Materiais:</strong><br>
+      <ul style="padding-left: 20px; margin-top: 5px;">
+        ${dados.materiais.map(m => `<li>${m.nome}: ${m.quantidade}</li>`).join('')}
+      </ul><br>
+      <strong>N.º de Profissionais Necessários:</strong> ${dados.nr_profissionais}<br><br>
+      <strong>Duração Estimada:</strong> ${dados.duracao} horas<br><br>
+      <div class="actions">
+        <button class="remove" onclick="removerAuditoria(this)">Remover</button>
+        <button class="concluir" onclick="concluirAuditoria(this)">Concluir</button>
+      </div>
+    </td>
+  `;
+
+  tbody.appendChild(linha);
+  tbody.appendChild(detalhes);
+}
+
   
   function toggleDetails(el) {
     const row = el.closest('tr');
