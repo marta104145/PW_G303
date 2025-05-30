@@ -60,6 +60,27 @@
     }
     .edit-btn { background-color: #007bff; color: #fff; }
     .delete-btn { background-color: #dc3545; color: #fff; }
+    .reenviar-btn { background-color: #28a745; color: #fff; }
+    .devolvido-message {
+      background-color: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px 0;
+      color: #856404;
+      font-weight: bold;
+    }
+    .adicionar-detalhes {
+      margin-top: 10px;
+    }
+    .adicionar-detalhes textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+    }
   </style>
 </head>
 
@@ -111,6 +132,23 @@
   </div>
 </div>
 
+<div class="modal" id="reenviarModal">
+  <div class="modal-content styleuser-modal">
+    <h3 class="styleuser-modal-title">Adicionar Detalhes e Reenviar</h3>
+    
+    <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; padding: 10px; margin-bottom: 15px; color: #856404;">
+      <strong>Motivo da devolução:</strong> Pedido devolvido por falta de informação
+    </div>
+
+    <label for="detalhesAdicionais" style="display: block; margin-bottom: 5px; font-weight: bold;">Adicionar mais detalhes:</label>
+    <textarea id="detalhesAdicionais" rows="4" placeholder="Adicione mais informações sobre a ocorrência..." class="styleuser-textarea"></textarea>
+
+    <div class="styleuser-modal-buttons">
+      <button onclick="fecharModalReenviar()" class="styleuser-cancel-button">Cancelar</button>
+      <button onclick="reenviarOcorrencia()" class="styleuser-save-button">Reenviar</button>
+    </div>
+  </div>
+</div>
 
 <button id="notificacoesBtn" style="
   position: fixed;
@@ -166,7 +204,8 @@
 </div>
 
 <script>
-let ocorrenciaEditIndex = null;
+let ocorrenciaEditId = null;
+let ocorrenciaReenviarId = null;
 
 window.onload = function() {
   const token = sessionStorage.getItem("google_credential");
@@ -180,6 +219,9 @@ window.onload = function() {
 
   const todasOcorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
   const minhasOcorrencias = todasOcorrencias.filter(o => o.userEmail === email);
+
+  console.log("Todas as ocorrências:", todasOcorrencias);
+  console.log("Minhas ocorrências:", minhasOcorrencias);
 
   const listaDiv = document.getElementById("ocorrencias-lista");
   listaDiv.innerHTML = "";
@@ -197,18 +239,56 @@ window.onload = function() {
 
       const estado = ocorrencia.estado || "Em espera";
       const fotoHTML = ocorrencia.fotoBase64 ? `<img class='card-image' src="${ocorrencia.fotoBase64}" alt="Foto da ocorrência">` : "";
+      
+      // Mensagem especial para pedidos devolvidos
+      const mensagemDevolvido = estado === "Devolvido" ? 
+        `<div class="devolvido-message">
+          <i class="fas fa-exclamation-triangle"></i> Pedido devolvido por falta de informação
+        </div>` : "";
+
+      // Criar um ID único se não existir
+      if (!ocorrencia.id) {
+        ocorrencia.id = 'ocorrencia_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        // Atualizar no localStorage
+        const indexCompleto = todasOcorrencias.findIndex(o => 
+          o.userEmail === ocorrencia.userEmail && 
+          o.tipo === ocorrencia.tipo && 
+          o.morada === ocorrencia.morada && 
+          o.data === ocorrencia.data
+        );
+        if (indexCompleto !== -1) {
+          todasOcorrencias[indexCompleto].id = ocorrencia.id;
+          localStorage.setItem("ocorrencias", JSON.stringify(todasOcorrencias));
+        }
+      }
+
+      // Botões condicionais baseados no estado
+      let botoesHTML = `
+        <button class="edit-btn" onclick="editarOcorrencia('${ocorrencia.id}')">Editar</button>
+        <button class="delete-btn" onclick="eliminarOcorrencia('${ocorrencia.id}')">Eliminar</button>
+      `;
+
+      if (estado === "Devolvido") {
+        botoesHTML = `
+          <button class="reenviar-btn" onclick="abrirModalReenviar('${ocorrencia.id}')">
+            <i class="fas fa-paper-plane"></i> Adicionar Detalhes e Reenviar
+          </button>
+          <button class="delete-btn" onclick="eliminarOcorrencia('${ocorrencia.id}')">Eliminar</button>
+        `;
+      }
 
       ocorrenciaCard.innerHTML = `
         <div class="card-container">
           <div class="card-text">
             <h3>${ocorrencia.tipo}</h3>
+            <p><strong>ID:</strong> ${ocorrencia.id}</p>
             <p><strong>Morada:</strong> ${ocorrencia.morada}</p>
             <p><strong>Código Postal:</strong> ${ocorrencia.codigoPostal}</p>
             <p><strong>Descrição:</strong> ${ocorrencia.descricao}</p>
             <p><strong>Data:</strong> ${new Date(ocorrencia.data).toLocaleString()}</p>
+            ${mensagemDevolvido}
             <div class="card-buttons">
-              <button class="edit-btn" onclick="editarOcorrencia(${index})">Editar</button>
-              <button class="delete-btn" onclick="eliminarOcorrencia('${ocorrencia.id}')">Eliminar</button>
+              ${botoesHTML}
             </div>
           </div>
           <div>${fotoHTML}</div>
@@ -225,6 +305,7 @@ window.onload = function() {
 };
 
 function eliminarOcorrencia(id) {
+  console.log("Eliminando ocorrência com ID:", id);
   const todas = JSON.parse(localStorage.getItem("ocorrencias")) || [];
   const token = sessionStorage.getItem("google_credential");
   const email = jwt_decode(token).email;
@@ -233,23 +314,53 @@ function eliminarOcorrencia(id) {
   location.reload();
 }
 
-function editarOcorrencia(index) {
-  const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
-  const ocorrencia = ocorrencias[index];
+function editarOcorrencia(id) {
+  console.log("Editando ocorrência com ID:", id);
+  const todasOcorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+  const ocorrencia = todasOcorrencias.find(o => o.id === id);
+  
+  if (!ocorrencia) {
+    alert("Ocorrência não encontrada!");
+    return;
+  }
 
   document.getElementById("editTipo").value = ocorrencia.tipo;
   document.getElementById("editMorada").value = ocorrencia.morada;
   document.getElementById("editPostal").value = ocorrencia.codigoPostal;
   document.getElementById("editDescricao").value = ocorrencia.descricao;
 
-  ocorrenciaEditIndex = index;
+  ocorrenciaEditId = id;
   document.getElementById("editModal").style.display = "flex";
 }
 
+function abrirModalReenviar(id) {
+  console.log("Abrindo modal reenviar para ID:", id);
+  const todasOcorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+  const ocorrencia = todasOcorrencias.find(o => o.id === id);
+  
+  if (!ocorrencia) {
+    alert("Ocorrência não encontrada!");
+    return;
+  }
+
+  if (ocorrencia.estado !== "Devolvido") {
+    alert("Esta ocorrência não está no estado 'Devolvido'!");
+    return;
+  }
+
+  ocorrenciaReenviarId = id;
+  document.getElementById("detalhesAdicionais").value = "";
+  document.getElementById("reenviarModal").style.display = "flex";
+}
 
 function fecharModal() {
   document.getElementById("editModal").style.display = "none";
-  ocorrenciaEditIndex = null;
+  ocorrenciaEditId = null;
+}
+
+function fecharModalReenviar() {
+  document.getElementById("reenviarModal").style.display = "none";
+  ocorrenciaReenviarId = null;
 }
 
 function guardarEdicao() {
@@ -259,16 +370,75 @@ function guardarEdicao() {
   const descricao = document.getElementById("editDescricao").value;
 
   const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
-  if (ocorrenciaEditIndex !== null && ocorrencias[ocorrenciaEditIndex]) {
-    ocorrencias[ocorrenciaEditIndex].tipo = tipo;
-    ocorrencias[ocorrenciaEditIndex].morada = morada;
-    ocorrencias[ocorrenciaEditIndex].codigoPostal = postal;
-    ocorrencias[ocorrenciaEditIndex].descricao = descricao;
+  
+  // Encontrar a ocorrência pelo ID
+  const indexReal = ocorrencias.findIndex(o => o.id === ocorrenciaEditId);
+  
+  console.log("Guardando edição para ID:", ocorrenciaEditId, "Índice encontrado:", indexReal);
+  
+  if (indexReal !== -1) {
+    ocorrencias[indexReal].tipo = tipo;
+    ocorrencias[indexReal].morada = morada;
+    ocorrencias[indexReal].codigoPostal = postal;
+    ocorrencias[indexReal].descricao = descricao;
     localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias));
+    console.log("Ocorrência atualizada:", ocorrencias[indexReal]);
+  } else {
+    alert("Erro: Ocorrência não encontrada para edição!");
   }
   fecharModal();
   location.reload();
 }
+
+function reenviarOcorrencia() {
+  const detalhesAdicionais = document.getElementById("detalhesAdicionais").value.trim();
+  
+  if (!detalhesAdicionais) {
+    alert("Por favor, adicione mais detalhes antes de reenviar.");
+    return;
+  }
+
+  const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
+  
+  // Encontrar a ocorrência pelo ID
+  const indexReal = ocorrencias.findIndex(o => o.id === ocorrenciaReenviarId);
+  
+  console.log("Reenviando ocorrência com ID:", ocorrenciaReenviarId, "Índice encontrado:", indexReal);
+  console.log("Estado atual:", ocorrencias[indexReal]?.estado);
+  
+  if (indexReal !== -1) {
+    // Adicionar os detalhes à descrição existente
+    const descricaoOriginal = ocorrencias[indexReal].descricao;
+    ocorrencias[indexReal].descricao = descricaoOriginal + "\n\n--- Detalhes Adicionais ---\n" + detalhesAdicionais;
+    
+    // Alterar o estado para "Em espera" e atualizar a data
+    ocorrencias[indexReal].estado = "Em espera";
+    ocorrencias[indexReal].data = new Date().toISOString();
+    
+    // Remover prioridade se existir (será reatribuída quando aceite novamente)
+    delete ocorrencias[indexReal].prioridade;
+    
+    localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias));
+    
+    console.log("Ocorrência após reenvio:", ocorrencias[indexReal]);
+    
+    alert("Ocorrência reenviada com sucesso!");
+    fecharModalReenviar();
+    location.reload();
+  } else {
+    alert("Erro: Ocorrência não encontrada para reenvio!");
+  }
+}
+
+// Event listeners para fechar modais clicando fora
+window.addEventListener("click", (e) => {
+  if (e.target === document.getElementById("editModal")) {
+    fecharModal();
+  }
+  if (e.target === document.getElementById("reenviarModal")) {
+    fecharModalReenviar();
+  }
+});
 
 const notificacoesBtn = document.getElementById("notificacoesBtn");
 const notificacoesModal = document.getElementById("notificacoesModal");
@@ -304,7 +474,13 @@ function carregarNotificacoes() {
       const li = document.createElement("li");
       li.style.padding = "10px";
       li.style.borderBottom = "1px solid #ddd";
-      li.innerHTML = `<strong>${o.tipo}</strong> - ${o.estado}`;
+      
+      let mensagem = `<strong>${o.tipo}</strong> - ${o.estado}`;
+      if (o.estado === "Devolvido") {
+        mensagem += " (por falta de informação)";
+      }
+      
+      li.innerHTML = mensagem;
       listaNotificacoes.appendChild(li);
     }
   });

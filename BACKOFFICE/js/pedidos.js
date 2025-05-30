@@ -1,25 +1,25 @@
-let ocorrencias = []; 
+let ocorrencias = []
 
-document.addEventListener('DOMContentLoaded', () => {
-    const tabela = document.getElementById('peritosTable').querySelector('tbody');
-    const modalRemover = document.getElementById('modalRemover');
-    const confirmarRemocao = document.getElementById('confirmarRemocao');
-    const cancelarRemocao = document.getElementById('cancelarRemocao');
-    let indexParaRemover = null;
+document.addEventListener("DOMContentLoaded", () => {
+  const tabela = document.getElementById("peritosTable").querySelector("tbody")
+  const modalRemover = document.getElementById("modalRemover")
+  const confirmarRemocao = document.getElementById("confirmarRemocao")
+  const cancelarRemocao = document.getElementById("cancelarRemocao")
+  let indexParaRemover = null
 
-    ocorrencias = JSON.parse(localStorage.getItem('ocorrencias')) || [];
-    tabela.innerHTML = '';
+  ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || []
+  tabela.innerHTML = ""
 
-    ocorrencias.forEach((ocorrencia, index) => {
-        const row = document.createElement('tr');
-        row.dataset.index = index;
+  ocorrencias.forEach((ocorrencia, index) => {
+    const row = document.createElement("tr")
+    row.dataset.index = index
 
-        row.innerHTML = `
+    row.innerHTML = `
       <td>${ocorrencia.tipo}</td>
       <td>${ocorrencia.morada}</td>
       <td>${ocorrencia.codigoPostal}</td>
-      <td><span class="estado ${classEstado(ocorrencia.estado)}">${ocorrencia.estado || 'Em espera'}</span></td>
-      <td>${ocorrencia.prioridade || '-'}</td>
+      <td><span class="estado ${classEstado(ocorrencia.estado)}">${ocorrencia.estado || "Em espera"}</span></td>
+      <td>${ocorrencia.prioridade || "-"}</td>
       <td>
         <button class="botao-verde-claro consultar-btn" data-index="${index}">
           <i class="fas fa-eye"></i> Consultar
@@ -30,12 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <i class="fas fa-trash"></i>
         </button>
       </td>
-    `;
+    `
 
-        // Consultar
-        row.querySelector('.consultar-btn').addEventListener('click', () => {
-            const o = ocorrencias[index];
-            const conteudo = `
+    // Consultar
+    row.querySelector(".consultar-btn").addEventListener("click", () => {
+      const o = ocorrencias[index]
+      const conteudo = `
 <div style="max-width: 900px; margin: 0 auto; font-family: Arial, sans-serif; padding: 20px; background-color: #f8f9fa; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
     <h1 style="margin: 0 0 20px 0; color:rgb(0, 0, 0); font-size: 28px; border-bottom: 2px solidrgb(0, 0, 0); padding-bottom: 10px;">${o.tipo}</h1>
     
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2 style="margin: 0 0 10px 0; font-size: 18px; color:rgb(0, 0, 0);">Informação do Utilizador</h2>
                 <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Nome:</strong> ${o.userName}</p>
                 <p style="margin: 0 0 8px 0; font-size: 16px;"><strong>Email:</strong> ${o.userEmail}</p>
-                <p style="margin: 0; font-size: 16px;"><strong>Data do Report:</strong> ${new Date(o.data).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                <p style="margin: 0; font-size: 16px;"><strong>Data do Report:</strong> ${new Date(o.data).toLocaleDateString("pt-PT", { day: "numeric", month: "long", year: "numeric" })}</p>
             </div>
         </div>
     </div>
@@ -82,78 +82,89 @@ document.addEventListener('DOMContentLoaded', () => {
         </button>
     </div>
 </div>
-`;
+`
 
-            document.getElementById('conteudoModal').innerHTML = conteudo;
-            document.getElementById('detalhesModal').style.display = 'block';
-        });
+      document.getElementById("conteudoModal").innerHTML = conteudo
+      document.getElementById("detalhesModal").style.display = "block"
+    })
 
-        // Remover
-        row.querySelector('.lixo-btn').addEventListener('click', () => {
-            indexParaRemover = index;
-            modalRemover.style.display = 'block';
-        });
+    // Remover
+    row.querySelector(".lixo-btn").addEventListener("click", () => {
+      indexParaRemover = index
+      modalRemover.style.display = "block"
+    })
 
-        tabela.appendChild(row);
-    });
+    tabela.appendChild(row)
+  })
 
-    document.getElementById('fecharModal').onclick = () => {
-        document.getElementById('detalhesModal').style.display = 'none';
-    };
+  document.getElementById("fecharModal").onclick = () => {
+    document.getElementById("detalhesModal").style.display = "none"
+  }
 
-    window.onclick = function (event) {
-        if (event.target === document.getElementById('detalhesModal')) {
-            document.getElementById('detalhesModal').style.display = 'none';
-        }
-        if (event.target === modalRemover) {
-            modalRemover.style.display = 'none';
-        }
-    };
+  window.onclick = (event) => {
+    if (event.target === document.getElementById("detalhesModal")) {
+      document.getElementById("detalhesModal").style.display = "none"
+    }
+    if (event.target === modalRemover) {
+      modalRemover.style.display = "none"
+    }
+  }
 
-    confirmarRemocao.onclick = () => {
-        ocorrencias.splice(indexParaRemover, 1);
-        localStorage.setItem('ocorrencias', JSON.stringify(ocorrencias));
-        modalRemover.style.display = 'none';
-        location.reload();
-    };
+  confirmarRemocao.onclick = () => {
+    ocorrencias.splice(indexParaRemover, 1)
+    localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias))
+    modalRemover.style.display = "none"
+    location.reload()
+  }
 
-    cancelarRemocao.onclick = () => {
-        modalRemover.style.display = 'none';
-    };
-});
+  cancelarRemocao.onclick = () => {
+    modalRemover.style.display = "none"
+  }
+})
 
 function classEstado(estado) {
-    if (estado === 'Aceite') return 'aceite';
-    if (estado === 'Não aceite') return 'nao-aceite';
-    return 'em-espera';
+  if (estado === "Aceite") return "aceite"
+  if (estado === "Não aceite") return "nao-aceite"
+  if (estado === "Devolvido") return "devolvido"
+  return "em-espera"
 }
 
 // Atualizada: pede prioridade antes de aceitar
 window.aceitar = (i) => {
-    const prioridade = prompt("Atribua um grau de prioridade (Alta, Média, Baixa):", "Média");
-    if (prioridade && ["Alta", "Média", "Baixa"].includes(prioridade)) {
-        ocorrencias[i].estado = 'Aceite';
-        ocorrencias[i].prioridade = prioridade;
-        localStorage.setItem('ocorrencias', JSON.stringify(ocorrencias));
+  const prioridade = prompt("Atribua um grau de prioridade (Alta, Média, Baixa):", "Média")
+  if (prioridade && ["Alta", "Média", "Baixa"].includes(prioridade)) {
+    ocorrencias[i].estado = "Aceite"
+    ocorrencias[i].prioridade = prioridade
+    localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias))
 
-        const aceites = JSON.parse(localStorage.getItem('ocorrenciasAceites')) || [];
-        aceites.push(ocorrencias[i]);
-        localStorage.setItem('ocorrenciasAceites', JSON.stringify(aceites));
+    const aceites = JSON.parse(localStorage.getItem("ocorrenciasAceites")) || []
+    aceites.push(ocorrencias[i])
+    localStorage.setItem("ocorrenciasAceites", JSON.stringify(aceites))
 
-        location.reload();
-    } else {
-        alert("Por favor, escolha uma prioridade válida: Alta, Média ou Baixa.");
-    }
-};
+    location.reload()
+  } else {
+    alert("Por favor, escolha uma prioridade válida: Alta, Média ou Baixa.")
+  }
+}
 
 window.rejeitar = (i) => {
-    ocorrencias[i].estado = 'Não aceite';
-    localStorage.setItem('ocorrencias', JSON.stringify(ocorrencias));
-    location.reload();
-};
+  ocorrencias[i].estado = "Não aceite"
+  localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias))
+  location.reload()
+}
 
 window.devolver = (i) => {
-    ocorrencias[i].estado = 'Devolvido';
-    localStorage.setItem('ocorrencias', JSON.stringify(ocorrencias));
-    location.reload();
-};
+  if (
+    confirm(
+      "Tem a certeza que pretende devolver este pedido? O utilizador será notificado que o pedido foi devolvido por falta de informação.",
+    )
+  ) {
+    ocorrencias[i].estado = "Devolvido"
+    // Remover prioridade se existir
+    delete ocorrencias[i].prioridade
+    localStorage.setItem("ocorrencias", JSON.stringify(ocorrencias))
+
+    alert("Pedido devolvido com sucesso. O utilizador poderá adicionar mais detalhes e reenviar.")
+    location.reload()
+  }
+}
