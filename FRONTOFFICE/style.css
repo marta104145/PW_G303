@@ -7,6 +7,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  overflow-x: hidden; /* Impede rolagem horizontal */
 }
 
 /* Estilo para o cabeçalho */
@@ -78,6 +79,8 @@ body {
   position: relative;
   gap: 2em;
   padding: 1em 4em 0.5em 4em;
+  position: relative; /* garante que a .hero-img se posiciona relativamente à .hero */
+  overflow: hidden;   /* impede que a imagem saia do ecrã horizontalmente */
 }
 
 .hero-text {
@@ -123,7 +126,9 @@ body {
 .hero-img {
   max-width: 450px;
   height: auto;
-  margin-right: -5em; /* "puxa" a imagem até à margem direita */
+  margin-right: -2em; /* "puxa" a imagem até à margem direita */
+  padding-top: 30px;
+  
 }
 
 section {
@@ -232,7 +237,7 @@ body {
 
 /* Estilo para a seção Auditorias */
 .auditorias {
-  padding: 2em;
+  padding: 1.2em;
   background-color: #3C5E4B;
   color: white;
   margin-top: 80px;
@@ -249,9 +254,11 @@ body {
 .auditoria-content {
   display: flex;
   justify-content: space-between;
-  gap: 2em;
+  gap: 5em;
   align-items: flex-start;
   flex-wrap: wrap;
+  margin-top: 0em;
+
 }
 
 /* Lista de auditorias */
@@ -271,7 +278,7 @@ body {
   border: 7px solid white;
   border-radius: 2px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 1em;
+  margin-top: 0em;
 }
 
 /* Estilo para a seção Ocorrências */

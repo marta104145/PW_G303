@@ -79,3 +79,24 @@ function filtrarOcorrencias(tipo) {
     document.getElementById("popup-concluidas").style.display = "flex";
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Vai buscar a lista UL
+  const auditoriasList = document.getElementById("auditorias-list");
+
+  // Vai buscar do localStorage
+  const auditorias = JSON.parse(localStorage.getItem("auditorias")) || [];
+
+  // Limpa lista (caso existam duplicados)
+  auditoriasList.innerHTML = "";
+
+  // Percorre as auditorias e adiciona cada item à lista
+  auditorias.forEach(auditoria => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>Auditoria ${auditoria.id} - ${auditoria.data}</strong>
+      <p>${auditoria.descricao}</p>
+    `;
+    auditoriasList.appendChild(li);
+  });
+});
