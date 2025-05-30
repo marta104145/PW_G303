@@ -11,6 +11,16 @@
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 </head>
 
+<script>
+function limparFormulario() {
+  document.getElementById("tipo").value = "";
+  document.getElementById("location").value = "";
+  document.getElementById("postal").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("photo").value = null;
+}
+</script>
+
 <body>
   <div class="alert" id="alertMessage"></div>
 
@@ -85,6 +95,32 @@
   </div>
 
   <script>
+    const openModal = document.getElementById("openModal");
+    const closeModal = document.getElementById("closeModal");
+    const cancelModal = document.getElementById("cancelModal");
+    const modal = document.getElementById("registerModal");
+    const submitBtn = document.getElementById("submitBtn");
+
+    openModal.onclick = () => {
+      modal.style.display = "flex";
+      limparFormulario();
+    }
+    closeModal.onclick = () => {
+  modal.style.display = "none";
+  limparFormulario();
+};
+    cancelModal.onclick = () => {
+  modal.style.display = "none";
+  limparFormulario();
+};
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+  modal.style.display = "none";
+  limparFormulario();
+}
+    }
+
     function showAlert(message) {
       const alertBox = document.getElementById("alertMessage");
       alertBox.textContent = message;
@@ -92,32 +128,6 @@
       setTimeout(() => {
         alertBox.classList.remove("show");
       }, 3000);
-    }
-
-    const openModal = document.getElementById("openModal");
-    const closeModal = document.getElementById("closeModal");
-    const cancelModal = document.getElementById("cancelModal");
-    const modal = document.getElementById("registerModal");
-    const submitBtn = document.getElementById("submitBtn");
-
-    openModal.onclick = () => modal.style.display = "flex";
-
-    closeModal.onclick = () => {
-    modal.style.display = "none";
-    limparFormulario();
-    };
-
-    cancelModal.onclick = () => {
-    modal.style.display = "none";
-    limparFormulario();
-    };
-
-
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-        limparFormulario();
-      }
     }
 
     function gerarIdUnico() {
