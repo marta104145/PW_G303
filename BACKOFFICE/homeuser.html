@@ -9,28 +9,6 @@
   <link rel="stylesheet" href="css/style-user.css">
   <link rel="icon" type="image/png" href="images/logo.png">
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-<style>
-    .alert {
-      display: none;
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #2B5314;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      z-index: 2000;
-      font-size: 16px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .alert.show {
-      display: block;
-      opacity: 1;
-    }
-</style>
 </head>
 
 <body>
@@ -63,24 +41,6 @@
       <div class="map-container">
         <div id="map"></div>
       </div>
-
-      <script>
-        function initMap() {
-          const centro = { lat: 41.450491, lng: -8.294101 };
-          const map = new google.maps.Map(document.getElementById("map"), {
-            center: centro,
-            zoom: 16,
-          });
-
-          const marker = new google.maps.Marker({
-            position: centro,
-            map: map,
-            title: "Estou aqui!"
-          });
-        }
-      </script>
-
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap" async defer></script>
     </section>
   </main>
 
@@ -131,7 +91,7 @@
       alertBox.classList.add("show");
       setTimeout(() => {
         alertBox.classList.remove("show");
-      }, 5000);
+      }, 3000);
     }
 
     const openModal = document.getElementById("openModal");
@@ -151,7 +111,7 @@
     }
 
     function gerarIdUnico() {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+      return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
     }
 
     submitBtn.onclick = function () {
@@ -191,17 +151,16 @@
           const photoBase64 = event.target.result;
 
           const ocorrencia = {
-          id: gerarIdUnico(),
-          tipo: tipo,
-          morada: location,
-          codigoPostal: postal,
-          descricao: description,
-          userEmail: email,
-          userName: nome,
-          data: new Date().toISOString(),
-          fotoBase64: photoBase64
+            id: gerarIdUnico(),
+            tipo: tipo,
+            morada: location,
+            codigoPostal: postal,
+            descricao: description,
+            userEmail: email,
+            userName: nome,
+            data: new Date().toISOString(),
+            fotoBase64: photoBase64
           };
-
 
           let ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
           ocorrencias.push(ocorrencia);
@@ -210,7 +169,7 @@
           showAlert("Ocorrência registada com sucesso!");
           setTimeout(() => {
             modal.style.display = "none";
-          }, 5000);
+          }, 3000);
         };
 
         reader.readAsDataURL(photoFile);
@@ -219,5 +178,8 @@
       }
     };
   </script>
+
+  <script src="js/mapa.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZQpO7I2R-8mgQQoQDLzOOgo5Ci4sIys&callback=initMap" async defer></script>
 </body>
 </html>
