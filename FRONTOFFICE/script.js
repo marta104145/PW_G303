@@ -1,75 +1,83 @@
+// --------- GUARDA UMA NOVA AUDITORIA NO LOCALSTORAGE ---------
+function adicionarAuditoria(nome, descricao, data, lat, lng) {
+  const auditorias = JSON.parse(localStorage.getItem("auditorias") || "[]");
+  auditorias.push({ nome, descricao, data, lat, lng });
+  localStorage.setItem("auditorias", JSON.stringify(auditorias));
+  alert("Nova auditoria guardada!");
+}
+
+// --------- CARREGA AS AUDITORIAS NO HTML E NO MAPA ---------
 document.addEventListener("DOMContentLoaded", () => {
-  // Lista de auditorias
-  /*const auditorias = [
-    "Auditoria 1 - Avaliação do parque de São Mamede",
-    "Auditoria 2 - Manutenção do Parque da Cidade",
-    "Auditoria 3 - Verificação da erosão do solo",
-    "Auditoria 4 - Árvores em Risco de Queda",
-    "Auditoria 5 - Monitorização do solo"
-    
-  ];
-
   const auditoriasList = document.getElementById("auditorias-list");
-  auditorias.forEach(item => {
+  const auditoriasData = localStorage.getItem("auditorias");
+  auditoriasList.innerHTML = "";
+
+  if (auditoriasData) {
+    const auditorias = JSON.parse(auditoriasData);
+    auditorias.forEach((auditoria) => {
+      const li = document.createElement("li");
+
+      const strong = document.createElement("strong");
+      const data = auditoria.data ? auditoria.data : "dd/mm/aaaa";
+      const nome = auditoria.nome ? auditoria.nome : "Auditoria sem nome";
+      strong.textContent = `${nome} - ${data}`;
+      li.appendChild(strong);
+
+      const p = document.createElement("p");
+      p.textContent = auditoria.descricao || "Sem descrição.";
+      li.appendChild(p);
+
+      auditoriasList.appendChild(li);
+    });
+
+    // Inicia o mapa com as auditorias
+    initAuditoriasMap(auditorias);
+  } else {
     const li = document.createElement("li");
-    li.textContent = item;
+    li.textContent = "Sem auditorias registadas no localStorage.";
     auditoriasList.appendChild(li);
-  });*/
-
-  // Feedbacks
-  const feedbacks = [
-    "A plataforma facilitou o processo de denúncia de espaços verdes abandonados. Agora, a nossa praça está revitalizada e bem cuidada! – Ana F.",
-    "Fiquei impressionado com a eficiência da plataforma. Reportei um jardim sem iluminação e, pouco tempo depois, já havia uma auditoria em andamento! – Luís C.",
-    "Graças à EyesEverywhere, conseguimos identificar árvores em risco de queda no nosso parque local. A rápida resposta evitou acidentes! – Sofia R."
-  ];
-
-  const feedbackList = document.getElementById("feedback-list");
-  feedbacks.forEach(msg => {
-    const div = document.createElement("div");
-    div.className = "box";
-    div.textContent = msg;
-    feedbackList.appendChild(div);
-  });
+  }
 });
 
-// Botão da hero section
+// --------- INICIALIZA O MAPA E ADICIONA MARCADORES ---------
+function initAuditoriasMap(auditorias) {
+  const map = new google.maps.Map(document.getElementById("auditoria-map"), {
+    center: { lat: 41.55, lng: -8.43 }, // Braga por exemplo
+    zoom: 8
+  });
+
+  auditorias.forEach((auditoria) => {
+    if (auditoria.lat && auditoria.lng) {
+      const marker = new google.maps.Marker({
+        position: { lat: auditoria.lat, lng: auditoria.lng },
+        map,
+        title: auditoria.nome || "Auditoria"
+      });
+
+      const info = new google.maps.InfoWindow({
+        content: `
+          <div>
+            <strong>${auditoria.nome || "Sem nome"}</strong><br>
+            <em>${auditoria.data || "Sem data"}</em><br>
+            <p>${auditoria.descricao || "Sem descrição"}</p>
+          </div>
+        `
+      });
+
+      marker.addListener("click", () => {
+        info.open(map, marker);
+      });
+    }
+  });
+}
+
+// --------- BOTÕES DA HERO SECTION ---------
 function scrollToSobre() {
   const sobre = document.getElementById("sobre");
   sobre.scrollIntoView({ behavior: "smooth" });
 }
 
-// Ocorrências
-function filtrarOcorrencias(tipo) {
-  if (tipo === 'em aberto') {
-    const popup = document.getElementById("popup");
-    if (popup) {
-      popup.style.display = "flex";
-    }
-  }
-}
-
-function fecharPopup() {
-  const popup = document.getElementById("popup");
-  if (popup) {
-    popup.style.display = "none";
-  }
-}
-
-function filtrarOcorrencias(tipo) {
-  if (tipo === 'em aberto') {
-    document.getElementById("popup").style.display = "flex";
-  } else if (tipo === 'em análise') {
-    document.getElementById("popup-analise").style.display = "flex";
-  }
-}
-
-function fecharPopup(id) {
-  const popup = document.getElementById(id);
-  if (popup) {
-    popup.style.display = "none";
-  }
-}
-
+// --------- POPUP DE OCORRÊNCIAS ---------
 function filtrarOcorrencias(tipo) {
   if (tipo === 'em aberto') {
     document.getElementById("popup").style.display = "flex";
@@ -80,23 +88,71 @@ function filtrarOcorrencias(tipo) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Vai buscar a lista UL
-  const auditoriasList = document.getElementById("auditorias-list");
+function fecharPopup(id) {
+  const popup = document.getElementById(id);
+  if (popup) {
+    popup.style.display = "none";
+  }
+}
 
-  // Vai buscar do localStorage
-  const auditorias = JSON.parse(localStorage.getItem("auditorias")) || [];
+// --------- INICIALIZA MAPA DE AUDITORIAS ---------
+function initAuditoriasMap() {
+    const centro = { lat: 41.55, lng: -8.43 }; // Centro inicial (p.ex. Braga)
+    const map = new google.maps.Map(document.getElementById("auditoria-map"), {
+        center: centro,
+        zoom: 8,
+    });
+    globalMap = map;
 
-  // Limpa lista (caso existam duplicados)
-  auditoriasList.innerHTML = "";
+    const geocoder = new google.maps.Geocoder();
+    const auditorias = JSON.parse(localStorage.getItem('auditorias') || '[]');
+    window._auditoriasOriginais = auditorias;
 
-  // Percorre as auditorias e adiciona cada item à lista
-  auditorias.forEach(auditoria => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>Auditoria ${auditoria.id} - ${auditoria.data}</strong>
-      <p>${auditoria.descricao}</p>
+    renderAuditoriaMarkers(auditorias, map, geocoder);
+}
+
+// --------- FUNÇÃO PARA RENDERIZAR MARCADORES DE AUDITORIAS ---------
+function renderAuditoriaMarkers(lista, map, geocoder) {
+    globalMarkers.forEach(m => m.setMap(null));
+    globalMarkers = [];
+
+    lista.forEach(auditoria => {
+        if (auditoria.lat && auditoria.lng) {
+            addAuditoriaMarker({ lat: auditoria.lat, lng: auditoria.lng }, auditoria, map);
+        } else if (auditoria.localidade || auditoria.morada) {
+            const endereco = `${auditoria.morada || ''} ${auditoria.localidade || ''} Portugal`;
+            geocoder.geocode({ address: endereco }, (results, status) => {
+                if (status === 'OK' && results[0]) {
+                    addAuditoriaMarker(results[0].geometry.location, auditoria, map);
+                }
+            });
+        }
+    });
+}
+
+function addAuditoriaMarker(position, auditoria, map) {
+    const marker = new google.maps.Marker({
+        map,
+        position,
+        icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+        title: auditoria.nome || 'Auditoria'
+    });
+    globalMarkers.push(marker);
+
+    const content = `
+        <div style="max-width: 260px;">
+            <strong>${auditoria.nome || 'Sem nome'}</strong><br>
+            <em>${auditoria.data || 'Sem data'}</em><br>
+            <p>${auditoria.descricao || 'Sem descrição'}</p>
+        </div>
     `;
-    auditoriasList.appendChild(li);
-  });
+
+    const infoWindow = new google.maps.InfoWindow({ content });
+    marker.addListener('click', () => {
+        infoWindow.open({ anchor: marker, map });
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    initAuditoriasMap();
 });
