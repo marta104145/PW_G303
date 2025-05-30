@@ -293,13 +293,17 @@ body {
   justify-content: space-between; /* Alinha os botões à esquerda */
   gap: 2em;
   align-items: flex-start;
+  margin-top: 1rem;
 }
 
 /* Estilo para os botões */
 .buttons-container {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 4em;
+  height: 450px; /* igual à altura do mapa */
+  justify-content: space-between;
+  margin-top: 0rem;
 }
 
 .buttons-container button {
@@ -327,7 +331,7 @@ body {
   border: 11px solid #2e4e3f;
   border-radius: 2px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 1em;
+  margin-top: 0em;
 }
 
 
@@ -622,15 +626,4 @@ body {
   height: 120px;
   border-radius: 10px;
   object-fit: cover;
-}
-
-section h2 {
-  margin-left: 4rem;
-  text-align: left;
-}
-
-section p {
-  margin-left: 4rem;
-  max-width: 800px;
-  text-align: left;
 }
