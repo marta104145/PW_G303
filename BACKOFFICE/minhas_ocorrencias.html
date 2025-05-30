@@ -91,9 +91,17 @@
   <div class="modal-content styleuser-modal">
     <h3 class="styleuser-modal-title">Editar Ocorrência</h3>
 
-    <input type="text" id="editTipo" placeholder="Tipo" class="styleuser-input" disabled>
-    <input type="text" id="editMorada" placeholder="Morada" class="styleuser-input" disabled>
-    <input type="text" id="editPostal" placeholder="Código Postal" class="styleuser-input" disabled>
+    <select id="editTipo" class="styleuser-input">
+      <option value="">Selecionar...</option>
+      <option>Árvores em risco de queda</option>
+      <option>Espaços verdes negligenciados</option>
+      <option>Iluminação pública avariada</option>
+      <option>Parque Vandalizado</option>
+      <option>Outro</option>
+    </select>
+
+    <input type="text" id="editMorada" placeholder="Morada" class="styleuser-input">
+    <input type="text" id="editPostal" placeholder="Código Postal" class="styleuser-input">
     <textarea id="editDescricao" rows="4" placeholder="Descrição" class="styleuser-textarea"></textarea>
 
     <div class="styleuser-modal-buttons">
@@ -200,7 +208,7 @@ window.onload = function() {
             <p><strong>Data:</strong> ${new Date(ocorrencia.data).toLocaleString()}</p>
             <div class="card-buttons">
               <button class="edit-btn" onclick="editarOcorrencia(${index})">Editar</button>
-              <button class="delete-btn" onclick="eliminarOcorrencia(${index})">Eliminar</button>
+              <button class="delete-btn" onclick="eliminarOcorrencia('${ocorrencia.id}')">Eliminar</button>
             </div>
           </div>
           <div>${fotoHTML}</div>
@@ -216,11 +224,11 @@ window.onload = function() {
   }
 };
 
-function eliminarOcorrencia(index) {
+function eliminarOcorrencia(id) {
   const todas = JSON.parse(localStorage.getItem("ocorrencias")) || [];
   const token = sessionStorage.getItem("google_credential");
   const email = jwt_decode(token).email;
-  const filtradas = todas.filter((o, i) => !(i === index && o.userEmail === email));
+  const filtradas = todas.filter(o => !(o.id === id && o.userEmail === email));
   localStorage.setItem("ocorrencias", JSON.stringify(filtradas));
   location.reload();
 }
@@ -228,13 +236,16 @@ function eliminarOcorrencia(index) {
 function editarOcorrencia(index) {
   const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
   const ocorrencia = ocorrencias[index];
+
   document.getElementById("editTipo").value = ocorrencia.tipo;
   document.getElementById("editMorada").value = ocorrencia.morada;
   document.getElementById("editPostal").value = ocorrencia.codigoPostal;
   document.getElementById("editDescricao").value = ocorrencia.descricao;
+
   ocorrenciaEditIndex = index;
   document.getElementById("editModal").style.display = "flex";
 }
+
 
 function fecharModal() {
   document.getElementById("editModal").style.display = "none";
