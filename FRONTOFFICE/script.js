@@ -149,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Data:</strong> ${auditoria.data || "Sem data"}</p>
         <p><strong>Tipo:</strong> ${auditoria.tipo || "Sem tipo"}</p>
         <p><strong>Local:</strong> ${local}</p>
+        <p><strong>Código Postal:</strong> ${auditoria.codigoPostal || "Não especificado"}</p>
         <p><strong>Descrição:</strong> ${auditoria.descricao || "Sem descrição"}</p>
       `
       li.appendChild(tooltip)
@@ -205,6 +206,7 @@ function initAuditoriasMap(auditorias) {
             <p><strong>Data:</strong> ${auditoria.data || "Sem data"}</p>
             <p><strong>Tipo:</strong> ${auditoria.tipo || "Sem tipo"}</p>
             <p><strong>Local:</strong> ${local}</p>
+            <p><strong>Código Postal:</strong> ${auditoria.codigoPostal || "Não especificado"}</p>
             <p><strong>Descrição:</strong> ${auditoria.descricao || "Sem descrição"}</p>
           </div>
         `,
@@ -274,4 +276,66 @@ function listarAuditorias() {
 function limparDados() {
   localStorage.removeItem("auditorias")
   location.reload()
+}
+
+function filtrarOcorrencias(tipo) {
+  if (tipo === "em aberto") {
+    const popup = document.getElementById("popup");
+    const listaContainer = document.getElementById("lista-ocorrencias-abertas");
+    listaContainer.innerHTML = ""; // Limpa a lista
+
+    const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasAceites") || "[]");
+
+    if (ocorrencias.length === 0) {
+      const mensagem = document.createElement("p");
+      mensagem.textContent = "Sem ocorrências registadas.";
+      listaContainer.appendChild(mensagem);
+    } else {
+      ocorrencias.forEach((ocorrencia, index) => {
+        const card = document.createElement("div");
+        card.className = "ocorrencia-card";
+
+        // FORMATAR DATA
+        let dataFormatada = "dd/mm/aaaa";
+        if (ocorrencia.data) {
+          const dataObj = new Date(ocorrencia.data);
+          const dia = String(dataObj.getDate()).padStart(2, '0');
+          const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+          const ano = dataObj.getFullYear();
+          dataFormatada = `${dia}/${mes}/${ano}`;
+        }
+
+        // TEXTO DA OCORRÊNCIA
+        const texto = document.createElement("div");
+        texto.className = "texto";
+        texto.innerHTML = `
+          <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
+          ${ocorrencia.nome ? `<p><strong>${ocorrencia.nome}</strong></p>` : ""}
+          <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
+          <p>Relato: ${ocorrencia.descricao || "Sem descrição."}</p>
+        `;
+
+        card.appendChild(texto);
+
+        // IMAGEM DA OCORRÊNCIA
+        const imagem = document.createElement("img");
+        if (ocorrencia.imagem && ocorrencia.imagem.trim() !== "") {
+          imagem.src = ocorrencia.imagem;
+          imagem.alt = ocorrencia.nome || "Imagem da ocorrência";
+        } else {
+          imagem.src = "imagens/sem-imagem.png"; // fallback
+          imagem.alt = "Imagem não disponível";
+        }
+        card.appendChild(imagem);
+
+        listaContainer.appendChild(card);
+      });
+    }
+
+    popup.style.display = "flex";
+  }
+
+  if (tipo === "concluídas") {
+    document.getElementById("popup-concluidas").style.display = "flex";
+  }
 }
