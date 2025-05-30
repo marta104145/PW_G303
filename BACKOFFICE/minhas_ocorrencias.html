@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="css/style-user.css">
+  <link rel="stylesheet" href="css/styleuser.css">
   <link rel="icon" type="image/png" href="images/logo.png">
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
   <style>
@@ -87,18 +88,21 @@
 </main>
 
 <div class="modal" id="editModal">
-  <div class="modal-content">
-    <h3>Editar Ocorrência</h3>
-    <input type="text" id="editTipo" placeholder="Tipo">
-    <input type="text" id="editMorada" placeholder="Morada">
-    <input type="text" id="editPostal" placeholder="Código Postal">
-    <textarea id="editDescricao" rows="4" placeholder="Descrição"></textarea>
-    <div class="modal-buttons">
-      <button onclick="fecharModal()">Cancelar</button>
-      <button onclick="guardarEdicao()">Guardar</button>
+  <div class="modal-content styleuser-modal">
+    <h3 class="styleuser-modal-title">Editar Ocorrência</h3>
+
+    <input type="text" id="editTipo" placeholder="Tipo" class="styleuser-input" disabled>
+    <input type="text" id="editMorada" placeholder="Morada" class="styleuser-input" disabled>
+    <input type="text" id="editPostal" placeholder="Código Postal" class="styleuser-input" disabled>
+    <textarea id="editDescricao" rows="4" placeholder="Descrição" class="styleuser-textarea"></textarea>
+
+    <div class="styleuser-modal-buttons">
+      <button onclick="fecharModal()" class="styleuser-cancel-button">Cancelar</button>
+      <button onclick="guardarEdicao()" class="styleuser-save-button">Guardar</button>
     </div>
   </div>
 </div>
+
 
 <button id="notificacoesBtn" style="
   position: fixed;
