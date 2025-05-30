@@ -1,7 +1,7 @@
 /* Estilos para o body */
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: #f2f2f2;
   color: #333;
   padding: 0;
@@ -12,7 +12,7 @@ body {
 
 /* Estilo para o cabeçalho */
 .header {
-  background-color: #3C5E4B;
+  background-color: #3c5e4b;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -44,23 +44,23 @@ body {
 }
 
 .header .logo-text {
- font-size: xx-large;
- color: #E1E1E1;
+  font-size: xx-large;
+  color: #e1e1e1;
 }
 
-.header nav{
+.header nav {
   display: flex;
-  gap:120px;
+  gap: 120px;
 }
 
-.header nav a{
+.header nav a {
   text-decoration: none;
-  color: #ACACAC;
+  color: #acacac;
   font-size: larger;
 }
 
-.icon{
-  width:20px;
+.icon {
+  width: 20px;
   height: 20px;
 }
 
@@ -74,13 +74,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #3C5E4B;
+  background-color: #3c5e4b;
   color: white;
   position: relative;
   gap: 2em;
   padding: 1em 4em 0.5em 4em;
   position: relative; /* garante que a .hero-img se posiciona relativamente à .hero */
-  overflow: hidden;   /* impede que a imagem saia do ecrã horizontalmente */
+  overflow: hidden; /* impede que a imagem saia do ecrã horizontalmente */
 }
 
 .hero-text {
@@ -96,31 +96,31 @@ body {
   font-size: 2.5em;
   margin: 0.2em 0;
   font-weight: normal;
-  color: #ACACAC;
+  color: #acacac;
 }
 
 .hero-text p {
   font-size: 1.5em;
   margin: 0.2em 0;
   font-weight: normal;
-  color: #ACACAC
+  color: #acacac;
 }
 
 .hero-btn {
   margin-top: 2em;
   padding: 1em 2.5em;
-  background-color: #3C5E4B;
-  color: #ACACAC;
+  background-color: #3c5e4b;
+  color: #acacac;
   font-size: 1.1em;
   text-decoration: none;
   border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hero-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 .hero-img {
@@ -128,7 +128,6 @@ body {
   height: auto;
   margin-right: -2em; /* "puxa" a imagem até à margem direita */
   padding-top: 30px;
-  
 }
 
 section {
@@ -146,15 +145,15 @@ section {
 }
 
 .botoes {
-  display: flex;        /* MUITO IMPORTANTE */
+  display: flex; /* MUITO IMPORTANTE */
   margin-top: 2rem;
   justify-content: center; /* Alinha no centro */
-  gap: 2rem;             /* Espaço entre cards */
+  gap: 2rem; /* Espaço entre cards */
   flex-direction: row;
 }
 
 .card {
-  background-color: #3C5E4B;
+  background-color: #3c5e4b;
   color: white;
   padding: 1.5em;
   border-radius: 10px;
@@ -202,10 +201,9 @@ section {
 
 .circle-cards .item {
   text-align: center;
-  width: 70px;  /* Define a largura do círculo */
+  width: 70px; /* Define a largura do círculo */
   height: 210px; /* Define a altura do círculo */
   flex: 0 1 30%; /* Controla a largura das imagens */
- 
 }
 
 .circle-cards img {
@@ -221,13 +219,13 @@ section {
   /* Força as duas últimas imagens a ficarem centralizadas */
   margin-left: 5px;
   margin-right: 5px;
-  margin-top: 40px; 
+  margin-top: 40px;
 }
 
 /* Estilos gerais para o body */
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: #f2f2f2;
   color: #333;
   padding: 0;
@@ -238,7 +236,7 @@ body {
 /* Estilo para a seção Auditorias */
 .auditorias {
   padding: 1.2em;
-  background-color: #3C5E4B;
+  background-color: #3c5e4b;
   color: white;
   margin-top: 80px;
   border-radius: 20px;
@@ -247,7 +245,7 @@ body {
 .auditorias h2 {
   font-size: 2.5em;
   font-weight: bold;
-  margin-bottom: 1.5em;
+  margin-bottom: 0em;
   margin-left: 30px;
 }
 
@@ -259,7 +257,6 @@ body {
   align-items: flex-start;
   flex-wrap: wrap;
   margin-top: 0em;
-
 }
 
 /* Lista de auditorias */
@@ -268,18 +265,102 @@ body {
   list-style: none;
   flex: 1;
   max-width: 600px;
+  margin: 0;
+}
+
+.auditoria-content ul li {
+  margin-bottom: 0.5em; 
+}
+
+.auditorias-list {
+  max-height: 450px;  /* igual à altura do mapa */
+  overflow-y: auto;   /* ativa a barra de scroll */
+  overflow-x: hidden;
+  padding-right: 10px; /* espaço para a barra de scroll */
+  margin-top: 0;       /* retira o espaçamento superior extra */
+  box-sizing: border-box; /* garante que padding-right não crie scroll extra */
+}
+
+/* Estilo para cada item de auditoria */
+.auditoria-item {
+  position: relative;
+  padding: 1em;
+  margin-bottom: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+}
+
+.auditoria-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Tooltip para auditorias */
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 320px;
+  background-color: white;
+  color: #333;
+  text-align: left;
+  border-radius: 10px;
+  padding: 1.2em;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  font-size: 0.9em;
+  border: 2px solid #3c5e4b;
+  margin-top: 10px;
+}
+
+.tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+
+.auditoria-item:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip p {
+  margin: 0.5em 0;
+  line-height: 1.4;
+}
+
+.tooltip p:first-child {
+  margin-top: 0;
+}
+
+.tooltip p:last-child {
+  margin-bottom: 0;
+}
+
+.tooltip strong {
+  color: #3c5e4b;
+  font-weight: 600;
 }
 
 /* Caixa do mapa das auditorias */
 .map-container {
   flex: 1;
-  width: 60%;  /* Ajusta o tamanho do mapa */
-  height: 450px;  /* Altura do mapa */
+  width: 60%; /* Ajusta o tamanho do mapa */
+  height: 450px; /* Altura do mapa */
   background-color: white;
   border: 7px solid white;
   border-radius: 2px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-top: -8em;
+  margin-top: -3em;
 }
 
 /* Estilo para a seção Ocorrências */
@@ -317,7 +398,7 @@ body {
 .buttons-container button {
   font-size: 1.5em;
   padding: 1.8em;
-  background-color: #3C5E4B;
+  background-color: #3c5e4b;
   color: white;
   border: none;
   border-radius: 6px;
@@ -342,8 +423,6 @@ body {
   margin-top: 0em;
 }
 
-
-
 .feedback {
   background-color: #2e4e3f;
   color: white;
@@ -353,7 +432,7 @@ body {
   margin: 4em auto;
   width: 90%;
   max-width: 1200px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .feedback h2 {
@@ -370,11 +449,11 @@ body {
 }
 
 .feedback-card {
-  background-color: #3C5E4B;
+  background-color: #3c5e4b;
   padding: 2em;
   border-radius: 15px;
   width: 300px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .feedback-card p {
@@ -406,7 +485,6 @@ body {
   display: block;
 }
 
-
 .contactos {
   background-color: white;
   padding: 4em 2em;
@@ -435,7 +513,7 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: 1.5em;
-  margin-top: -50px; 
+  margin-top: -50px;
 }
 
 .contactos-info h2 {
@@ -470,77 +548,7 @@ body {
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,0.7);
-  justify-content: center;
-  align-items: center;
-}
-
-/* Caixa principal do popup */
-.popup-content {
-  background-color: #f2f2f2;
-  padding: 2em;
-  border-radius: 30px;
-  width: 90%;
-  max-width: 1000px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  position: relative;
-}
-
-/* Botão de fechar */
-.close-btn {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  font-size: 2em;
-  cursor: pointer;
-  color: #333;
-  font-weight: bold;
-}
-
-/* Cartões de ocorrência */
-.ocorrencia-card {
-  display: flex;
-  justify-content: space-between;
-  background-color: #d9d9d9;
-  border-radius: 15px;
-  padding: 1.5em;
-  margin-bottom: 1.5em;
-  gap: 2em;
-  align-items: center;
-}
-
-/* Imagem da ocorrência */
-.ocorrencia-card img {
-  width: 220px;
-  height: 150px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-/* Texto da ocorrência */
-.ocorrencia-card .texto {
-  flex: 1;
-  text-align: left;
-}
-
-/* Estilo do texto "Ocorrência X" */
-.verde {
-  color: #2c5f2d;
-  font-weight: bold;
-}
-
-/* Fundo escuro por trás do popup */
-.popup {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   justify-content: center;
   align-items: center;
 }
@@ -634,32 +642,4 @@ body {
   height: 120px;
   border-radius: 10px;
   object-fit: cover;
-}
-
-/* Tooltip para auditorias */
-.auditoria-item {
-  position: relative;
-}
-
-.auditoria-item .tooltip {
-  visibility: hidden;
-  opacity: 0;
-  width: 300px;
-  background-color: white;
-  color: #333;
-  text-align: left;
-  border-radius: 10px;
-  padding: 1em;
-  position: absolute;
-  top: 50%;
-  left: 110%;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  transition: opacity 0.3s;
-  font-size: 0.9em;
-}
-
-.auditoria-item:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
 }

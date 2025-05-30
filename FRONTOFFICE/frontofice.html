@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EyesEverywhere</title>
   <link rel="stylesheet" href="style.css" />
-
   <link rel="icon" type="image/png" href="imagens/logo.png">
 </head>
 <body>
@@ -148,15 +147,15 @@
     <h2>Feedback</h2>
     <div class="feedback-cards">
       <div class="feedback-card">
-        <p>“A plataforma facilitou o processo de denúncia de espaços verdes abandonados. Agora, a nossa praça está revitalizada e bem cuidada!”</p>
+        <p>"A plataforma facilitou o processo de denúncia de espaços verdes abandonados. Agora, a nossa praça está revitalizada e bem cuidada!"</p>
         <span>– Ana F.</span>
       </div>
       <div class="feedback-card">
-        <p>“Fiquei impressionado com a eficiência da plataforma. Reportei um jardim sem iluminação e, pouco tempo depois, já havia uma auditoria em andamento!”</p>
+        <p>"Fiquei impressionado com a eficiência da plataforma. Reportei um jardim sem iluminação e, pouco tempo depois, já havia uma auditoria em andamento!"</p>
         <span>– Luís C.</span>
       </div>
       <div class="feedback-card">
-        <p>“Graças à EyesEverywhere, conseguimos identificar árvores em risco de queda no nosso parque local. A rápida resposta evitou acidentes!”</p>
+        <p>"Graças à EyesEverywhere, conseguimos identificar árvores em risco de queda no nosso parque local. A rápida resposta evitou acidentes!"</p>
         <span>– Sofia R.</span>
       </div>
     </div>
@@ -208,83 +207,82 @@
     </div>
   </div>
 
+  <!-- POPUP OCORRÊNCIAS EM ANÁLISE -->
+  <div id="popup-analise" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" onclick="fecharPopup('popup-analise')">&times;</span>
+      <h2>Ocorrências em análise</h2>
+
+      <div class="ocorrencia-card">
+        <div class="texto">
+          <p><span class="verde">Ocorrência 1</span> - dd/mm/aaaa</p>
+          <p><strong>-Banco de jardim danificado</strong></p>
+          <p>Relato: Passeando pelo parque, vi que vários bancos estão partidos e impossíveis de usar.</p>
+          <p>Estado: Especialistas chegam a dd/mm.</p>
+        </div>
+        <img src="imagens/banco-danificado.png" alt="Banco danificado">
+      </div>
+
+      <div class="ocorrencia-card">
+        <div class="texto">
+          <p><span class="verde">Ocorrência 2</span> - dd/mm/aaaa</p>
+          <p><strong>-Lixo na floresta</strong></p>
+          <p>Relato: Quando cheguei à floresta reparei que ela estava cheia de lixo espalhado.</p>
+          <p>Estado: Relato confirmado.<br>Equipa de limpeza chega a dd/mm.</p>
+        </div>
+        <img src="imagens/lixo-floresta.jpg" alt="Lixo na floresta">
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP OCORRÊNCIAS CONCLUÍDAS -->
+  <div id="popup-concluidas" class="popup">
+    <div class="popup-content">
+      <span class="close-btn" onclick="fecharPopup('popup-concluidas')">&times;</span>
+      <h2>Ocorrências concluídas</h2>
+
+      <!-- Ocorrência 1 -->
+      <div class="ocorrencia-card">
+        <div class="texto">
+          <p><span class="verde">Ocorrência 1</span> - dd/mm/aaaa</p>
+          <p><strong>-Rio poluído</strong></p>
+          <p>Relato: Hoje a passear à beira do rio…</p>
+          <p>Estado: Relato confirmado.<br>Tratamento da água realizado a dd/mm.</p>
+        </div>
+        <div class="antes-depois">
+          <div>
+            <p class="verde">Antes</p>
+            <img src="imagens/banco-danificado.png" alt="Antes - Banco danificado">
+          </div>
+          <div>
+            <p class="verde">Depois</p>
+            <img src="imagens/banco arranjado.png" alt="Depois - Banco novo">
+          </div>
+        </div>
+      </div>
+
+      <!-- Ocorrência 2 -->
+      <div class="ocorrencia-card">
+        <div class="texto">
+          <p><span class="verde">Ocorrência 2</span> - dd/mm/aaaa</p>
+          <p><strong>-Lixo na floresta</strong></p>
+          <p>Relato: Quando cheguei à floresta…</p>
+          <p>Estado: Relato confirmado.<br>Limpeza da floresta realizada a dd/mm.</p>
+        </div>
+        <div class="antes-depois">
+          <div>
+            <p class="verde">Antes</p>
+            <img src="imagens/lixo-floresta.jpg" alt="Antes - Lixo na floresta">
+          </div>
+          <div>
+            <p class="verde">Depois</p>
+            <img src="imagens/floresta sem lixo.png" alt="Depois - Floresta limpa">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
-
-<!-- POPUP OCORRÊNCIAS EM ANÁLISE -->
-<div id="popup-analise" class="popup">
-  <div class="popup-content">
-    <span class="close-btn" onclick="fecharPopup('popup-analise')">&times;</span>
-    <h2>Ocorrências em análise</h2>
-
-    <div class="ocorrencia-card">
-      <div class="texto">
-        <p><span class="verde">Ocorrência 1</span> - dd/mm/aaaa</p>
-        <p><strong>-Banco de jardim danificado</strong></p>
-        <p>Relato: Passeando pelo parque, vi que vários bancos estão partidos e impossíveis de usar.</p>
-        <p>Estado: Especialistas chegam a dd/mm.</p>
-      </div>
-      <img src="imagens/banco-danificado.png" alt="Banco danificado">
-    </div>
-
-    <div class="ocorrencia-card">
-      <div class="texto">
-        <p><span class="verde">Ocorrência 2</span> - dd/mm/aaaa</p>
-        <p><strong>-Lixo na floresta</strong></p>
-        <p>Relato: Quando cheguei à floresta reparei que ela estava cheia de lixo espalhado.</p>
-        <p>Estado: Relato confirmado.<br>Equipa de limpeza chega a dd/mm.</p>
-      </div>
-      <img src="imagens/lixo-floresta.jpg" alt="Lixo na floresta">
-    </div>
-  </div>
-</div>
-
-<!-- POPUP OCORRÊNCIAS CONCLUÍDAS -->
-<div id="popup-concluidas" class="popup">
-  <div class="popup-content">
-    <span class="close-btn" onclick="fecharPopup('popup-concluidas')">&times;</span>
-    <h2>Ocorrências concluídas</h2>
-
-    <!-- Ocorrência 1 -->
-    <div class="ocorrencia-card">
-      <div class="texto">
-        <p><span class="verde">Ocorrência 1</span> - dd/mm/aaaa</p>
-        <p><strong>-Rio poluído</strong></p>
-        <p>Relato: Hoje a passear à beira do rio…</p>
-        <p>Estado: Relato confirmado.<br>Tratamento da água realizado a dd/mm.</p>
-      </div>
-      <div class="antes-depois">
-        <div>
-          <p class="verde">Antes</p>
-          <img src="imagens/banco-danificado.png" alt="Antes - Banco danificado">
-        </div>
-        <div>
-          <p class="verde">Depois</p>
-          <img src="imagens/banco arranjado.png" alt="Depois - Banco novo">
-        </div>
-      </div>
-    </div>
-
-    <!-- Ocorrência 2 -->
-    <div class="ocorrencia-card">
-      <div class="texto">
-        <p><span class="verde">Ocorrência 2</span> - dd/mm/aaaa</p>
-        <p><strong>-Lixo na floresta</strong></p>
-        <p>Relato: Quando cheguei à floresta…</p>
-        <p>Estado: Relato confirmado.<br>Limpeza da floresta realizada a dd/mm.</p>
-      </div>
-      <div class="antes-depois">
-        <div>
-          <p class="verde">Antes</p>
-          <img src="imagens/lixo-floresta.jpg" alt="Antes - Lixo na floresta">
-        </div>
-        <div>
-          <p class="verde">Depois</p>
-          <img src="imagens/floresta sem lixo.png" alt="Depois - Floresta limpa">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
