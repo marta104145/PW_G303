@@ -150,6 +150,10 @@
       }
     }
 
+    function gerarIdUnico() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+    }
+
     submitBtn.onclick = function () {
       const tipoSelect = document.getElementById("tipo");
       const tipo = tipoSelect.options[tipoSelect.selectedIndex].text;
@@ -187,15 +191,17 @@
           const photoBase64 = event.target.result;
 
           const ocorrencia = {
-            tipo: tipo,
-            morada: location,
-            codigoPostal: postal,
-            descricao: description,
-            userEmail: email,
-            userName: nome,
-            data: new Date().toISOString(),
-            fotoBase64: photoBase64 // <-- Nome correto aqui
+          id: gerarIdUnico(),
+          tipo: tipo,
+          morada: location,
+          codigoPostal: postal,
+          descricao: description,
+          userEmail: email,
+          userName: nome,
+          data: new Date().toISOString(),
+          fotoBase64: photoBase64
           };
+
 
           let ocorrencias = JSON.parse(localStorage.getItem("ocorrencias")) || [];
           ocorrencias.push(ocorrencia);
