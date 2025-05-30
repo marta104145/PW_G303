@@ -169,30 +169,36 @@ createApp({
     
       const resolvidas = JSON.parse(localStorage.getItem("resolvidas")) || [];
       animarContador(ocorrencias, resolvidas.length);
+
       // Criar contagem mensal de ocorrências resolvidas
       const ocorrenciasPorMes = Array(12).fill(0);
       resolvidas.forEach(o => {
-        const data = new Date(o.dataISO || o.dataFormatada);
-        const mes = data.getMonth(); // 0 = Janeiro
-        ocorrenciasPorMes[mes]++;
+        // dataFormatada ex: "26/05/2025 14:30"
+        const dataStr = o.dataISO || o.dataFormatada || "";
+        const [diaMesAno] = dataStr.split(' ');           // "26/05/2025"
+        const parts = diaMesAno.split(/[\/\-]/).map(n => parseInt(n,10));
+        if (parts.length === 3) {
+          const mesIndex = parts[1] - 1;                   // 0..11
+          if (mesIndex >= 0 && mesIndex <= 11) 
+            ocorrenciasPorMes[mesIndex]++;
+        }
       });
 
-      // Gráficos
-      new Chart(document.getElementById('ocorrenciasChart'), {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-        datasets: [{
-          label: 'Ocorrências resolvidas',
-          data: ocorrenciasPorMes,
-          borderColor: '#2c5f2d',
-          backgroundColor: 'rgba(44, 95, 45, 0.2)',
-          fill: true,
-          tension: 0.3
-        }]
-      },
-      options: { responsive: true }
-    });
+new Chart(document.getElementById('ocorrenciasChart'), {
+  type: 'line',
+  data: {
+    labels: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    datasets:[{
+      label: 'Ocorrências resolvidas',
+      data: ocorrenciasPorMes,
+      borderColor: '#2c5f2d',
+      backgroundColor: 'rgba(44,95,45,0.2)',
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: { responsive: true }
+});
 
     const resolvidasGuardadas = JSON.parse(localStorage.getItem("resolvidas")) || [];
     const tiposCount = {};
