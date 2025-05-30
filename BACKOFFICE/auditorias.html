@@ -9,6 +9,45 @@
   <script src="js/auditorias.js" defer></script>
   <link rel="icon" type="image/png" href="images/logo.png">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .prioridade-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 13px;
+      color: #000000;
+      letter-spacing: 1px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* Cores suaves baseadas na prioridade */
+    .prioridade-1 {
+      background-color: #e8f5e8; /* Verde muito suave */
+      border-color: #a5d6a7;
+    }
+
+    .prioridade-2 {
+      background-color: #f1f8e9; /* Verde claro muito suave */
+      border-color: #c5e1a5;
+    }
+
+    .prioridade-3 {
+      background-color: #fffde7; /* Amarelo muito suave */
+      border-color: #fff176;
+    }
+
+    .prioridade-4 {
+      background-color: #fff3e0; /* Laranja muito suave */
+      border-color: #ffcc02;
+    }
+
+    .prioridade-5 {
+      background-color: #ffebee; /* Vermelho muito suave */
+      border-color: #ffcdd2;
+    }
+  </style>
 </head>
 
 <body>
@@ -69,6 +108,7 @@
               <th>Localização</th>
               <th>Perito Responsável</th>
               <th>Data</th>
+              <th>Prioridade</th>
               <th></th>
             </tr>
           </thead>
@@ -162,7 +202,7 @@
         e.preventDefault();
 
         const dados = Object.fromEntries(new FormData(this));
-        dados.prioridade = window.ocorrenciaClicada?.cells[4]?.innerText || "";
+        dados.prioridade = window.ocorrenciaClicada?.cells[4]?.innerHTML || "";
         // Extrair materiais e quantidades
       const materiaisSelecionados = [];
       document.querySelectorAll('#materiaisContainer input[type="number"]').forEach(input => {
@@ -251,20 +291,44 @@
       function adicionarAuditoriaNaTabela(dados) {
         const tbody = document.querySelector('#auditoriasRealizadas tbody');
 
+        // Formatar a prioridade com estrelas e cores
+        let prioridadeDisplay = "-";
+        if (dados.prioridade) {
+          // Se já vem formatado com HTML (badge), usar diretamente
+          if (dados.prioridade.includes('prioridade-badge')) {
+            prioridadeDisplay = dados.prioridade;
+          } else {
+            // Tentar extrair o número da prioridade (pode estar no formato "4 ★★★★☆")
+            const prioridadeMatch = dados.prioridade.toString().match(/^(\d+)/);
+            const nivel = prioridadeMatch ? parseInt(prioridadeMatch[1]) : 
+                         (["Alta", "Média", "Baixa"].includes(dados.prioridade) ? 
+                          {"Alta": 4, "Média": 3, "Baixa": 2}[dados.prioridade] : 3);
+            
+            if (!isNaN(nivel) && nivel >= 1 && nivel <= 5) {
+              const estrelas = "★".repeat(nivel) + "☆".repeat(5 - nivel);
+              prioridadeDisplay = `<span class="prioridade-badge prioridade-${nivel}">${nivel} ${estrelas}</span>`;
+            } else {
+              prioridadeDisplay = dados.prioridade;
+            }
+          }
+        }
+
         const linha = document.createElement('tr');
         linha.classList.add('audit-row');
         linha.innerHTML = `
           <td>${dados.nome}</td>
+          <td>${dados.tipo || '-'}</td>
           <td>${dados.local_nome}</td>
           <td>${dados.equipa}</td>
           <td>${dados.dataFormatada}</td>
+          <td>${prioridadeDisplay}</td>
           <td onclick="toggleDetails(this)" class="expand-btn">▸</td>
         `;
 
         const detalhes = document.createElement('tr');
         detalhes.classList.add('details');
         detalhes.innerHTML = `
-        <td colspan="5">
+        <td colspan="7">
           <strong>Descrição:</strong><br>${dados.descricao}<br><br>
           <strong>Materiais:</strong><br>
           <ul style="padding-left: 20px; margin-top: 5px;">
@@ -392,7 +456,7 @@
         const local_nome = mainRow.cells[2].innerText;
         const equipa = mainRow.cells[3].innerText;
         const dataText = mainRow.cells[4].innerText;
-        const prioridade = mainRow.cells[5].innerText;
+        const prioridade = mainRow.cells[5].innerHTML; // Usar innerHTML para preservar as estrelas
 
         const dados = {
           nome,
@@ -432,6 +496,7 @@
           <td>${dados.local_nome}</td>
           <td>${dados.equipa}</td>
           <td>${dados.dataFormatada}</td>
+          <td>${dados.prioridade || '-'}</td>
           <td></td>
         `;
 
