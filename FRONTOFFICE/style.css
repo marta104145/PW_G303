@@ -241,6 +241,7 @@ body {
   background-color: #3C5E4B;
   color: white;
   margin-top: 80px;
+  border-radius: 20px;
 }
 
 .auditorias h2 {
@@ -278,7 +279,7 @@ body {
   border: 7px solid white;
   border-radius: 2px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 0em;
+  margin-top: -8em;
 }
 
 /* Estilo para a seção Ocorrências */
@@ -633,4 +634,32 @@ body {
   height: 120px;
   border-radius: 10px;
   object-fit: cover;
+}
+
+/* Tooltip para auditorias */
+.auditoria-item {
+  position: relative;
+}
+
+.auditoria-item .tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 300px;
+  background-color: white;
+  color: #333;
+  text-align: left;
+  border-radius: 10px;
+  padding: 1em;
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: opacity 0.3s;
+  font-size: 0.9em;
+}
+
+.auditoria-item:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
