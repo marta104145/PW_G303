@@ -157,7 +157,10 @@ document.addEventListener("DOMContentLoaded", () => {
       auditoriasList.appendChild(li)
     })
 
-    initAuditoriasMap(auditorias)
+    // Inicializar o mapa das auditorias se a API do Google Maps estiver carregada
+    if (window.google && window.google.maps) {
+      initAuditoriasMap(auditorias)
+    }
   } else {
     const li = document.createElement("li")
     li.textContent = "Sem auditorias registadas no localStorage."
@@ -182,7 +185,7 @@ function initAuditoriasMap(auditorias) {
 
   const map = new google.maps.Map(mapElement, {
     center: { lat: 41.55, lng: -8.43 }, // Braga por exemplo
-    zoom: 8,
+    zoom: 9,
   })
 
   auditorias.forEach((auditoria) => {
@@ -232,14 +235,110 @@ function scrollToSobre() {
 // --------- POPUP DE OCORRÊNCIAS ---------
 function filtrarOcorrencias(tipo) {
   if (tipo === "em aberto") {
-    document.getElementById("popup").style.display = "flex"
-  } else if (tipo === "em análise") {
-    document.getElementById("popup-analise").style.display = "flex"
-  } else if (tipo === "concluídas") {
-    document.getElementById("popup-concluidas").style.display = "flex"
+    const popup = document.getElementById("popup")
+    const listaContainer = document.getElementById("lista-ocorrencias-abertas")
+    listaContainer.innerHTML = "" // Limpa a lista
+
+    const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasAceites") || "[]")
+
+    if (ocorrencias.length === 0) {
+      const mensagem = document.createElement("p")
+      mensagem.textContent = "Sem ocorrências registadas."
+      listaContainer.appendChild(mensagem)
+    } else {
+      ocorrencias.forEach((ocorrencia, index) => {
+        const card = document.createElement("div")
+        card.className = "ocorrencia-card"
+
+        // FORMATAR DATA
+        let dataFormatada = "dd/mm/aaaa"
+        if (ocorrencia.data) {
+          const dataObj = new Date(ocorrencia.data)
+          const dia = String(dataObj.getDate()).padStart(2, "0")
+          const mes = String(dataObj.getMonth() + 1).padStart(2, "0")
+          const ano = dataObj.getFullYear()
+          dataFormatada = `${dia}/${mes}/${ano}`
+        }
+
+        // TEXTO DA OCORRÊNCIA COM MAIS INFORMAÇÕES
+        const texto = document.createElement("div")
+        texto.className = "texto"
+        texto.innerHTML = `
+          <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
+          ${ocorrencia.nome ? `<p><strong>Utilizador:</strong> ${ocorrencia.nome}</p>` : ""}
+          <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
+          <p><strong>Local:</strong> ${ocorrencia.morada || "Local não especificado"}</p>
+          ${ocorrencia.codigoPostal ? `<p><strong>Código Postal:</strong> ${ocorrencia.codigoPostal}</p>` : ""}
+          ${ocorrencia.prioridade ? `<p><strong>Prioridade:</strong> ${ocorrencia.prioridade}</p>` : ""}
+          <p><strong>Relato:</strong> ${ocorrencia.descricao || "Sem descrição."}</p>
+          ${ocorrencia.contacto ? `<p><strong>Contacto:</strong> ${ocorrencia.contacto}</p>` : ""}
+        `
+
+        card.appendChild(texto)
+        listaContainer.appendChild(card)
+      })
+    }
+
+    popup.style.display = "flex"
+  }
+
+  if (tipo === "concluídas") {
+    filtrarOcorrenciasConcluidas()
   }
 }
 
+// --------- BOTÃO: VER OCORRÊNCIAS CONCLUÍDAS ---------
+function filtrarOcorrenciasConcluidas() {
+  const popup = document.getElementById("popup-concluidas")
+  const listaContainer = document.getElementById("lista-ocorrencias-concluidas")
+  listaContainer.innerHTML = ""
+
+  // Buscar ocorrências resolvidas do localStorage (vem da página de auditorias)
+  const ocorrenciasResolvidas = JSON.parse(localStorage.getItem("resolvidas") || "[]")
+
+  if (!ocorrenciasResolvidas || ocorrenciasResolvidas.length === 0) {
+    const mensagem = document.createElement("p")
+    mensagem.textContent = "Sem ocorrências concluídas registadas."
+    listaContainer.appendChild(mensagem)
+  } else {
+    ocorrenciasResolvidas.forEach((ocorrencia, index) => {
+      const card = document.createElement("div")
+      card.classList.add("ocorrencia-card")
+
+      // FORMATAR DATA - usar dataFormatada se existir, senão tentar formatar
+      let dataFormatada = "dd/mm/aaaa"
+      if (ocorrencia.dataFormatada) {
+        dataFormatada = ocorrencia.dataFormatada
+      } else if (ocorrencia.data) {
+        const dataObj = new Date(ocorrencia.data)
+        const dia = String(dataObj.getDate()).padStart(2, "0")
+        const mes = String(dataObj.getMonth() + 1).padStart(2, "0")
+        const ano = dataObj.getFullYear()
+        dataFormatada = `${dia}/${mes}/${ano}`
+      }
+
+      // TEXTO DA OCORRÊNCIA COM MAIS INFORMAÇÕES
+      const texto = document.createElement("div")
+      texto.className = "texto"
+      texto.innerHTML = `
+        <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
+        <p><strong>Nome:</strong> ${ocorrencia.nome || "Sem nome"}</p>
+        <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
+        <p><strong>Local:</strong> ${ocorrencia.local_nome || "Sem localização"}</p>
+        <p><strong>Perito Responsável:</strong> ${ocorrencia.equipa || "Não especificado"}</p>
+        ${ocorrencia.prioridade ? `<p><strong>Prioridade:</strong> ${ocorrencia.prioridade}</p>` : ""}
+        <p>Estado: <strong style="color: #2c5f2d;">Concluída</strong></p>
+      `
+
+      card.appendChild(texto)
+      listaContainer.appendChild(card)
+    })
+  }
+
+  popup.style.display = "flex"
+}
+
+// --------- FECHAR POPUP ---------
 function fecharPopup(id) {
   const popup = document.getElementById(id)
   if (popup) {
@@ -278,119 +377,112 @@ function limparDados() {
   location.reload()
 }
 
-function filtrarOcorrencias(tipo) {
-  if (tipo === "em aberto") {
-    const popup = document.getElementById("popup");
-    const listaContainer = document.getElementById("lista-ocorrencias-abertas");
-    listaContainer.innerHTML = ""; // Limpa a lista
-
-    const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasAceites") || "[]");
-
-    if (ocorrencias.length === 0) {
-      const mensagem = document.createElement("p");
-      mensagem.textContent = "Sem ocorrências registadas.";
-      listaContainer.appendChild(mensagem);
-    } else {
-      ocorrencias.forEach((ocorrencia, index) => {
-        const card = document.createElement("div");
-        card.className = "ocorrencia-card";
-
-        // FORMATAR DATA
-        let dataFormatada = "dd/mm/aaaa";
-        if (ocorrencia.data) {
-          const dataObj = new Date(ocorrencia.data);
-          const dia = String(dataObj.getDate()).padStart(2, '0');
-          const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
-          const ano = dataObj.getFullYear();
-          dataFormatada = `${dia}/${mes}/${ano}`;
-        }
-
-        // TEXTO DA OCORRÊNCIA
-        const texto = document.createElement("div");
-        texto.className = "texto";
-        texto.innerHTML = `
-          <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
-          ${ocorrencia.nome ? `<p><strong>${ocorrencia.nome}</strong></p>` : ""}
-          <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
-          <p>Relato: ${ocorrencia.descricao || "Sem descrição."}</p>
-        `;
-
-        card.appendChild(texto);
-        listaContainer.appendChild(card);
-      });
-    }
-
-    popup.style.display = "flex";
-  }
-
-  if (tipo === "concluídas") {
-    document.getElementById("popup-concluidas").style.display = "flex";
-  }
-}
-// --------- BOTÃO: VER OCORRÊNCIAS CONCLUÍDAS ---------
-function filtrarOcorrenciasConcluidas() {
-  const popup = document.getElementById("popup-concluidas");
-  const listaContainer = document.getElementById("lista-ocorrencias-concluidas");
-  listaContainer.innerHTML = "";
-
-  const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasResolvidas") || "[]");
-
-  if (!ocorrencias || ocorrencias.length === 0) {
-    const mensagem = document.createElement("p");
-    mensagem.textContent = "Sem ocorrências registadas.";
-    listaContainer.appendChild(mensagem);
-  } else {
-    ocorrencias.forEach((ocorrencia, index) => {
-      const card = document.createElement("div");
-      card.classList.add("ocorrencia-card");
-
-      let dataFormatada = "dd/mm/aaaa";
-      if (ocorrencia.data) {
-        const dataObj = new Date(ocorrencia.data);
-        const dia = String(dataObj.getDate()).padStart(2, '0');
-        const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
-        const ano = dataObj.getFullYear();
-        dataFormatada = `${dia}/${mes}/${ano}`;
-      }
-
-      card.innerHTML = `
-        <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
-        <p><strong>Nome:</strong> ${ocorrencia.nome || "Sem nome"}</p>
-        <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
-        <p>Relato: ${ocorrencia.descricao || "Sem descrição."}</p>
-      `;
-
-      listaContainer.appendChild(card);
-    });
-  }
-
-  popup.style.display = "flex";
-}
-
-// --------- FECHAR POPUP ---------
-function fecharPopup(id) {
-  const popup = document.getElementById(id);
-  if (popup) {
-    popup.style.display = "none";
-  }
-}
-
-// --------- BOTÃO NO HTML ---------
-/*
-<button onclick="filtrarOcorrenciasConcluidas()">Ver Ocorrências Concluídas</button>
-*/
-
-// --------- ADICIONA NOVA OCORRÊNCIA (APENAS SE PRECISAR) ---------
-function adicionarOcorrenciaResolvida(nome, tipo, descricao, data) {
-  const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasResolvidas") || "[]");
-  ocorrencias.push({ nome, tipo, descricao, data });
-  localStorage.setItem("ocorrenciasResolvidas", JSON.stringify(ocorrencias));
-}
-
-// --------- TESTAR OCORRÊNCIAS (DEBUG) ---------
+// --------- FUNÇÕES PARA TESTAR OCORRÊNCIAS CONCLUÍDAS (DEBUG) ---------
 function listarOcorrenciasConcluidas() {
-  const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasResolvidas") || "[]");
-  console.log("Ocorrências resolvidas:", ocorrencias);
+  const ocorrencias = JSON.parse(localStorage.getItem("resolvidas") || "[]")
+  console.log("=== OCORRÊNCIAS CONCLUÍDAS ===")
+  ocorrencias.forEach((ocorrencia, index) => {
+    console.log(`${index}: ${ocorrencia.nome} - ${ocorrencia.tipo} - ${ocorrencia.local_nome}`)
+  })
 }
 
+// --------- ADICIONAR OCORRÊNCIAS DE TESTE (PARA DEBUG) ---------
+function adicionarOcorrenciasTesteResolvidas() {
+  const ocorrenciasExemplo = [
+    {
+      nome: "Limpeza do Parque Central",
+      tipo: "Gestão de Resíduos",
+      local_nome: "Parque Central de Braga",
+      equipa: "João Silva",
+      dataFormatada: "15/12/2024",
+      prioridade: '<span class="prioridade-badge prioridade-4">4 ★★★★☆</span>',
+    },
+    {
+      nome: "Poda de Árvores",
+      tipo: "Árvores em Risco",
+      local_nome: "Avenida da Liberdade",
+      equipa: "Maria Santos",
+      dataFormatada: "10/12/2024",
+      prioridade: '<span class="prioridade-badge prioridade-5">5 ★★★★★</span>',
+    },
+    {
+      nome: "Manutenção de Jardim",
+      tipo: "Manutenção de Jardins",
+      local_nome: "Jardim de Santa Bárbara",
+      equipa: "Pedro Costa",
+      dataFormatada: "08/12/2024",
+      prioridade: '<span class="prioridade-badge prioridade-2">2 ★★☆☆☆</span>',
+    },
+  ]
 
+  localStorage.setItem("resolvidas", JSON.stringify(ocorrenciasExemplo))
+  console.log("Ocorrências de teste adicionadas!")
+}
+
+// --------- ADICIONAR OCORRÊNCIAS DE TESTE PARA "EM ABERTO" (PARA DEBUG) ---------
+function adicionarOcorrenciasTesteAbertas() {
+  const ocorrenciasExemplo = [
+    {
+      nome: "João Silva",
+      tipo: "Parque Vandalizado",
+      morada: "Parque da Cidade, Braga",
+      codigoPostal: "4710-229",
+      prioridade: "Alta",
+      descricao: "Equipamentos do parque foram vandalizados durante a noite",
+      contacto: "joao.silva@email.com",
+      data: "2025-05-19",
+    },
+    {
+      nome: "Maria Santos",
+      tipo: "Árvore em Risco",
+      morada: "Rua da Liberdade, Guimarães",
+      codigoPostal: "4800-123",
+      prioridade: "Muito Alta",
+      descricao: "Árvore com risco de queda próximo à escola",
+      contacto: "maria.santos@email.com",
+      data: "2025-05-18",
+    },
+    {
+      nome: "Pedro Costa",
+      tipo: "Lixo Abandonado",
+      morada: "Avenida Central, Barcelos",
+      codigoPostal: "4750-111",
+      prioridade: "Média",
+      descricao: "Acumulação de lixo na via pública",
+      contacto: "pedro.costa@email.com",
+      data: "2025-05-17",
+    },
+  ]
+
+  localStorage.setItem("ocorrenciasAceites", JSON.stringify(ocorrenciasExemplo))
+  console.log("Ocorrências de teste (em aberto) adicionadas!")
+}
+
+// Inicializar o mapa das ocorrências quando a página carregar
+window.addEventListener("load", () => {
+  // Verificar se o mapa das ocorrências existe
+  const ocorrenciasMapElement = document.getElementById("ocorrencias-map")
+  if (ocorrenciasMapElement && window.google && window.google.maps) {
+    // Inicializar o mapa das ocorrências
+    const google = window.google
+    const ocorrenciasMap = new google.maps.Map(ocorrenciasMapElement, {
+      center: { lat: 41.55, lng: -8.43 }, // Coordenadas de Braga
+      zoom: 9,
+    })
+
+    // Adicionar alguns marcadores de exemplo
+    const marcadores = [
+      { lat: 41.55, lng: -8.43, titulo: "Ocorrência 1" },
+      { lat: 41.5, lng: -8.4, titulo: "Ocorrência 2" },
+      { lat: 41.6, lng: -8.45, titulo: "Ocorrência 3" },
+    ]
+
+    marcadores.forEach((pos) => {
+      new google.maps.Marker({
+        position: { lat: pos.lat, lng: pos.lng },
+        map: ocorrenciasMap,
+        title: pos.titulo,
+      })
+    })
+  }
+})

@@ -253,10 +253,11 @@ body {
 .auditoria-content {
   display: flex;
   justify-content: space-between;
-  gap: 5em;
+  gap: 3em; /* aumentar gap de 5em para 3em */
   align-items: flex-start;
   flex-wrap: wrap;
   margin-top: 0em;
+  height: 450px; /* definir altura fixa para o container */
 }
 
 /* Lista de auditorias */
@@ -264,8 +265,9 @@ body {
   padding-left: 0;
   list-style: none;
   flex: 1;
-  max-width: 600px;
+  max-width: 500px; /* reduzir de 600px para 500px */
   margin: 0;
+  height: 100%; /* ocupar toda a altura disponível */
 }
 
 .auditoria-content ul li {
@@ -273,12 +275,13 @@ body {
 }
 
 .auditorias-list {
-  max-height: 450px;  /* igual à altura do mapa */
-  overflow-y: auto;   /* ativa a barra de scroll */
+  max-height: 400px; /* igual à altura do mapa */
+  overflow-y: auto; /* ativa a barra de scroll */
   overflow-x: hidden;
   padding-right: 10px; /* espaço para a barra de scroll */
-  margin-top: 0;       /* retira o espaçamento superior extra */
+  margin-top: 0; /* retira o espaçamento superior extra */
   box-sizing: border-box; /* garante que padding-right não crie scroll extra */
+  padding-bottom: 30px; /* adiciona espaço extra no final para permitir scroll completo */
 }
 
 /* Estilo para cada item de auditoria */
@@ -309,7 +312,7 @@ body {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
+  z-index: 2000; /* Aumentado para garantir que fique por cima */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: opacity 0.3s ease, visibility 0.3s ease;
   font-size: 0.9em;
@@ -361,7 +364,7 @@ body {
   border-radius: 2px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   margin-top: -3em;
-  position: fixed;
+  position: relative; /* Mudado de fixed para relative */
 }
 
 /* Estilo para a seção Ocorrências */
@@ -380,48 +383,42 @@ body {
 /* Layout da seção de ocorrências */
 .ocorrencias-content {
   display: flex;
-  justify-content: space-between; /* Alinha os botões à esquerda */
-  gap: 2em;
-  align-items: flex-start;
-  margin-top: 1rem;
+  justify-content: center; /* Centraliza os botões */
+  align-items: center;
+  margin-top: 2rem;
+  flex-wrap: nowrap; /* Impede que os elementos quebrem para a próxima linha */
 }
 
 /* Estilo para os botões */
 .buttons-container {
   display: flex;
-  flex-direction: column;
-  gap: 5em;
-  height: 450px; /* igual à altura do mapa */
-  justify-content: flex-start;
-  margin-top: 5rem;
+  flex-direction: row; /* Mudado de column para row */
+  gap: 3em; /* Espaçamento horizontal entre os botões */
+  justify-content: center;
+  align-items: center;
 }
 
 .buttons-container button {
   font-size: 1.5em;
-  padding: 1.8em;
+  padding: 1.8em 2.5em; /* Ajustado o padding horizontal */
   background-color: #3c5e4b;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: transform 0.3s ease;
-  width: 400px;
+  width: 350px; /* Largura fixa para manter consistência */
+  height: auto; /* Altura automática */
 }
 
 .buttons-container button:hover {
-  transform: scale(1.1);
+  transform: scale(1.05); /* Efeito de hover mais suave */
   background-color: #2e4e3f;
 }
 
 /* Caixa do mapa das ocorrências */
 #ocorrencias-map {
-  width: 60%; /* Ajusta o tamanho do mapa */
-  height: 450px; /* Altura do mapa */
-  background-color: white;
-  border: 11px solid #2e4e3f;
-  border-radius: 2px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 0em;
+  display: none;
 }
 
 .feedback {
