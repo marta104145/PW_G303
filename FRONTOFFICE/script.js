@@ -316,17 +316,6 @@ function filtrarOcorrencias(tipo) {
         `;
 
         card.appendChild(texto);
-
-        // IMAGEM DA OCORRÊNCIA
-        const imagem = document.createElement("img");
-        if (ocorrencia.imagem && ocorrencia.imagem.trim() !== "") {
-          imagem.src = ocorrencia.imagem;
-        } else {
-          imagem.src = "imagens/sem-imagem.png";
-        }
-        imagem.alt = ocorrencia.nome || "Imagem da ocorrência";
-        card.appendChild(imagem);
-
         listaContainer.appendChild(card);
       });
     }
@@ -339,114 +328,48 @@ function filtrarOcorrencias(tipo) {
   }
 }
 
-function filtrarOcorrencias(tipo) {
-  if (tipo === "em aberto") {
-    const popup = document.getElementById("popup");
-    const listaContainer = document.getElementById("lista-ocorrencias-abertas");
-    listaContainer.innerHTML = ""; // Limpa a lista
+function filtrarOcorrenciasConcluidas() {
+  const popupConcluidas = document.getElementById("popup-concluidas");
+  const listaContainer = document.getElementById("lista-ocorrencias-concluidas");
 
-    const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasAceites") || "[]");
-
-    if (ocorrencias.length === 0) {
-      const mensagem = document.createElement("p");
-      mensagem.textContent = "Sem ocorrências registadas.";
-      listaContainer.appendChild(mensagem);
-    } else {
-      ocorrencias.forEach((ocorrencia, index) => {
-        const card = document.createElement("div");
-        card.className = "ocorrencia-card";
-
-        // FORMATAR DATA
-        let dataFormatada = "dd/mm/aaaa";
-        if (ocorrencia.data) {
-          const dataObj = new Date(ocorrencia.data);
-          const dia = String(dataObj.getDate()).padStart(2, '0');
-          const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
-          const ano = dataObj.getFullYear();
-          dataFormatada = `${dia}/${mes}/${ano}`;
-        }
-
-        // TEXTO DA OCORRÊNCIA
-        const texto = document.createElement("div");
-        texto.className = "texto";
-        texto.innerHTML = `
-          <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
-          ${ocorrencia.nome ? `<p><strong>${ocorrencia.nome}</strong></p>` : ""}
-          <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
-          <p>Relato: ${ocorrencia.descricao || "Sem descrição."}</p>
-        `;
-
-        card.appendChild(texto);
-
-        // IMAGEM DA OCORRÊNCIA
-        const imagem = document.createElement("img");
-        if (ocorrencia.imagem && ocorrencia.imagem.trim() !== "") {
-          imagem.src = ocorrencia.imagem;
-        } else {
-          imagem.src = "imagens/sem-imagem.png";
-        }
-        imagem.alt = ocorrencia.nome || "Imagem da ocorrência";
-        card.appendChild(imagem);
-
-        listaContainer.appendChild(card);
-      });
-    }
-
-    popup.style.display = "flex";
+  if (!listaContainer) {
+    console.error("Elemento lista-ocorrencias-concluidas não encontrado!");
+    return;
   }
 
-  if (tipo === "concluídas") {
-    const popupConcluidas = document.getElementById("popup-concluidas");
-    const listaContainer = document.getElementById("lista-ocorrencias-concluidas");
-    listaContainer.innerHTML = ""; // Limpa a lista
+  listaContainer.innerHTML = ""; // Limpa a lista
 
-    const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasResolvidas") || "[]");
+  const ocorrenciasString = localStorage.getItem("ocorrenciasResolvidas");
+  console.log("Conteúdo em ocorrenciasResolvidas:", ocorrenciasString);
 
-    if (ocorrencias.length === 0) {
-      const mensagem = document.createElement("p");
-      mensagem.textContent = "Sem ocorrências registadas.";
-      listaContainer.appendChild(mensagem);
-    } else {
-      ocorrencias.forEach((ocorrencia, index) => {
-        const card = document.createElement("div");
-        card.className = "ocorrencia-card";
+  const ocorrencias = JSON.parse(ocorrenciasString || "[]");
+  console.log("Ocorrências resolvidas:", ocorrencias);
 
-        // FORMATAR DATA
-        let dataFormatada = "dd/mm/aaaa";
-        if (ocorrencia.data) {
-          const dataObj = new Date(ocorrencia.data);
-          const dia = String(dataObj.getDate()).padStart(2, '0');
-          const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
-          const ano = dataObj.getFullYear();
-          dataFormatada = `${dia}/${mes}/${ano}`;
-        }
+  if (!ocorrencias || ocorrencias.length === 0) {
+    const mensagem = document.createElement("p");
+    mensagem.textContent = "Sem ocorrências registadas.";
+    listaContainer.appendChild(mensagem);
+  } else {
+    ocorrencias.forEach((ocorrencia, index) => {
+      const card = document.createElement("div");
+      card.classList.add("ocorrencia-card");
 
-        // TEXTO DA OCORRÊNCIA
-        const texto = document.createElement("div");
-        texto.className = "texto";
-        texto.innerHTML = `
-          <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
-          ${ocorrencia.nome ? `<p><strong>${ocorrencia.nome}</strong></p>` : ""}
-          <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
-          <p>Relato: ${ocorrencia.descricao || "Sem descrição."}</p>
-        `;
+      // DATA já formatada
+      const dataFormatada = ocorrencia.Data || "Sem data";
 
-        card.appendChild(texto);
+      // CONTEÚDO DA OCORRÊNCIA
+      card.innerHTML = `
+        <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
+        <p><strong>Auditoria:</strong> ${ocorrencia.Auditoria || "Sem auditoria"}</p>
+        <p><strong>Tipo:</strong> ${ocorrencia.Tipo || "Sem tipo"}</p>
+        <p><strong>Localização:</strong> ${ocorrencia.Localização || "Sem localização"}</p>
+        <p><strong>Prioridade:</strong> ${ocorrencia.Prioridade || "Sem prioridade"}</p>
+      `;
 
-        // IMAGEM DA OCORRÊNCIA
-        const imagem = document.createElement("img");
-        if (ocorrencia.imagem && ocorrencia.imagem.trim() !== "") {
-          imagem.src = ocorrencia.imagem;
-        } else {
-          imagem.src = "imagens/sem-imagem.png";
-        }
-        imagem.alt = ocorrencia.nome || "Imagem da ocorrência";
-        card.appendChild(imagem);
-
-        listaContainer.appendChild(card);
-      });
-    }
-
-    popupConcluidas.style.display = "flex";
+      listaContainer.appendChild(card);
+    });
   }
+
+  popupConcluidas.style.display = "flex";
 }
+

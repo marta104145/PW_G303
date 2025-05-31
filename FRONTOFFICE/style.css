@@ -390,10 +390,10 @@ body {
 .buttons-container {
   display: flex;
   flex-direction: column;
-  gap: 4em;
+  gap: 5em;
   height: 450px; /* igual à altura do mapa */
-  justify-content: space-between;
-  margin-top: 0rem;
+  justify-content: flex-start;
+  margin-top: 5rem;
 }
 
 .buttons-container button {
