@@ -345,7 +345,7 @@ function filtrarOcorrencias(tipo) {
     const listaContainer = document.getElementById("lista-ocorrencias-abertas");
     listaContainer.innerHTML = ""; // Limpa a lista
 
-    const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasAceites") || "[]");
+    const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias") || "[]");
 
     if (ocorrencias.length === 0) {
       const mensagem = document.createElement("p");
@@ -380,15 +380,14 @@ function filtrarOcorrencias(tipo) {
 
         // IMAGEM DA OCORRÊNCIA
         const imagem = document.createElement("img");
-        if (ocorrencia.imagem && ocorrencia.imagem.trim() !== "") {
-          imagem.src = ocorrencia.imagem;
-        } else {
-          imagem.src = "imagens/sem-imagem.png";
+        if (ocorrencia.fotoBase64 && ocorrencia.fotoBase64.trim() !== "") {
+        imagem.src = ocorrencia.fotoBase64;
+        }
+         else {
+        imagem.src = "imagens/sem-imagem.png";
         }
         imagem.alt = ocorrencia.nome || "Imagem da ocorrência";
         card.appendChild(imagem);
-
-        listaContainer.appendChild(card);
       });
     }
 
