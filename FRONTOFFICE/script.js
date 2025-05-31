@@ -327,5 +327,70 @@ function filtrarOcorrencias(tipo) {
     document.getElementById("popup-concluidas").style.display = "flex";
   }
 }
+// --------- BOTÃO: VER OCORRÊNCIAS CONCLUÍDAS ---------
+function filtrarOcorrenciasConcluidas() {
+  const popup = document.getElementById("popup-concluidas");
+  const listaContainer = document.getElementById("lista-ocorrencias-concluidas");
+  listaContainer.innerHTML = "";
+
+  const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasResolvidas") || "[]");
+
+  if (!ocorrencias || ocorrencias.length === 0) {
+    const mensagem = document.createElement("p");
+    mensagem.textContent = "Sem ocorrências registadas.";
+    listaContainer.appendChild(mensagem);
+  } else {
+    ocorrencias.forEach((ocorrencia, index) => {
+      const card = document.createElement("div");
+      card.classList.add("ocorrencia-card");
+
+      let dataFormatada = "dd/mm/aaaa";
+      if (ocorrencia.data) {
+        const dataObj = new Date(ocorrencia.data);
+        const dia = String(dataObj.getDate()).padStart(2, '0');
+        const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+        const ano = dataObj.getFullYear();
+        dataFormatada = `${dia}/${mes}/${ano}`;
+      }
+
+      card.innerHTML = `
+        <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
+        <p><strong>Nome:</strong> ${ocorrencia.nome || "Sem nome"}</p>
+        <p><strong>Tipo:</strong> ${ocorrencia.tipo || "Sem tipo"}</p>
+        <p>Relato: ${ocorrencia.descricao || "Sem descrição."}</p>
+      `;
+
+      listaContainer.appendChild(card);
+    });
+  }
+
+  popup.style.display = "flex";
+}
+
+// --------- FECHAR POPUP ---------
+function fecharPopup(id) {
+  const popup = document.getElementById(id);
+  if (popup) {
+    popup.style.display = "none";
+  }
+}
+
+// --------- BOTÃO NO HTML ---------
+/*
+<button onclick="filtrarOcorrenciasConcluidas()">Ver Ocorrências Concluídas</button>
+*/
+
+// --------- ADICIONA NOVA OCORRÊNCIA (APENAS SE PRECISAR) ---------
+function adicionarOcorrenciaResolvida(nome, tipo, descricao, data) {
+  const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasResolvidas") || "[]");
+  ocorrencias.push({ nome, tipo, descricao, data });
+  localStorage.setItem("ocorrenciasResolvidas", JSON.stringify(ocorrencias));
+}
+
+// --------- TESTAR OCORRÊNCIAS (DEBUG) ---------
+function listarOcorrenciasConcluidas() {
+  const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasResolvidas") || "[]");
+  console.log("Ocorrências resolvidas:", ocorrencias);
+}
 
 
