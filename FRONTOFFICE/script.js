@@ -345,7 +345,7 @@ function filtrarOcorrencias(tipo) {
     const listaContainer = document.getElementById("lista-ocorrencias-abertas");
     listaContainer.innerHTML = ""; // Limpa a lista
 
-    const ocorrencias = JSON.parse(localStorage.getItem("ocorrencias") || "[]");
+    const ocorrencias = JSON.parse(localStorage.getItem("ocorrenciasAceites") || "[]");
 
     if (ocorrencias.length === 0) {
       const mensagem = document.createElement("p");
