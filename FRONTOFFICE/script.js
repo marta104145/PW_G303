@@ -380,14 +380,15 @@ function filtrarOcorrencias(tipo) {
 
         // IMAGEM DA OCORRÊNCIA
         const imagem = document.createElement("img");
-        if (ocorrencia.fotoBase64 && ocorrencia.fotoBase64.trim() !== "") {
-        imagem.src = ocorrencia.fotoBase64;
-        }
-         else {
-        imagem.src = "imagens/sem-imagem.png";
+        if (ocorrencia.imagem && ocorrencia.imagem.trim() !== "") {
+          imagem.src = ocorrencia.imagem;
+        } else {
+          imagem.src = "imagens/sem-imagem.png";
         }
         imagem.alt = ocorrencia.nome || "Imagem da ocorrência";
         card.appendChild(imagem);
+
+        listaContainer.appendChild(card);
       });
     }
 
