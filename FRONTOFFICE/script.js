@@ -328,48 +328,4 @@ function filtrarOcorrencias(tipo) {
   }
 }
 
-function filtrarOcorrenciasConcluidas() {
-  const popupConcluidas = document.getElementById("popup-concluidas");
-  const listaContainer = document.getElementById("lista-ocorrencias-concluidas");
-
-  if (!listaContainer) {
-    console.error("Elemento lista-ocorrencias-concluidas não encontrado!");
-    return;
-  }
-
-  listaContainer.innerHTML = ""; // Limpa a lista
-
-  const ocorrenciasString = localStorage.getItem("ocorrenciasResolvidas");
-  console.log("Conteúdo em ocorrenciasResolvidas:", ocorrenciasString);
-
-  const ocorrencias = JSON.parse(ocorrenciasString || "[]");
-  console.log("Ocorrências resolvidas:", ocorrencias);
-
-  if (!ocorrencias || ocorrencias.length === 0) {
-    const mensagem = document.createElement("p");
-    mensagem.textContent = "Sem ocorrências registadas.";
-    listaContainer.appendChild(mensagem);
-  } else {
-    ocorrencias.forEach((ocorrencia, index) => {
-      const card = document.createElement("div");
-      card.classList.add("ocorrencia-card");
-
-      // DATA já formatada
-      const dataFormatada = ocorrencia.Data || "Sem data";
-
-      // CONTEÚDO DA OCORRÊNCIA
-      card.innerHTML = `
-        <p><span class="verde">Ocorrência ${index + 1}</span> - ${dataFormatada}</p>
-        <p><strong>Auditoria:</strong> ${ocorrencia.Auditoria || "Sem auditoria"}</p>
-        <p><strong>Tipo:</strong> ${ocorrencia.Tipo || "Sem tipo"}</p>
-        <p><strong>Localização:</strong> ${ocorrencia.Localização || "Sem localização"}</p>
-        <p><strong>Prioridade:</strong> ${ocorrencia.Prioridade || "Sem prioridade"}</p>
-      `;
-
-      listaContainer.appendChild(card);
-    });
-  }
-
-  popupConcluidas.style.display = "flex";
-}
 
