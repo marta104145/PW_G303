@@ -486,3 +486,45 @@ window.addEventListener("load", () => {
     })
   }
 })
+function initAuditoriasMap() {
+  const centro = { lat: 41.55, lng: -8.43 }; // Ajusta o centro que quiseres
+  const map = new google.maps.Map(
+    document.getElementById("auditoria-map"),
+    { center: centro, zoom: 12 }
+  );
+  const geocoder = new google.maps.Geocoder();
+
+  const auditorias = JSON.parse(localStorage.getItem("auditorias") || "[]");
+  auditorias.forEach(aud => {
+    if (aud.lat != null && aud.lng != null) {
+      // Usa coordenadas já disponíveis
+      placeMarker({ lat: aud.lat, lng: aud.lng }, aud, map);
+    } else {
+      // Geocodifica a localização
+      let endereco = aud.local_nome || aud.morada || "";
+      if (aud.local_tipo) endereco += `, ${aud.local_tipo}`;
+      endereco += ", Portugal";
+      geocoder.geocode({ address: endereco }, (results, status) => {
+        if (status === "OK" && results[0]) {
+          placeMarker(results[0].geometry.location, aud, map);
+        }
+      });
+    }
+  });
+}
+
+function placeMarker(position, aud, map) {
+  const marker = new google.maps.Marker({
+    position, map, title: aud.nome || aud.tipo
+  });
+  const infow = new google.maps.InfoWindow({
+    content: `
+      <div>
+        <strong>${aud.nome || "Sem nome"}</strong><br>
+        <em>${aud.data || ""}</em><br>
+        <p>${aud.descricao || ""}</p>
+      </div>
+    `
+  });
+  marker.addListener("click", () => infow.open(map, marker));
+}
